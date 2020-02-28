@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const db = require("../config/keys").mongoURI;
 const expressGraphQL = require("express-graphql");
-const models = require("./models");
+const models = require("./models/index");
 const schema = require("./schema/schema");
 const cors = require("cors");
 

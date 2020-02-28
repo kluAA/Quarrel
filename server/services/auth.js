@@ -104,4 +104,5 @@ const verifyUser = async data => {
     }
 };
 
+
 module.exports = { register, logout, login, verifyUser };
