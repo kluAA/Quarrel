@@ -2,7 +2,7 @@ const graphql = require("graphql");
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLList } = graphql;
 
 const mongoose = require("mongoose");
-const User = mongoose.model("user");
+const Answer = mongoose.model("answer");
 
 const AnswerType = new GraphQLObjectType({
   name: "AnswerType",
@@ -18,7 +18,17 @@ const AnswerType = new GraphQLObjectType({
                         return answer.user
                     });
             }
-        }
+        },
+    question: {
+      type: require("./question_type"),
+      resolve(parentValue) {
+        return Answer.findById(parentValue._id)
+          .populate("question")
+          .then(answer=> {
+            return answer.question
+          });
+      }
+    }
   })
 });
 

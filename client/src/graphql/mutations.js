@@ -23,5 +23,16 @@ export default {
             loggedIn
             }
         }
+    `,
+    NEW_QUESTION: gql`
+        mutation NewQuestion($question: String) {
+            newQuestion(question: $question) {
+                _id
+                question
+                user {
+                    name
+                }
+            }
+        }
     `
 }
