@@ -5,6 +5,8 @@ const AuthService = require("../services/auth");
 
 const UserType = require("./types/user_type");
 const User = mongoose.model("user");
+const TopicType = require("./types/topic_type");
+const Topic = mongoose.model("topic");
 const QuestionType = require("./types/question_type");
 const Question = mongoose.model("question");
 const AnswerType = require("./types/answer_type");
@@ -57,12 +59,12 @@ const mutation = new GraphQLObjectType({
             type: QuestionType,
             args: {
                 authorId: { type: new GraphQLNonNull(GraphQLID) },
-                question: { type: GraphQLString}
+                question: { type: GraphQLString }
             },
-            async resolve(_, { question, authorId }, ctx ) {
+            async resolve(_, { question, authorId }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
-                    return new Question({question, user: authorId }).save()
+                    return new Question({ question, user: authorId }).save()
                 } else {
                     // throw new Error("Must be logged in to create a question")
                     return new Question({ question, user: authorId }).save()
@@ -79,11 +81,37 @@ const mutation = new GraphQLObjectType({
             async resolve(_, { body }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
-                    return new Answer({body, authorId, questionId }).save()
+                    return new Answer({ body, authorId, questionId }).save()
                 } else {
                     // throw new Error("Must be logged in to create an answer")
                     return new Answer({ body, authorId, questionId }).save()
                 }
+            }
+        },
+        newTopic: {
+            type: TopicType,
+            args: {
+                name: { type: GraphQLString },
+                description: { type: GraphQLString },
+            },
+            async resolve(_, { name, description }, ctx) {
+                const validUser = await AuthService.verifyUser({ token: ctx.token });
+                if (validUser.loggedIn) {
+                    return new Topic({ name, description }).save()
+                } else {
+                    // throw new Error("Must be logged in to create an answer")
+                    return new Topic({ name, description }).save()
+                }
+            }
+        },
+        addQuestionToTopic: {
+            type: TopicType,
+            args: {
+                topicId: { type: GraphQLID },
+                questionId: { type: GraphQLID },
+            },
+            resolve(parentValue, { topicId, questionId }) {
+                return Topic.addQuestion(topicId, questionId);
             }
         }
     }

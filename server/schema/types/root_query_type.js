@@ -5,7 +5,9 @@ const { GraphQLObjectType, GraphQLList, GraphQLID, GraphQLNonNull } = graphql;
 const UserType = require("./user_type");
 const QuestionType = require("./question_type");
 const AnswerType = require("./answer_type");
+const TopicType = require("./topic_type");
 
+const Topic = mongoose.model("topic");
 const User = mongoose.model("user");
 const Question = mongoose.model("question");
 const Answer = mongoose.model("answer");
@@ -50,6 +52,19 @@ const RootQueryType = new GraphQLObjectType({
             args: { _id: { type: new GraphQLNonNull(GraphQLID) } },
             resolve(_, args) {
                 return Answer.findById(args._id);
+            }
+        },
+        topics: {
+            type: new GraphQLList(TopicType),
+            resolve() {
+                return Topic.find({});
+            }
+        },
+        topic: {
+            type: TopicType,
+            args: { _id: { type: new GraphQLNonNull(GraphQLID) } },
+            resolve(parentValue, { _id }) {
+                return Topic.findById(_id);
             }
         }
     })
