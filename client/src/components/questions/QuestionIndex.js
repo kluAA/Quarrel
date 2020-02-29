@@ -1,8 +1,8 @@
 import React from "react";
 import { Query } from "react-apollo";
 import Queries from "../../graphql/queries";
-const { FETCH_QUESTIONS } = Queries;
 import { Link } from "react-router-dom";
+const { FETCH_QUESTIONS } = Queries;
 
 class QuestionIndex extends React.Component {
     render () {
