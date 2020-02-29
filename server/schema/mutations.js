@@ -103,17 +103,17 @@ const mutation = new GraphQLObjectType({
                     return new Topic({ name, description }).save()
                 }
             }
-        },
-        addQuestionToTopic: {
-            type: TopicType,
-            args: {
-                topicId: { type: GraphQLID },
-                questionId: { type: GraphQLID },
-            },
-            resolve(parentValue, { topicId, questionId }) {
-                return Topic.addQuestion(topicId, questionId);
-            }
         }
+        // addQuestionToTopic: {
+        //     type: TopicType,
+        //     args: {
+        //         topicId: { type: GraphQLID },
+        //         questionId: { type: GraphQLID },
+        //     },
+        //     resolve(parentValue, { topicId, questionId }) {
+        //         return Topic.addQuestion(topicId, questionId);
+        //     }
+        // }
     }
 });
 
