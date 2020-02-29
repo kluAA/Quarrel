@@ -4,6 +4,8 @@ import Login from "./session/Login";
 import Register from "./session/Register";
 import AuthRoute from "../util/route_util";
 import NavBar from "./navigation/NavBar";
+import QuestionIndex from "./questions/QuestionIndex";
+import QuestionForm from "./questions/QuestionForm";
 
 
 const App = () => {
@@ -15,6 +17,8 @@ const App = () => {
           <AuthRoute exact path="/login" component={Login} routeType="auth" />
           <AuthRoute exact path="/register" component={Register} routeType="auth" />
       </Switch>
+      <QuestionForm />
+      <QuestionIndex />
     </div>
   )
 };
