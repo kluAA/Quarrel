@@ -58,7 +58,7 @@ class QuestionForm extends React.Component {
                 }}
             >
                 {(newQuestion, { data }) => (
-                    <div>
+                    <div className="question-modal">
                         <form onSubmit={e => this.handleSubmit(e, newQuestion)}>
                             <textarea
                                 onChange={this.update("question")}

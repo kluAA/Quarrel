@@ -1,0 +1,23 @@
+.question-index {
+    width: 602px;
+    margin: auto;
+}
+
+.question-item {
+    background-color: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.add-question-item {
+    background-color: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.question-modal {
+    
+}
