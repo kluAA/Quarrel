@@ -49,9 +49,7 @@ class NavBar extends React.Component {
                                 Topics
                             </li>
                         </Link>
-                        <Link>
                             <li className="nav-notifications"></li>
-                        </Link>
                     </ul>
                 </div>
             </div>
