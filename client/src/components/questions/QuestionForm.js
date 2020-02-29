@@ -1,8 +1,8 @@
 import React from "react";
 import { Mutation } from "react-apollo";
 import Queries from "../../graphql/queries";
-const { FETCH_QUESTIONS } = Queries;
 import Mutations from "../../graphql/mutations";
+const { FETCH_QUESTIONS } = Queries;
 const { NEW_QUESTION } = Mutations;
 
 class QuestionForm extends React.Component {
