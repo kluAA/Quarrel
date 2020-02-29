@@ -5,42 +5,59 @@ import Queries from "../../graphql/queries";
 import { ApolloConsumer } from "react-apollo"
 const { IS_LOGGED_IN } = Queries;
 
-const Nav = props => {
-    return (
-        <ApolloConsumer>
-            {client => (
-                <Query query={IS_LOGGED_IN}>
-                    {({ data }) => {
-                        if (data.isLoggedIn) {
-                            return (
-                                <button
-                                    onClick={e => {
-                                        e.preventDefault();
-                                        localStorage.removeItem("auth-token");
-                                        client.writeData({ data: { isLoggedIn: false } });
-                                        props.history.push("/");
-                                    }}
-                                >
-                                    Logout
-                                </button>
-                            );
-                        } else {
-                            return (
-                                <div>
-                                    <Link to="/login">Login</Link>
-                                    <br />
-                                    <Link to="/register">Register</Link>
-                                    <br />
-                                    <Link to="/">Home</Link>
-                                </div>
-                            );
-                        }
-                    }}
+class NavBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.logout = this.logout.bind(this);
+    }
 
-                </Query>
-            )}
-        </ApolloConsumer>
-    );
-};
+    logout(client) {
+        return (
+            <button
+                onClick={e => {
+                    e.preventDefault();
+                    localStorage.removeItem("auth-token");
+                    client.writeData({ data: { isLoggedIn: false } });
+                    this.props.history.push("/");
+                }}
+            >
+                Logout
+            </button>
+        )
+    }
 
-export default withRouter(Nav);
+    render() {
+        return (
+            <div className="nav-container">
+                <div className="nav-content">
+                    <div className="nav-logo">
+                        <Link to="/">Quarrel</Link>
+                    </div>
+                    <ul className="nav-links">
+                        <Link to="/home">
+                            <li className="nav-home">
+                                Home
+                            </li>
+                        </Link>
+                        <Link to="/answer">
+                            <li className="nav-answer">
+                                Answer
+                            </li>
+                        </Link>
+                        <Link to="/topics">
+                            <li className="nav-topics">
+                                Topics
+                            </li>
+                        </Link>
+                        <Link>
+                            <li className="nav-notifications"></li>
+                        </Link>
+                    </ul>
+                </div>
+            </div>
+  
+        );
+    }
+}
+
+export default NavBar;

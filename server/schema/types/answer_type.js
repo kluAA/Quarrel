@@ -12,10 +12,10 @@ const AnswerType = new GraphQLObjectType({
     user: {
             type: require("./user_type"),
             resolve(parentValue) {
-                return Question.findById(parentValue._id)
+                return Answer.findById(parentValue._id)
                     .populate("user")
-                    .then(question => {
-                        return question.user
+                    .then(answer => {
+                        return answer.user
                     });
             }
         }

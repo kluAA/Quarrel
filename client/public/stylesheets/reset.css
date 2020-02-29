@@ -1,0 +1,24 @@
+html, body, textarea, button, input, label, div, hr, p, form, a, h1, h2, ul, li, select {
+    vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-family: sans-serif;
+    outline: none;
+    text-decoration: none;
+    color: inherit;
+    resize: none;
+    outline: none;
+    list-style: none;
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+html, body {
+    height: 100%;
+}
+
+a, button, input[type='submit'] {
+    cursor: pointer;
+}
