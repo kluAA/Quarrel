@@ -185,6 +185,9 @@
     justify-content: space-between;
     align-items: center;
     position: absolute;
+    z-index: 11;
+    top: 0;
+    left: 0;
 }
 
 .modal-message > p {
@@ -198,4 +201,14 @@
 .close-message {
     margin-right: 25px;
     cursor: pointer;
+}
+
+.hide-me {
+    animation: hideElement 5s forwards;
+}
+
+@keyframes hideElement {
+    0% { opacity: 1}
+    90% { opacity: 1}
+    100% { opacity: 0}
 }

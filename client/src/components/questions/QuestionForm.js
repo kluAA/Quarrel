@@ -23,11 +23,13 @@ class QuestionForm extends React.Component {
 
     handleModal(e) {
         e.preventDefault();
-        this.setState({ showModal: !this.state.showModal });
+        this.setState({ 
+            showModal: !this.state.showModal,
+            message: "" 
+        });
     }
 
     closeMessage (e) {
-        e.preventDefault();
         this.setState({ message: "" })
     }
 
@@ -58,7 +60,8 @@ class QuestionForm extends React.Component {
         if (question.split(" ").length < 3 ) {
             this.setState({ message: "This question needs more detail. " + 
                                 "Add more information to ask a clear question, " +
-                                "written as a complete sentence."})
+                                "written as a complete sentence."});
+            setTimeout(this.closeMessage, 5001)
         } else {
             newQuestion({
                 variables: {
@@ -71,6 +74,14 @@ class QuestionForm extends React.Component {
     render () {
         return (
             <div>
+                {
+                    this.state.message.length > 0 &&
+                    <div className="modal-message hide-me">
+                        <div className="hidden">x</div>
+                        <p>{this.state.message}</p>
+                        <div className="close-message" onClick={this.closeMessage}>x</div>
+                    </div>
+                }
                 <div className="add-question-item" onClick={this.handleModal}>
                     <p className="add-question-item-user">Username</p>
                     <p className="add-question-item-prompt">What is your question or link?</p>
@@ -78,15 +89,6 @@ class QuestionForm extends React.Component {
                     {
                         this.state.showModal &&
                         <div className="modal-background" onClick={this.handleModal}>
-                            {
-                                this.state.message.length > 0 && 
-                                <div className="modal-message">
-                                    <div className="hidden">x</div>
-                                    <p>{this.state.message}</p>
-                                    <div className="close-message">x</div>
-                                </div>
-                            }
-                            
                             <div className="modal-child" onClick={e => e.stopPropagation()}>
                                 <Mutation
                                     mutation={NEW_QUESTION}
