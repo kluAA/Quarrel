@@ -47,7 +47,7 @@
 
 .modal-child {
   position: absolute;
-  top: 30%;
+  top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -173,5 +173,29 @@
 
 .add-question-modal-x > span:hover {
     background: #f0efef;
+    cursor: pointer;
+}
+
+.modal-message {
+    background: #656e75;
+    color: white;
+    height: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+}
+
+.modal-message > p {
+    font-size: 14px;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.close-message {
+    margin-right: 25px;
     cursor: pointer;
 }

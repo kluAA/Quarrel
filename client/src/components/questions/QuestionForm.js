@@ -17,12 +17,18 @@ class QuestionForm extends React.Component {
             showModal: false
         };
         this.handleModal = this.handleModal.bind(this);
+        this.closeMessage = this.closeMessage.bind(this);
     }
 
 
     handleModal(e) {
         e.preventDefault();
         this.setState({ showModal: !this.state.showModal });
+    }
+
+    closeMessage (e) {
+        e.preventDefault();
+        this.setState({ message: "" })
     }
 
     update(field) {
@@ -48,11 +54,18 @@ class QuestionForm extends React.Component {
 
     handleSubmit(e, newQuestion) {
         e.preventDefault();
-        newQuestion({
-            variables: {
-                question: this.state.question
-            }
-        });
+        const question = this.state.question;
+        if (question.split(" ").length < 3 ) {
+            this.setState({ message: "This question needs more detail. " + 
+                                "Add more information to ask a clear question, " +
+                                "written as a complete sentence."})
+        } else {
+            newQuestion({
+                variables: {
+                    question: question
+                }
+            });
+        }
     }
 
     render () {
@@ -65,6 +78,15 @@ class QuestionForm extends React.Component {
                     {
                         this.state.showModal &&
                         <div className="modal-background" onClick={this.handleModal}>
+                            {
+                                this.state.message.length > 0 && 
+                                <div className="modal-message">
+                                    <div className="hidden">x</div>
+                                    <p>{this.state.message}</p>
+                                    <div className="close-message">x</div>
+                                </div>
+                            }
+                            
                             <div className="modal-child" onClick={e => e.stopPropagation()}>
                                 <Mutation
                                     mutation={NEW_QUESTION}
@@ -112,7 +134,6 @@ class QuestionForm extends React.Component {
                                                     <button type="submit">Add Question</button>
                                                 </div>
                                             </form>
-                                            <p>{this.state.message}</p>
                                         </div>
                                     )}
                                 </Mutation>
