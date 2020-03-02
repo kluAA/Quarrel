@@ -16,7 +16,8 @@
 }
 
 .nav-logo {
-    font-size: 28px;
+    font-size: 30px;
+    font-weight: bold;
     color: #B92B28;
     padding: 0 5px;
 }
@@ -26,6 +27,7 @@
 }
 
 .nav-links li {
+    cursor: pointer;
     display: flex;
     align-items: center;
     height: 49px;
@@ -34,4 +36,43 @@
 
 .nav-links li:hover {
     background: #F8F8F8;
+}
+
+.nav-links li span {
+    margin-left: 5px;
+}
+
+.search-container {
+    width: 249px;
+    height: 26px;
+    padding: 4px 8px;
+    border: 1px solid rgb(222, 224, 225);
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+}
+
+.search-container > .fa-search {
+    color: #93959888;
+}
+
+.search {
+    margin-left: 5px;
+    font-size: 13px;
+}
+
+.nav-ask-btn {
+    width: 113px;
+    height: 30px;
+    margin-left: 10px;
+    padding: 5px 15px;
+    font-size: 13px;
+    border-radius: 20px;
+    background: #b92b27;
+    color: white;
+    font-weight: 500;
+}
+
+.nav-ask-btn:hover {
+    background: #a82624;
 }

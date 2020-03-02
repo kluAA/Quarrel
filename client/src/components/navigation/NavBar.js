@@ -3,6 +3,7 @@ import { Link, withRouter } from "react-router-dom";
 import { Query } from "react-apollo";
 import Queries from "../../graphql/queries";
 import { ApolloConsumer } from "react-apollo"
+import SearchBar from "./SearchBar";
 const { IS_LOGGED_IN } = Queries;
 
 class NavBar extends React.Component {
@@ -36,24 +37,34 @@ class NavBar extends React.Component {
                     <ul className="nav-links">
                         <Link to="/home">
                             <li className="nav-home">
-                                Home
+                                <i className="far fa-list-alt"></i>
+                                <span>Home</span>
                             </li>
                         </Link>
                         <Link to="/answer">
                             <li className="nav-answer">
-                                Answer
+                                <i className="far fa-edit"></i>
+                                <span>Answer</span>
                             </li>
                         </Link>
                         <Link to="/topics">
                             <li className="nav-topics">
-                                Topics
+                                <i className="far fa-comments"></i>
+                                <span>Topics</span>
                             </li>
                         </Link>
-                            <li className="nav-notifications"></li>
+                        <li className="nav-notifications">
+                            <i className="far fa-bell"></i>
+                            <span>Notifications</span>
+                        </li>
                     </ul>
+                    <SearchBar />
+                    <button className="nav-ask-btn">
+                        Add Question
+                    </button>
                 </div>
             </div>
-  
+
         );
     }
 }
