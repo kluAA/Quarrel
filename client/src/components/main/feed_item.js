@@ -15,7 +15,12 @@ class FeedItem extends React.Component {
                         {question}
                     </Link>
                 </h1>
-
+                <div className="feed-item-options">
+                    <div className="feed-item-answer">
+                        <i class="far fa-edit"></i>
+                        <span>Answer</span>
+                    </div>
+                </div>
             </li>
         )
     }
