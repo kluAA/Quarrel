@@ -179,7 +179,7 @@
 .modal-message {
     background: #656e75;
     color: white;
-    height: 30px;
+    height: 40px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -191,7 +191,7 @@
 }
 
 .modal-message > p {
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .hidden {
@@ -211,4 +211,8 @@
     0% { opacity: 1}
     90% { opacity: 1}
     100% { opacity: 0}
+}
+
+.success {
+    background-color: rgb(108, 189, 142);
 }

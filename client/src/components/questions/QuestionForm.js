@@ -14,7 +14,8 @@ class QuestionForm extends React.Component {
         this.state = {
             question: "",
             message: "",
-            showModal: false
+            showModal: false,
+            success: ""
         };
         this.handleModal = this.handleModal.bind(this);
         this.closeMessage = this.closeMessage.bind(this);
@@ -25,7 +26,9 @@ class QuestionForm extends React.Component {
         e.preventDefault();
         this.setState({ 
             showModal: !this.state.showModal,
-            message: "" 
+            message: "",
+            success: "",
+            question: "" 
         });
     }
 
@@ -68,6 +71,7 @@ class QuestionForm extends React.Component {
                     question: question
                 }
             });
+            setTimeout(this.closeMessage, 5001)
         }
     }
 
@@ -82,7 +86,10 @@ class QuestionForm extends React.Component {
                         onCompleted={data => {
                             const { question } = data.newQuestion;
                             this.setState({
-                                message: `New question ${question} created successfully`
+                                message: `You've asked: ${question}`,
+                                success: 'success',
+                                showModal: false,
+                                question: ""
                             });
                         }}
                     >
@@ -131,7 +138,7 @@ class QuestionForm extends React.Component {
             <div>
                 {
                     this.state.message.length > 0 &&
-                    <div className="modal-message hide-me">
+                    <div className={`modal-message hide-me ${this.state.success}`}>
                         <div className="hidden">x</div>
                         <p>{this.state.message}</p>
                         <div className="close-message" onClick={this.closeMessage}>x</div>
