@@ -1,12 +1,12 @@
 import React from "react";
-import { Mutation } from "react-apollo";
+import { Mutation, Query } from "react-apollo";
 import Queries from "../../graphql/queries";
 import Mutations from "../../graphql/mutations";
 import { FaLink } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Validator = require("validator");
-const { FETCH_QUESTIONS } = Queries;
+const { FETCH_QUESTIONS, CURRENT_USER } = Queries;
 const { NEW_QUESTION } = Mutations;
 
 
@@ -122,9 +122,18 @@ class QuestionForm extends React.Component {
                                 </div>
                                 <form onSubmit={e => this.handleSubmit(e, newQuestion)}>
                                     <div className="add-question-modal-content">
-                                        <div className="add-question-modal-user">
-                                            User asked
-                                        </div>
+                                        <Query
+                                            query={CURRENT_USER} variables={{ token: localStorage.getItem("auth-token") }}>
+                                                {({ loading, error, data }) => {
+                                                    if (loading) return "Loading...";
+                                                    if (error) return `Error! ${error.message}`
+                                                    return (
+                                                        <div className="add-question-modal-user">
+                                                            {`${data.currentUser.name} asked`}
+                                                        </div>
+                                                    )
+                                                }}
+                                        </Query>
                                         <div className="add-question-modal-question">
                                             <textarea
                                                 onChange={this.update("question")}
