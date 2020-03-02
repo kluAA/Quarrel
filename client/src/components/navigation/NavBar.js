@@ -4,6 +4,7 @@ import { Query } from "react-apollo";
 import Queries from "../../graphql/queries";
 import { ApolloConsumer } from "react-apollo"
 import SearchBar from "./SearchBar";
+import QuestionForm from "../questions/QuestionForm";
 const { IS_LOGGED_IN } = Queries;
 
 class NavBar extends React.Component {
@@ -59,9 +60,7 @@ class NavBar extends React.Component {
                         </li>
                     </ul>
                     <SearchBar />
-                    <button className="nav-ask-btn">
-                        Add Question
-                    </button>
+                    <QuestionForm />
                 </div>
             </div>
 
