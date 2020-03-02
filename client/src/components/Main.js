@@ -13,7 +13,6 @@ const Main = () => {
             <NavBar />
             <div className="main-body">
                 <Switch>
-                    <QuestionForm />  
                 
                 </Switch>
             </div>

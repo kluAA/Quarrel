@@ -72,6 +72,61 @@ class QuestionForm extends React.Component {
     }
 
     render () {
+        const button = (
+            <div className="modal-background" onClick={this.handleModal}>
+                <div className="modal-child" onClick={e => e.stopPropagation()}>
+                    <Mutation
+                        mutation={NEW_QUESTION}
+                        onError={err => this.setState({ message: err.message })}
+                        update={(cache, data) => this.updateCache(cache, data)}
+                        onCompleted={data => {
+                            const { question } = data.newQuestion;
+                            this.setState({
+                                message: `New question ${question} created successfully`
+                            });
+                        }}
+                    >
+                        {(newQuestion, { data }) => (
+                            <div className="add-question-modal">
+                                <div className="modal-header">
+                                    <div className="add-question-modal-header">
+                                        <div className="tab selected">Add Question</div>
+                                        {/* <div className="tab">Share Link</div> */}
+                                    </div>
+                                    <div className="add-question-modal-x">
+                                        <span onClick={this.handleModal}>X</span>
+                                    </div>
+                                </div>
+                                <form onSubmit={e => this.handleSubmit(e, newQuestion)}>
+                                    <div className="add-question-modal-content">
+                                        <div className="add-question-modal-user">
+                                            User asked
+                                                    </div>
+                                        <div className="add-question-modal-question">
+                                            <textarea
+                                                onChange={this.update("question")}
+                                                value={this.state.question}
+                                                placeholder='Start your question with "What", "How", "Why", etc.'
+                                            />
+                                        </div>
+                                        <div className="add-question-modal-link">
+                                            <span><FaLink /></span>
+                                            <input
+                                                placeholder="Optional: include a link that gives context"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="add-question-modal-footer">
+                                        <p onClick={this.handleModal}>Cancel</p>
+                                        <button type="submit">Add Question</button>
+                                    </div>
+                                </form>
+                            </div>
+                        )}
+                    </Mutation>
+                </div>
+            </div>
+        )
         return (
             <div>
                 {
@@ -82,66 +137,12 @@ class QuestionForm extends React.Component {
                         <div className="close-message" onClick={this.closeMessage}>x</div>
                     </div>
                 }
-                <div className="add-question-item" onClick={this.handleModal}>
+                {/* <div className="add-question-item" onClick={this.handleModal}>
                     <p className="add-question-item-user">Username</p>
                     <p className="add-question-item-prompt">What is your question or link?</p>
-                </div>
-                    {
-                        this.state.showModal &&
-                        <div className="modal-background" onClick={this.handleModal}>
-                            <div className="modal-child" onClick={e => e.stopPropagation()}>
-                                <Mutation
-                                    mutation={NEW_QUESTION}
-                                    onError={err => this.setState({ message: err.message })}
-                                    update={(cache, data) => this.updateCache(cache, data)}
-                                    onCompleted={data => {
-                                        const { question } = data.newQuestion;
-                                        this.setState({
-                                            message: `New question ${question} created successfully`
-                                        });
-                                    }}
-                                >
-                                    {(newQuestion, { data }) => (
-                                        <div className="add-question-modal">
-                                            <div className="modal-header">
-                                                <div className="add-question-modal-header">
-                                                    <div className="tab selected">Add Question</div>
-                                                    {/* <div className="tab">Share Link</div> */}
-                                                </div>
-                                                <div className="add-question-modal-x">
-                                                    <span onClick={this.handleModal}>X</span>
-                                                </div>
-                                            </div>
-                                            <form onSubmit={e => this.handleSubmit(e, newQuestion)}>
-                                                <div className="add-question-modal-content">
-                                                    <div className="add-question-modal-user">
-                                                        User asked
-                                                    </div>
-                                                    <div className="add-question-modal-question">
-                                                        <textarea
-                                                            onChange={this.update("question")}
-                                                            value={this.state.question}
-                                                            placeholder='Start your question with "What", "How", "Why", etc.'
-                                                        />
-                                                    </div>
-                                                    <div className="add-question-modal-link">
-                                                        <span><FaLink /></span>
-                                                        <input
-                                                            placeholder="Optional: include a link that gives context"
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="add-question-modal-footer">
-                                                    <p onClick={this.handleModal}>Cancel</p>
-                                                    <button type="submit">Add Question</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    )}
-                                </Mutation>
-                            </div>
-                        </div>
-                    }
+                </div> */}
+                <button className="nav-ask-btn" onClick={this.handleModal}>Add Question</button>
+                    { this.state.showModal && button }
             </div>
         )
     }
