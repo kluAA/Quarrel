@@ -66,8 +66,7 @@ const mutation = new GraphQLObjectType({
                 if (validUser.loggedIn) {
                     return new Question({ question, user: authorId }).save()
                 } else {
-                    // throw new Error("Must be logged in to create a question")
-                    return new Question({ question, user: authorId }).save()
+                    throw new Error("Must be logged in to create a question")
                 }
             }
         },
@@ -81,10 +80,9 @@ const mutation = new GraphQLObjectType({
             async resolve(_, { body }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
-                    return new Answer({ body, authorId, questionId }).save()
+                    return new Answer({body, user: authorId, question: questionId }).save()
                 } else {
-                    // throw new Error("Must be logged in to create an answer")
-                    return new Answer({ body, authorId, questionId }).save()
+                    throw new Error("Must be logged in to create an answer")
                 }
             }
         },

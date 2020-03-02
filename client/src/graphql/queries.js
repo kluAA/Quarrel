@@ -5,5 +5,16 @@ export default {
       query isUserLoggedIn {
           isLoggedIn @client
       }
+    `,
+    FETCH_QUESTIONS: gql`
+      {
+        questions {
+          _id
+          question
+          user {
+            name
+          }
+        }
+      }
     `
 };

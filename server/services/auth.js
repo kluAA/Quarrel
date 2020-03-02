@@ -98,7 +98,7 @@ const verifyUser = async data => {
             return user ? true : false;
         });
 
-        return { loggedIn };
+        return { loggedIn, _id};
     } catch (err) {
         return { loggedIn: false };
     }
