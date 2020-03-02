@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import AnswerForm from "../answer/AnswerForm";
 
 class FeedItem extends React.Component {
     constructor(props) {
@@ -17,9 +18,10 @@ class FeedItem extends React.Component {
                 </h1>
                 <div className="feed-item-options">
                     <div className="feed-item-answer">
-                        <i class="far fa-edit"></i>
+                        <i className="far fa-edit"></i>
                         <span>Answer</span>
                     </div>
+                    <AnswerForm />
                 </div>
             </li>
         )
