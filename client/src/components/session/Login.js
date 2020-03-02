@@ -7,7 +7,7 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "",
+            email: "",
             password: ""
         };
     }
@@ -41,16 +41,17 @@ class Login extends React.Component {
                                 e.preventDefault();
                                 loginUser({
                                     variables: {
-                                        username: this.state.username,
+                                        email: this.state.email,
                                         password: this.state.password
                                     }
                                 }).catch(err => console.log(err));
                             }}
                         >
+													<>Login</>
                             <input
-                                value={this.state.username}
-                                onChange={this.update("username")}
-                                placeholder="Username"
+                                value={this.state.email}
+                                onChange={this.update("email")}
+                                placeholder="Email"
                             />
                             <input
                                 value={this.state.password}
@@ -58,7 +59,7 @@ class Login extends React.Component {
                                 type="password"
                                 placeholder="Password"
                             />
-                            <button type="submit">Log In</button>
+                            <button type="submit">Login</button>
                         </form>
                     </div>
                 )}

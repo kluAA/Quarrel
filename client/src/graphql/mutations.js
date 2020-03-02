@@ -2,16 +2,18 @@ import gql from "graphql-tag";
 
 export default {
     REGISTER_USER: gql`
-        mutation RegisterUser($name: String!, $username: String! $email: String!, $password: String!) {
-            register(name: $name, username: $username, email: $email, password: $password) {
-                token
+        mutation RegisterUser($fname: String!, $lname: String! $email: String!, $password: String!) {
+            register(fname: $fname, lname: $lname, email: $email, password: $password) {
+								email
+								token
                 loggedIn
             }
         }
     `,
     LOGIN_USER: gql`
-        mutation LoginUser($username: String!, $password: String!) {
-            login(username: $username, password: $password) {
+        mutation LoginUser($email: String!, $password: String!) {
+            login(email: $email, password: $password) {
+						email
             token
             loggedIn
             }

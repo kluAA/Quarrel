@@ -2,37 +2,47 @@ const Validator = require("validator");
 const validText = require("./valid-text");
 
 module.exports = function  validateRegisterInput(data) {
-    data.name = validText(data.name) ? data.name : "";
-    data.username = validText(data.username) ? data.username : "";
+    data.fname = validText(data.fname) ? data.fname : "";
+    data.lname = validText(data.lname) ? data.lname : "";
     data.email = validText(data.email) ? data.email : "";
     data.password = validText(data.password) ? data.password : "";
 
-    if (Validator.isEmpty(data.name)) {
-        return { message: "Name field is required.", isValid: false };
+    if (Validator.isEmpty(data.fname) || Validator.isEmpty(data.lname)) {
+        return { message: "Please use your full name", isValid: false };
     }
-    
-    if (Validator.isEmpty(data.username)) {
-        return { message: "Username field is required.", isValid: false };
+		
+		if (!Validator.isLength(data.fname, { min: 2 })) {
+			return { message: "", isValid: false };
+		}
+
+    if (Validator.isEmpty(data.lname)) {
+        return { message: "", isValid: false };
     }
 
-    if (!Validator.isLength(data.username, { min: 4 })) {
-        return { message: "Username must be at least 4 characters long.", isValid: false }
+    if (!Validator.isLength(data.email, { min: 4 })) {
+        return { message: "", isValid: false }
     }
 
     if (Validator.isEmpty(data.email)) {
-        return { message: "Email field is required.", isValid: false };
+        return { message: "", isValid: false };
     }
 
     if (!Validator.isEmail(data.email)) {
-        return { message: "Please enter a valid email.", isValid: false };
+        return { message: "The email address you entered is not valid.", isValid: false };
     }
 
     if (Validator.isEmpty(data.password)) {
-        return { message: "Password field is required", isValid: false };
+        return {
+					message: "Please use a password at least 8 characters long.",
+					isValid: false
+				};
     }
 
-    if (!Validator.isLength(data.password, { min: 6 })) {
-        return { message: "Password must be at least 6 characters long.", isValid: false };
+    if (!Validator.isLength(data.password, { min: 8 })) {
+        return {
+					message: "Please use a password at least 8 characters long.",
+					isValid: false
+				};
     }
 
     return {
@@ -40,3 +50,5 @@ module.exports = function  validateRegisterInput(data) {
         isValid: true
     };
 }
+
+// Unconfirmed account already 

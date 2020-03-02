@@ -3,16 +3,23 @@ const validText = require("./valid-text");
 
 module.exports = function validateLoginInput(data) {
     // data.email = validText(data.email) ? data.email : "";
-    data.username = validText(data.username) ? data.username : "";
+    data.email = validText(data.email) ? data.email : "";
     data.password = validText(data.password) ? data.password : "";
 
 
-    if (Validator.isEmpty(data.username)) {
-        return { message: "Username field is required", isValid: false };
+    if (Validator.isEmpty(data.email)) {
+        return {
+					message:
+						"No account found for this email. Retry, or Sign up for Quora.",
+					isValid: false
+				};
     }
 
     if (Validator.isEmpty(data.password)) {
-        return { message: "Password field is required", isValid: false };
+        return {
+					message: "Incorrect password. Reset Password",
+					isValid: false
+				};
     }
 
     return {

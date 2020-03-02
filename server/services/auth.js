@@ -14,9 +14,9 @@ const register = async data => {
             throw new Error(message);
         }
 
-        const { name, username, email, password } = data;
+        const { fname, lname, email, password } = data;
 
-        const existingUser = await User.findOne({ username });
+        const existingUser = await User.findOne({ email });
 
         if (existingUser) {
             throw new Error("This user already exists");
@@ -26,8 +26,8 @@ const register = async data => {
 
         const user = new User(
             {
-                name,
-                username,
+                fname,
+                lname,
                 email,
                 password: hashedPassword
             },
@@ -38,8 +38,9 @@ const register = async data => {
 
         user.save();
 
-        const token = jwt.sign({ _id: user._id }, keys.secretOrKey);
-        return { token, loggedIn: true, ...user._doc, password: null };
+				const token = jwt.sign({ _id: user._id }, keys.secretOrKey);
+    		const id = user._doc._id;
+        return { token, loggedIn: true, ...user._doc, id, password: null };
 
     } catch (err) {
         throw err;
@@ -66,18 +67,20 @@ const login = async data => {
             throw new Error(message);
         }
 
-        const { username, password } = data;
+        const { email, password } = data;
 
-        const existingUser = await User.findOne({ username });
+        const existingUser = await User.findOne({ email });
 
         if (!existingUser) {
-            throw new Error("GUESS AGAIN");
+            throw new Error(
+							"No account found for this email. Retry, or Sign up for Quora."
+						);
         }
 
         const validPassword = await bcrypt.compareSync(password, existingUser.password);
 
         if (!validPassword) {
-            throw new Error("WRONG PASSWORD");
+            throw new Error("Incorrect password. Reset Password");
         }
 
         const token = jwt.sign({ _id: existingUser._id }, keys.secretOrKey);

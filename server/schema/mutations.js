@@ -16,8 +16,8 @@ const mutation = new GraphQLObjectType({
         register: {
             type: UserType,
             args: {
-                name: { type: GraphQLString },
-                username: { type: GraphQLString },
+                fname: { type: GraphQLString },
+                lname: { type: GraphQLString },
                 email: { type: GraphQLString },
                 password: { type: GraphQLString }
             },
@@ -28,7 +28,7 @@ const mutation = new GraphQLObjectType({
         login: {
             type: UserType,
             args: {
-                username: { type: GraphQLString },
+                email: { type: GraphQLString },
                 password: { type: GraphQLString }
             },
             resolve(_, args) {
