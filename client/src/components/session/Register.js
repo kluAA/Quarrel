@@ -11,9 +11,10 @@ class Register extends React.Component {
 			lname: "",
 			email: "",
 			password: "",
-			errors: {}
+			errors: {},
+			showModal: false
 		};
-		this.renderErrors = this.renderErrors.bind(this);
+
 	}
 
 	update(field) {
@@ -27,26 +28,26 @@ class Register extends React.Component {
 		});
 	}
 
-	handleSubmit(e) {
+	handleSubmit(e, registerUser) {
 		e.preventDefault();
-		let user = {
-			email: this.state.email,
-			password: this.state.password
-		};
-
-		this.props.signup(user, this.props.history);
-		// .then(this.props.history.push("/"),
-		// () => this.props.closeModal());
-	}
-
-	renderErrors() {
-		return (
-			<ul>
-				{Object.keys(this.state.errors).map((error, i) => (
-					<li key={`error-${i}`}>{this.state.errors[error]}</li>
-				))}
-			</ul>
-		);
+		const email = this.state.email;
+		const password = this.state.password;
+		if (email.split("@").length !== 2) {
+			this.setState({
+				email:
+					"Invalid email" +
+					"Try again"
+			});
+		} else {
+			registerUser({
+				variables: {
+					fname: this.state.fname,
+					lname: this.state.lname,
+					email: this.state.email,
+					password: this.state.password
+				}
+			}).catch(err => console.log(err));
+		}
 	}
 
 	render() {
@@ -67,35 +68,26 @@ class Register extends React.Component {
 				update={(client, data) => this.updateCache(client, data)}
 			>
 				{registerUser => (
-					<div>
-						<form
-							onSubmit={e => {
-								e.preventDefault();
-								registerUser({
-									variables: {
-										fname: this.state.fname,
-										lname: this.state.lname,
-										email: this.state.email,
-										password: this.state.password
-									}
-								}).catch(err => console.log(err));
-							}}
-						>
+					<div className="">
+						<form onSubmit={e => this.handleSubmit(e, registerUser)}>
+							<p>Login</p>
 							<label>
 								FIRST NAME
 								<input
+									type="text"
 									value={this.state.fname}
 									onChange={this.update("fname")}
-									// placeholder="First Name"
+									className=""
 								/>
 							</label>
 							<br />
 							<label>
 								LAST NAME
 								<input
+									type="text"
 									value={this.state.lname}
 									onChange={this.update("lname")}
-									// placeholder="Last Name"
+									className=""
 								/>
 							</label>
 							<br />
@@ -104,7 +96,7 @@ class Register extends React.Component {
 								<input
 									value={this.state.email}
 									onChange={this.update("email")}
-									// placeholder="Email"
+									className=""
 								/>
 							</label>
 							<br />
@@ -114,12 +106,11 @@ class Register extends React.Component {
 									value={this.state.password}
 									onChange={this.update("password")}
 									type="password"
-									// placeholder="Password"
+									className=""
 								/>
 							</label>
 							<br />
-							{this.renderErrors()}
-							<button type="submit">Sign Up</button>
+							<button type="submit" className="">Sign up</button>
 						</form>
 					</div>
 				)}

@@ -35,7 +35,7 @@ class Login extends React.Component {
                 update={(client, data) => this.updateCache(client, data)}
             >
                 {loginUser => (
-                    <div>
+                    <div className="container">
                         <form
                             onSubmit={e => {
                                 e.preventDefault();
