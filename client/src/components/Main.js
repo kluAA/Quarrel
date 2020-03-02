@@ -2,9 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import AuthRoute from "../util/route_util";
 import NavBar from "./navigation/NavBar";
-import Login from "./session/Login";
-import Register from "./session/Register";
-import QuestionForm from "./questions/QuestionForm";
+import Feed from "./main/feed";
 
 
 const Main = () => {
@@ -13,7 +11,7 @@ const Main = () => {
             <NavBar />
             <div className="main-body">
                 <Switch>
-                
+                    <Route exact path="/" component={Feed} />
                 </Switch>
             </div>
         </div>
