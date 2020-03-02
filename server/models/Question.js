@@ -10,6 +10,9 @@ const QuestionSchema = new Schema({
         type: String,
         required: true
     },
+    link: {
+        type: String
+    }
 });
 
 module.exports = mongoose.model("question", QuestionSchema);

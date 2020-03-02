@@ -216,3 +216,7 @@
 .success {
     background-color: rgb(108, 189, 142);
 }
+
+.modal-message > p > a {
+    text-decoration: underline;
+}

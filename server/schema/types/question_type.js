@@ -18,7 +18,8 @@ const QuestionType = new GraphQLObjectType({
                         return question.user
                     });
             }
-        }
+        },
+        link: { type: GraphQLString }
     })
 });
 

@@ -3,7 +3,9 @@ import { Mutation } from "react-apollo";
 import Queries from "../../graphql/queries";
 import Mutations from "../../graphql/mutations";
 import { FaLink } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
+const Validator = require("validator");
 const { FETCH_QUESTIONS } = Queries;
 const { NEW_QUESTION } = Mutations;
 
@@ -15,7 +17,10 @@ class QuestionForm extends React.Component {
             question: "",
             message: "",
             showModal: false,
-            success: ""
+            success: "",
+            link: "",
+            successfulQuestion: "",
+            successfulQId: ""
         };
         this.handleModal = this.handleModal.bind(this);
         this.closeMessage = this.closeMessage.bind(this);
@@ -28,7 +33,10 @@ class QuestionForm extends React.Component {
             showModal: !this.state.showModal,
             message: "",
             success: "",
-            question: "" 
+            question: "",
+            link: "",
+            successfulQuestion: "",
+            successfulQId: "" 
         });
     }
 
@@ -60,17 +68,22 @@ class QuestionForm extends React.Component {
     handleSubmit(e, newQuestion) {
         e.preventDefault();
         const question = this.state.question;
+        const link = this.state.link;
         if (question.split(" ").length < 3 ) {
             this.setState({ message: "This question needs more detail. " + 
                                 "Add more information to ask a clear question, " +
                                 "written as a complete sentence."});
             setTimeout(this.closeMessage, 5001)
-        } else {
+        } else if (link.length === 0 || Validator.isURL(link)) {
             newQuestion({
                 variables: {
-                    question: question
+                    question: question,
+                    link: link
                 }
             });
+            setTimeout(this.closeMessage, 5001)
+        } else {
+            this.setState({ message: "The source should be a valid link."})
             setTimeout(this.closeMessage, 5001)
         }
     }
@@ -86,10 +99,13 @@ class QuestionForm extends React.Component {
                         onCompleted={data => {
                             const { question } = data.newQuestion;
                             this.setState({
-                                message: `You've asked: ${question}`,
+                                message: `You asked: `,
                                 success: 'success',
                                 showModal: false,
-                                question: ""
+                                question: "",
+                                link: "",
+                                successfulQuestion: `${question}`,
+                                successfulQId: data.newQuestion._id
                             });
                         }}
                     >
@@ -108,7 +124,7 @@ class QuestionForm extends React.Component {
                                     <div className="add-question-modal-content">
                                         <div className="add-question-modal-user">
                                             User asked
-                                                    </div>
+                                        </div>
                                         <div className="add-question-modal-question">
                                             <textarea
                                                 onChange={this.update("question")}
@@ -119,6 +135,8 @@ class QuestionForm extends React.Component {
                                         <div className="add-question-modal-link">
                                             <span><FaLink /></span>
                                             <input
+                                                onChange={this.update("link")}
+                                                value={this.state.link}
                                                 placeholder="Optional: include a link that gives context"
                                             />
                                         </div>
@@ -140,7 +158,7 @@ class QuestionForm extends React.Component {
                     this.state.message.length > 0 &&
                     <div className={`modal-message hide-me ${this.state.success}`}>
                         <div className="hidden">x</div>
-                        <p>{this.state.message}</p>
+                        <p>{this.state.message}<Link to={`${this.state.successfulQId}`}>{this.state.successfulQuestion}</Link></p>
                         <div className="close-message" onClick={this.closeMessage}>x</div>
                     </div>
                 }
