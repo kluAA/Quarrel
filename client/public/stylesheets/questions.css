@@ -154,6 +154,8 @@
     display: flex;
     justify-content: space-between;
     background: #fafafa;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .add-question-modal-x {
