@@ -4,6 +4,7 @@ import AuthRoute from "../util/route_util";
 import NavBar from "./navigation/NavBar";
 import Login from "./session/Login";
 import Register from "./session/Register";
+import QuestionForm from "./questions/QuestionForm";
 
 
 const Main = () => {
@@ -12,7 +13,7 @@ const Main = () => {
             <NavBar />
             <div className="main-body">
                 <Switch>
-                    
+                    <QuestionForm />  
                 
                 </Switch>
             </div>

@@ -5,24 +5,48 @@ const { REGISTER_USER } = Mutations;
 
 class Register extends React.Component {
 	constructor(props) {
-			super(props);
-			this.state = {
-					fname: "",
-					lname: "",
-					email: "",
-					password: ""
-			}
+		super(props);
+		this.state = {
+			fname: "",
+			lname: "",
+			email: "",
+			password: "",
+			errors: {}
+		};
+		this.renderErrors = this.renderErrors.bind(this);
 	}
 
 	update(field) {
-			return e => this.setState({ [field]: e.target.value });
+		return e => this.setState({ [field]: e.target.value });
 	}
 
 	updateCache(client, { data }) {
-			console.log(data);
-			client.writeData({
-					data: { isLoggedIn: data.register.loggedIn }
-			});
+		console.log(data);
+		client.writeData({
+			data: { isLoggedIn: data.register.loggedIn }
+		});
+	}
+
+	handleSubmit(e) {
+		e.preventDefault();
+		let user = {
+			email: this.state.email,
+			password: this.state.password
+		};
+
+		this.props.signup(user, this.props.history);
+		// .then(this.props.history.push("/"),
+		// () => this.props.closeModal());
+	}
+
+	renderErrors() {
+		return (
+			<ul>
+				{Object.keys(this.state.errors).map((error, i) => (
+					<li key={`error-${i}`}>{this.state.errors[error]}</li>
+				))}
+			</ul>
+		);
 	}
 
 	render() {
@@ -94,6 +118,7 @@ class Register extends React.Component {
 								/>
 							</label>
 							<br />
+							{this.renderErrors()}
 							<button type="submit">Sign Up</button>
 						</form>
 					</div>
