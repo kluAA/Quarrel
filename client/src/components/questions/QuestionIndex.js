@@ -4,10 +4,15 @@ import Queries from "../../graphql/queries";
 import { Link } from "react-router-dom";
 const { FETCH_QUESTIONS } = Queries;
 
+
 class QuestionIndex extends React.Component {
+    constructor (props) {
+        super(props);
+    }
+
     render () {
         return (
-            <div>
+            <div className="question-index">
                 <Query query={FETCH_QUESTIONS}>
                     {({ loading, error, data }) => {
                         if (loading) return "Loading...";
@@ -16,7 +21,7 @@ class QuestionIndex extends React.Component {
                         return (
                             <div>
                                 {data.questions.map(question => (
-                                        <div key={question._id}>
+                                        <div key={question._id} className="question-item">
                                             <div>
                                                 <Link to={`/${question._id}`}>
                                                     {question.question}

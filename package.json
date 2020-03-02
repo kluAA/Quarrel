@@ -23,6 +23,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.2",
     "nodemon": "^2.0.2",
+    "react-icons": "^3.9.0",
     "validator": "^12.2.0"
   }
 }
