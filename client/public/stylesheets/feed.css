@@ -4,9 +4,9 @@
 }
 
 .feed-item {
-    min-height: 100px;
+    /* min-height: 100px; */
     background: white;
-    padding: 16px 16px 4px;
+    padding: 16px 16px;
     border: 1px solid rgb(222, 224, 225);
     border-radius: 3px;
     margin-bottom: 10px;
@@ -23,4 +23,30 @@
 
 .feed-item h1:hover {
     text-decoration: underline;
+}
+
+.feed-item-options {
+    margin-top: 10px;
+}
+
+.feed-item-answer {
+    cursor: pointer;
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 20px;
+}
+
+.feed-item-answer:hover {
+    background: #f8f8f8;
+}
+
+.feed-item-answer .fa-edit {
+    color: #2e69ff;
+}
+
+.feed-item-answer > span {
+    margin-left: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #636466;
 }
