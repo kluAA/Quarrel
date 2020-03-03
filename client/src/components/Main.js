@@ -12,6 +12,7 @@ const Main = () => {
     return (
         <div className="main">
             <NavBar />
+						{/* <SessionForm /> */}
             <div className="main-body">
                 <Switch>
                     <Route exact path="/" component={Feed} />

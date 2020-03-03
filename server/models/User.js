@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 
 const UserSchema = new Schema({
-    name: {
+    fname: {
         type: String,
         required: true
     },
-    username: {
+    lname: {
         type: String,
         required: true,
     },
@@ -18,7 +18,7 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true,
-        min: 6,
+        min: 8,
         max: 32
     }
 });

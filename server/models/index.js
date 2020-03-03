@@ -2,4 +2,5 @@
 require("./User");
 require("./Question");
 require("./Answer");
-require("./Topic")
+require("./Topic");
+require("./Comment");

@@ -14,20 +14,20 @@ const register = async data => {
             throw new Error(message);
         }
 
-        const { name, username, email, password } = data;
+        const { fname, lname, email, password } = data;
 
-        const existingUser = await User.findOne({ username });
+        const existingUser = await User.findOne({ email });
 
         if (existingUser) {
-            throw new Error("This user already exists");
+            throw new Error("This email already exists");
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = new User(
             {
-                name,
-                username,
+                fname,
+                lname,
                 email,
                 password: hashedPassword
             },
@@ -38,13 +38,40 @@ const register = async data => {
 
         user.save();
 
-        const token = jwt.sign({ _id: user._id }, keys.secretOrKey);
-        return { token, loggedIn: true, ...user._doc, password: null };
+				const token = jwt.sign({ _id: user._id }, keys.secretOrKey);
+    		const id = user._doc._id;
+        return { token, loggedIn: true, ...user._doc, id, password: null };
 
     } catch (err) {
         throw err;
     }
 
+};
+
+const login = async data =>
+{
+	try {
+		const { message, isValid } = validateLoginInput(data);
+
+		if (!isValid) throw new Error(message);
+
+		const user = await User.findOne({ email: data.email });
+
+		if (!user) throw new Error("Invalid Credentials");
+
+		let password_matches = await bcrypt.compareSync(
+			data.password,
+			user.password
+		);
+		if (password_matches) {
+			const token = jwt.sign({ _id: user._id }, keys.secretOrKey);
+			return { token, loggedIn: true, ...user._doc, password: null };
+		} else {
+			throw new Error("Invalid Credentials");
+		}
+	} catch (err) {
+		throw new Error(err);
+	}
 };
 
 const logout = async data => {
@@ -53,37 +80,6 @@ const logout = async data => {
         user = await User.findById(_id);
         const token = "";
         return { token, loggedIn: false, ...user._doc, password: null }
-    } catch (err) {
-        throw err;
-    }
-};
-
-const login = async data => {
-    try {
-        const { message, isValid } = validateLoginInput(data);
-
-        if (!isValid) {
-            throw new Error(message);
-        }
-
-        const { username, password } = data;
-
-        const existingUser = await User.findOne({ username });
-
-        if (!existingUser) {
-            throw new Error("GUESS AGAIN");
-        }
-
-        const validPassword = await bcrypt.compareSync(password, existingUser.password);
-
-        if (!validPassword) {
-            throw new Error("WRONG PASSWORD");
-        }
-
-        const token = jwt.sign({ _id: existingUser._id }, keys.secretOrKey);
-        return { token, loggedIn: true, ...existingUser._doc, password: null };
-
-
     } catch (err) {
         throw err;
     }
@@ -115,6 +111,5 @@ const currentUser = async data => {
         return { user: "No user found."}
     }
 }
-
 
 module.exports = { register, logout, login, verifyUser, currentUser };
