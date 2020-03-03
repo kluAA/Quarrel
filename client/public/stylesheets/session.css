@@ -1,0 +1,115 @@
+.background-container {
+	background-image: url('/splash.png');
+	background-size: cover;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+}
+
+.main-logo {
+  font-family: 'Libre Baskerville', serif;
+  color: #b92b26;
+  font-weight: 700;
+  font-size: 70px;
+  margin: auto;
+}
+
+.tag-description {
+  font-family: 'q_serif', Georgia,Times, "Times New Roman",
+  "Hiragino Kaku Gothic Pro", "Meiryo",serif;
+  color: #9c9594;
+  font-size: 19px;
+}
+
+.form-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: 10px;
+  padding: 32px;
+}
+
+.session-form-container {
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  box-shadow: 0 0 5px #888;
+  border-radius: 4px;
+  padding-top: 25px;
+  width: 650px;
+  position: absolute;
+  bottom: initial;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 10%;
+	text-align: center;
+}
+
+.session-form-container {
+  float: right;
+  font-size: 15px;
+  line-height: 1.4;
+  box-sizing: border-box;
+  border-radius: 3px;
+  /* background: #3e78ad; */
+  color: #fff;
+  border: 1px solid #3a66ad;
+  box-shadow: 0 1px 1px 0 rgba(200, 200, 200, 0.6);
+}
+
+.signup-form-box {
+	display: flex;
+	flex-direction: column;
+	margin-top: 5px;
+	padding: 5px;
+}
+
+.signup-input-box {
+  background: #fafafa;
+  color: #333;
+  box-sizing: border-box;
+  font-size: 15px;
+  line-height: 1.4;
+  min-height: 27px;
+  border: 1px solid #e2e2e2;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 1px rgba(200, 200, 200, 0.3);
+  display: block;
+  padding-left: 5px;
+  width: 100%;
+}
+
+.session-label {
+  text-transform: none;
+  color: #333;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 10px;
+  float: left;
+  font-size: 13px;
+}
+
+.names-input-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.lname-wrapper {
+  margin-left: 5px;
+}
+
+label {
+	text-align: left;
+}
+.signup-form-box label {
+	font-size: 11px;
+	color: #666;
+	text-transform: uppercase;
+	letter-spacing: .5px;
+	font-weight: bold;
+	line-height: 27px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.email-input-box {
+	text-align: left;
+}

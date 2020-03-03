@@ -11,14 +11,21 @@ class Register extends React.Component {
 			lname: "",
 			email: "",
 			password: "",
-			errors: {},
-			showModal: false
+			errors: [],
 		};
-
+		this.renderErrors = this.renderErrors.bind(this);
 	}
 
 	update(field) {
 		return e => this.setState({ [field]: e.target.value });
+	}
+
+	renderErrors(errors) {
+		let errorArray = errors.map((error) => (
+			error.message
+		))
+		this.setState({errors: errorArray})
+		console.log(errorArray)
 	}
 
 	updateCache(client, { data }) {
@@ -51,10 +58,12 @@ class Register extends React.Component {
 	}
 
 	render() {
+		// console.log(this.state.errors);
 		return (
 			<Mutation
 				mutation={REGISTER_USER}
-				onError={err => this.setState({ message: err.message })}
+				onError={err => this.renderErrors(err.graphQLErrors)}
+				// {console.log(err.graphQLErrors)}}
 				update={(cache, data) => this.updateCache(cache, data)}
 				onCompleted={data => {
 					const { token } = data.register;
@@ -69,48 +78,54 @@ class Register extends React.Component {
 			>
 				{registerUser => (
 					<div className="">
-						<form onSubmit={e => this.handleSubmit(e, registerUser)}>
-							<p>Login</p>
-							<label>
-								FIRST NAME
-								<input
-									type="text"
-									value={this.state.fname}
-									onChange={this.update("fname")}
-									className=""
-								/>
-							</label>
-							<br />
-							<label>
-								LAST NAME
-								<input
-									type="text"
-									value={this.state.lname}
-									onChange={this.update("lname")}
-									className=""
-								/>
-							</label>
-							<br />
-							<label>
-								EMAIL
+						<form onSubmit={e => this.handleSubmit(e, registerUser)} className="signup-form-box">
+							<p className="session-label">Signup</p>
+							<div className="names-input-box">
+									<label>FIRST NAME<br />
+									<input
+										type="text"
+										value={this.state.fname}
+										onChange={this.update("fname")}
+										className="signup-input-box"
+										/></label>
+									<label className="lname-wrapper">LAST NAME
+									<input
+										type="text"
+										value={this.state.lname}
+										onChange={this.update("lname")}
+										className="signup-input-box"
+									/>
+									</label>
+							</div>
+							<div className="email-input-box">
+								<label className="">EMAIL</label>
 								<input
 									value={this.state.email}
 									onChange={this.update("email")}
-									className=""
+									className="signup-input-box"
 								/>
-							</label>
-							<br />
-							<label>
-								PASSWORD
+								</div>
+								<div className="email-input-box">
+								<label className="">PASSWORD</label>
 								<input
 									value={this.state.password}
 									onChange={this.update("password")}
 									type="password"
-									className=""
+									className="signup-input-box"
 								/>
-							</label>
-							<br />
-							<button type="submit" className="">Sign up</button>
+								</div>
+								<br />
+							{/* <a>Cancel</a> */}
+							<button type="submit" className="form-button">
+								Sign up
+							</button>
+
+							<div>{this.state.errors.map(error => {
+								return (
+									<li key={error}>{error}</li>
+								);
+								})}
+							</div>
 						</form>
 					</div>
 				)}
