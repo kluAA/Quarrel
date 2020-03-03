@@ -3,7 +3,7 @@ import { Mutation, Query } from "react-apollo";
 import Queries from "../../graphql/queries";
 import Mutations from "../../graphql/mutations";
 import { FaLink } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 const Validator = require("validator");
 const { FETCH_QUESTIONS, CURRENT_USER, SIMILAR_QUESTIONS } = Queries;
@@ -20,12 +20,29 @@ class QuestionForm extends React.Component {
             success: "",
             link: "",
             successfulQuestion: "",
-            successfulQId: ""
+            successfulQId: "",
+            redirectId: ""
         };
         this.handleModal = this.handleModal.bind(this);
         this.closeMessage = this.closeMessage.bind(this);
+        this.redirect = this.redirect.bind(this);
     }
 
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.redirectId !== this.state.redirectId) {
+            this.props.history.push(this.state.redirectId);
+        }
+    }
+
+    redirect (id) {
+        return e => {
+                this.setState({
+                showModal: false,
+                redirectId: id
+            });
+        }
+    }
 
     handleModal(e) {
         e.preventDefault();
@@ -98,7 +115,7 @@ class QuestionForm extends React.Component {
                         if (loading) return "loading...";
                         if (error) return `Error! ${error.message}`;
                         return data.similarQuestions.map(match => {
-                            return <Link to={`${match._id}`}><li className="matches-item">{`${match.question}`}</li></Link>
+                            return <li className="matches-item" onClick={this.redirect(match._id)}>{`${match.question}`}</li>
                         })
                     }}
                 </Query>
@@ -200,4 +217,4 @@ class QuestionForm extends React.Component {
     }
 }
 
-export default QuestionForm;
+export default withRouter(QuestionForm);
