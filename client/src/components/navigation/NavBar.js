@@ -10,14 +10,15 @@ const { IS_LOGGED_IN } = Queries;
 
 class NavBar extends React.Component {
     constructor(props) {
-				super(props);
-				this.state = {
-					data: "",
-					isLoggedIn: "",
-					client: ""
-				};
-        // this.logout = this.logout.bind(this);
-		}
+        super(props);
+        this.state = {
+            data: "",
+            isLoggedIn: "",
+            client: "",
+            showModal: false
+        };
+        this.handleModal = this.handleModal.bind(this);
+	}
 		
     logout(client) {
         return (
@@ -35,6 +36,12 @@ class NavBar extends React.Component {
             </button>
 					</div>
         )
+    }
+
+    handleModal (e) {
+        e.preventDefault();
+        debugger
+        this.setState({ showModal: !this.state.showModal });
     }
 
     render() {
@@ -70,10 +77,11 @@ class NavBar extends React.Component {
                             <span>Notifications</span>
                         </li>
                     </ul>
-                    <SearchBar />
+                    <SearchBar onClick={this.handleModal}/>
                     <QuestionForm />
-										<SigninButton />
+					<SigninButton />
                 </div>
+                {this.state.showModal && <div className="search-modal-background">It works!</div>}
             </div>
 
         );
