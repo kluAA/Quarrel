@@ -2,6 +2,7 @@ import React from 'react';
 import { Mutation } from "react-apollo";
 import Mutations from "../../graphql/mutations";
 const { LOGIN_USER } = Mutations;
+const { LOGOUT } = Mutations;
 
 class Login extends React.Component {
 	constructor(props) {
@@ -12,7 +13,7 @@ class Login extends React.Component {
 			errors: {},
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
-		// this.demoLogin = this.demoLogin.bind(this);
+		this.demoLogin = this.demoLogin.bind(this);
 	}
 
 	update(field) {
@@ -36,9 +37,15 @@ class Login extends React.Component {
 		}).catch(err => console.log(err));
 	}
 
-	// demoLogin(loginUser) {
-
-	// }
+	demoLogin(e, loginUser) {
+		e.preventDefault();
+		loginUser({
+			variables: {
+				email: "demouser@gmail.com",
+				password: "password"
+			}})
+		// }).catch(err => console.log(err));
+	}
 
 	render() {
 		return (
@@ -47,7 +54,7 @@ class Login extends React.Component {
 				onCompleted={data => {
 					const { token } = data.login;
 					localStorage.setItem("auth-token", token);
-					this.props.history.push("/");
+					// this.props.history.push("/");
 				}}
 				update={(client, data) => this.updateCache(client, data)}
 			>
@@ -79,7 +86,7 @@ class Login extends React.Component {
 								Login
 							</button>
 							<button
-								onClick={e => this.handleSubmit(e, loginUser)}
+								onClick={e => this.demoLogin(e, loginUser)}
 								className="demo-button"
 							>
 								Demo Login

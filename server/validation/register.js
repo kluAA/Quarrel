@@ -7,7 +7,7 @@ module.exports = function  validateRegisterInput(data) {
     data.email = validText(data.email) ? data.email : "";
     data.password = validText(data.password) ? data.password : "";
 
-    if (Validator.isEmpty(data.fname) || Validator.isEmpty(data.lname)) {
+    if (Validator.isEmpty(data.fname) && Validator.isEmpty(data.lname)) {
         return { message: "Please use your full name", isValid: false };
     }
 		

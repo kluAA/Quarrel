@@ -9,7 +9,11 @@ const { IS_LOGGED_IN } = Queries;
 
 class NavBar extends React.Component {
     constructor(props) {
-        super(props);
+				super(props);
+				this.state = {
+					data: "{this.data}",
+					isLoggedIn: "{this.isLoggedIn}"
+				};
         this.logout = this.logout.bind(this);
     }
 
@@ -20,7 +24,7 @@ class NavBar extends React.Component {
                     e.preventDefault();
                     localStorage.removeItem("auth-token");
                     client.writeData({ data: { isLoggedIn: false } });
-                    this.props.history.push("/");
+                    // this.props.history.push("/logout");
                 }}
             >
                 Logout
@@ -29,6 +33,7 @@ class NavBar extends React.Component {
     }
 
     render() {
+			let client = this.client;
         return (
             <div className="nav-container">
                 <div className="nav-content">
@@ -58,9 +63,14 @@ class NavBar extends React.Component {
                             <i className="far fa-bell"></i>
                             <span>Notifications</span>
                         </li>
+												<li className="nav-notifications">
+													<i className="far fa-bell"></i>
+													<span>{this.logout(client)}</span>
+												</li>
                     </ul>
                     <SearchBar />
                     <QuestionForm />
+										
                 </div>
             </div>
 

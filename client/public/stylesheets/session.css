@@ -113,3 +113,9 @@ label {
 .email-input-box {
 	text-align: left;
 }
+
+.errorMsg {
+	position: absolute;
+	top: 0;
+	color: black;
+}

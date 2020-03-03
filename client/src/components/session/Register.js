@@ -37,15 +37,8 @@ class Register extends React.Component {
 
 	handleSubmit(e, registerUser) {
 		e.preventDefault();
-		const email = this.state.email;
-		const password = this.state.password;
-		if (email.split("@").length !== 2) {
-			this.setState({
-				email:
-					"Invalid email" +
-					"Try again"
-			});
-		} else {
+		// const email = this.state.email;
+		// const password = this.state.password;
 			registerUser({
 				variables: {
 					fname: this.state.fname,
@@ -54,7 +47,6 @@ class Register extends React.Component {
 					password: this.state.password
 				}
 			}).catch(err => console.log(err));
-		}
 	}
 
 	render() {
@@ -76,8 +68,20 @@ class Register extends React.Component {
 				}}
 				update={(client, data) => this.updateCache(client, data)}
 			>
+				
 				{registerUser => (
 					<div className="">
+						<div className="errorMsg">
+							{this.state.errors[0]}
+						</div>
+						{/* <div>{this.state.errors.map(error =>
+						{
+							return (
+								<li key={error}>{error}</li>
+							);
+						})}
+						</div> */}
+
 						<form onSubmit={e => this.handleSubmit(e, registerUser)} className="signup-form-box">
 							<p className="session-label">Signup</p>
 							<div className="names-input-box">
@@ -120,12 +124,7 @@ class Register extends React.Component {
 								Sign up
 							</button>
 
-							<div>{this.state.errors.map(error => {
-								return (
-									<li key={error}>{error}</li>
-								);
-								})}
-							</div>
+							
 						</form>
 					</div>
 				)}
