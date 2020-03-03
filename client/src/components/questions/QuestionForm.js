@@ -104,6 +104,7 @@ class QuestionForm extends React.Component {
             setTimeout(this.closeMessage, 5001)
         }
     }
+    
     capitalize (word) {
         return word[0].toUpperCase() + word.slice(1);
     }
