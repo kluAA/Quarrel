@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import AuthRoute from "../util/route_util";
 import NavBar from "./navigation/NavBar";
+import Feed from "./main/feed";
 import Login from "./session/Login";
 import Register from "./session/Register";
 import QuestionForm from "./questions/QuestionForm";
@@ -13,8 +14,9 @@ const Main = () => {
             <NavBar />
             <div className="main-body">
                 <Switch>
+                    <Route exact path="/" component={Feed} />
                     {/* <QuestionForm /> */}
-                    <TopicShow />
+                    <Route exact path="/topic" component={TopicShow} />
                 </Switch>
             </div>
         </div>
