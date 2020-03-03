@@ -19,7 +19,7 @@ const Main = () => {
                 <Switch>
                     <Route exact path="/" component={Feed} />
                     {/* <QuestionForm /> */}
-                    <Route exact path="/topic" component={TopicShow} />
+                    <Route exact path="/topics" component={TopicShow} />
                 </Switch>
             </div>
         </div>
