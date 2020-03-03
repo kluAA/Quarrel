@@ -104,6 +104,9 @@ class QuestionForm extends React.Component {
             setTimeout(this.closeMessage, 5001)
         }
     }
+    capitalize (word) {
+        return word[0].toUpperCase() + word.slice(1);
+    }
 
     render () {
         let matchesList = "";
@@ -161,7 +164,7 @@ class QuestionForm extends React.Component {
                                                     if (error) return `Error! ${error.message}`
                                                     return (
                                                         <div className="add-question-modal-user">
-                                                            {`${data.currentUser.name} asked`}
+                                                            {`${this.capitalize(data.currentUser.fname)} ${this.capitalize(data.currentUser.lname)} asked`}
                                                         </div>
                                                     )
                                                 }}
