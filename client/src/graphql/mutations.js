@@ -34,5 +34,21 @@ export default {
                 }
             }
         }
+    `,
+
+    NEW_ANSWER: gql`
+        mutation NewAnswer($body: String!, $questionId: ID!) {
+            newAnswer(body: $body, questionId: $questionId) {
+                _id
+                body
+                user {
+                    name
+                }
+                question {
+                    _id
+                }
+            }
+        }
+
     `
 }

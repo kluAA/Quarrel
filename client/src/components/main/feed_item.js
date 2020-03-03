@@ -5,6 +5,14 @@ import AnswerForm from "../answer/AnswerForm";
 class FeedItem extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            showForm: false
+        }
+        this.toggleForm = this.toggleForm.bind(this);
+    }
+
+    toggleForm() {
+        this.setState({showForm: !this.state.showForm})
     }
 
     render() {
@@ -17,11 +25,11 @@ class FeedItem extends React.Component {
                     </Link>
                 </h1>
                 <div className="feed-item-options">
-                    <div className="feed-item-answer">
+                    <div onClick={e => this.toggleForm()} className="feed-item-answer">
                         <i className="far fa-edit"></i>
                         <span>Answer</span>
                     </div>
-                    <AnswerForm />
+                    {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={this.props.question._id}/> : null }
                 </div>
             </li>
         )

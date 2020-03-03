@@ -74,14 +74,14 @@ const mutation = new GraphQLObjectType({
             args: {
                 body: { type: GraphQLString },
                 questionId: { type: GraphQLID },
-                authorId: { type: new GraphQLNonNull(GraphQLID) },
             },
-            async resolve(_, { body }, ctx) {
+            async resolve(_, { body, questionId }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
-                    return new Answer({body, user: authorId, question: questionId }).save()
+                    return new Answer({body, user: validUser._id, question: questionId }).save()
                 } else {
-                    throw new Error("Must be logged in to create an answer")
+                    // throw new Error("Must be logged in to create an answer")
+                    return new Answer({ body, user: validUser._id, question: questionId }).save()
                 }
             }
         },
