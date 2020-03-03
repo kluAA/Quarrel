@@ -37,5 +37,18 @@ export default {
           }
         }
       }
-    `
+		`,
+	ANSWER_COMMENTS: gql`
+			query AnswerComments($answer: String) {
+			answerComments(answer: $answer) {
+				_id
+				answer
+				comments {
+					_id
+					comment
+					user
+				}
+			}
+		}
+	`,
 };
