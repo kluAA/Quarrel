@@ -19,7 +19,13 @@ const QuestionSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "answer"
         }
-    ]
+		],
+		comments: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "comment"
+			}
+		]
 });
 
 QuestionSchema.statics.findMatches = (question) => {

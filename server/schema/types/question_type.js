@@ -27,7 +27,16 @@ const QuestionType = new GraphQLObjectType({
                     .populate("answers")
                     .then(question => question.answers)
             }
-        }
+				},
+			comments: {
+				type: require("./comment_type"),
+				resolve(parentValue)
+				{
+					return Question.findById(parentValue._id)
+						.populate("comments")
+						.then(question => question.comments)
+				}
+			}
     })
 });
 
