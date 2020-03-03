@@ -15,7 +15,7 @@ class SessionForm extends React.Component {
 			<div className="background-container">
 				<div className="session-form-container">
 					<label className="main-logo">Quarrel</label>
-					<p className="tag-description">come fight</p>
+					<p className="tag-description">A place to pick verbal fights with other likedminded individuals from the safety of your own bed.</p>
 					<div className="form-container">
 						<div className="signup-form-container">
 							<Register />

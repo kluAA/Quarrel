@@ -19,13 +19,13 @@ module.exports = function  validateRegisterInput(data) {
         return { message: "", isValid: false };
     }
 
-    if (!Validator.isLength(data.email, { min: 4 })) {
-        return { message: "", isValid: false }
-    }
+    // if (!Validator.isLength(data.email, { min: 4 })) {
+    //     return { message: "", isValid: false }
+    // }
 
-    if (Validator.isEmpty(data.email)) {
-        return { message: "", isValid: false };
-    }
+    // if (Validator.isEmpty(data.email)) {
+    //     return { message: "", isValid: false };
+    // }
 
     if (!Validator.isEmail(data.email)) {
         return { message: "The email address you entered is not valid.", isValid: false };
