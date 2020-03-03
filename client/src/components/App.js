@@ -8,14 +8,16 @@ import SessionForm from "./session/SessionForm";
 
 const App = () => {
   return (
-    <div>
-      <Switch>
-        <Route exact path="/login" component={Login} routeType="auth" />
-        <Route exact path="/register" component={Register} routeType="auth" />
-        <AuthRoute path="/" component={Main} />
-      </Switch>
-    </div>
-  )
+		<div>
+			{/* <SessionForm /> */}
+			<Switch>
+				<Route exact path="/login" component={Login} />
+				<Route exact path="/signup" component={SessionForm} />
+				<AuthRoute exact path="/session" component={SessionForm} routeType="auth" />
+				<AuthRoute exact path="/" component={Main} />
+			</Switch>
+		</div>
+	);
 };
 
 export default App;

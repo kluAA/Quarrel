@@ -12,7 +12,7 @@ export default {
           _id
           question
           user {
-            name
+            email
           }
         }
       }
@@ -20,17 +20,18 @@ export default {
     CURRENT_USER: gql`
       query CurrentUser($token: String!) {
         currentUser(token: $token) {
-          _id
-          username
-          name
-          email
+          currentUserId @client
+					curentUserFname @client
+					curentUserLname @client
+					curentUserEmail @client
+
         }
       }
     `,
     SIMILAR_QUESTIONS: gql`
       query SimilarQuestions($question: String) {
         similarQuestions(question: $question) {
-          _id
+          _id 
           question
           answers {
             _id

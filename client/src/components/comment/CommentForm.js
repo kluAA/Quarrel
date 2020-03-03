@@ -204,7 +204,7 @@ class CommentForm extends React.Component
 					</div>
 				}
 				{/* <div className="add-question-item" onClick={this.handleModal}>
-                    <p className="add-question-item-user">Username</p>
+                    <p className="add-question-item-user">Email</p>
                     <p className="add-question-item-prompt">What is your question or link?</p>
                 </div> */}
 				<button className="nav-ask-btn" onClick={this.handleModal}>Add Comment</button>

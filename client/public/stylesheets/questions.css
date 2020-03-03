@@ -47,7 +47,7 @@
 
 .modal-child {
   position: absolute;
-  top: 35%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -82,8 +82,6 @@
 .add-question-modal-content {
     padding: 32px;
     padding-bottom: 70px;
-    height: 200px;
-    overflow-y: scroll;
 }
 
 .add-question-modal-user {
@@ -156,8 +154,6 @@
     display: flex;
     justify-content: space-between;
     background: #fafafa;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
 }
 
 .add-question-modal-x {
@@ -178,68 +174,4 @@
 .add-question-modal-x > span:hover {
     background: #f0efef;
     cursor: pointer;
-}
-
-.modal-message {
-    background: #656e75;
-    color: white;
-    height: 40px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    z-index: 11;
-    top: 0;
-    left: 0;
-}
-
-.modal-message > p {
-    font-size: 15px;
-}
-
-.hidden {
-    visibility: hidden;
-}
-
-.close-message {
-    margin-right: 25px;
-    cursor: pointer;
-}
-
-.hide-me {
-    animation: hideElement 5s forwards;
-}
-
-@keyframes hideElement {
-    0% { opacity: 1}
-    90% { opacity: 1}
-    100% { opacity: 0}
-}
-
-.success {
-    background-color: rgb(108, 189, 142);
-}
-
-.modal-message > p > a {
-    text-decoration: underline;
-}
-
-.matches-list {
-
-}
-
-.matches-item {
-    font-size: 13px;
-    font-weight: 500;
-    font-weight: 600;
-    border-top: 1px solid #e2e2e2;
-    padding: 10px 5px;
-}
-
-.matches-item:hover {
-    cursor: pointer;
-    background-color: #f5f5f5;
-    text-decoration: underline;
-    color: #3e78ad;
 }

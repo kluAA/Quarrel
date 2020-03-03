@@ -1,6 +1,8 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
 import Mutations from "../../graphql/mutations";
+import * as SessionUtil from "../../util/session_util";
+
 const { REGISTER_USER } = Mutations;
 
 class Register extends React.Component {
@@ -37,15 +39,8 @@ class Register extends React.Component {
 
 	handleSubmit(e, registerUser) {
 		e.preventDefault();
-		const email = this.state.email;
-		const password = this.state.password;
-		if (email.split("@").length !== 2) {
-			this.setState({
-				email:
-					"Invalid email" +
-					"Try again"
-			});
-		} else {
+		// const email = this.state.email;
+		// const password = this.state.password;
 			registerUser({
 				variables: {
 					fname: this.state.fname,
@@ -54,7 +49,6 @@ class Register extends React.Component {
 					password: this.state.password
 				}
 			}).catch(err => console.log(err));
-		}
 	}
 
 	render() {
@@ -64,7 +58,7 @@ class Register extends React.Component {
 				mutation={REGISTER_USER}
 				onError={err => this.renderErrors(err.graphQLErrors)}
 				// {console.log(err.graphQLErrors)}}
-				update={(cache, data) => this.updateCache(cache, data)}
+				update={(client, cache, data) => this.updateCache(client, cache, data)}
 				onCompleted={data => {
 					const { token } = data.register;
 					localStorage.setItem("auth-token", token);
@@ -76,9 +70,21 @@ class Register extends React.Component {
 				}}
 				update={(client, data) => this.updateCache(client, data)}
 			>
+				
 				{registerUser => (
 					<div className="">
-						<form onSubmit={e => this.handleSubmit(e, registerUser)} className="signup-form-box">
+						<div className="errorMsg">
+							{this.state.errors[0]}
+						</div>
+						{/* <div>{this.state.errors.map(error =>
+						{
+							return (
+								<li key={error}>{error}</li>
+							);
+						})}
+						</div> */}
+
+						<form onSubmit={e => this.handleSubmit(e, registerUser, this.props.history)} className="signup-form-box">
 							<p className="session-label">Signup</p>
 							<div className="names-input-box">
 									<label>FIRST NAME<br />
@@ -120,12 +126,7 @@ class Register extends React.Component {
 								Sign up
 							</button>
 
-							<div>{this.state.errors.map(error => {
-								return (
-									<li key={error}>{error}</li>
-								);
-								})}
-							</div>
+							
 						</form>
 					</div>
 				)}

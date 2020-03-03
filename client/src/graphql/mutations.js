@@ -6,7 +6,11 @@ export default {
             register(fname: $fname, lname: $lname, email: $email, password: $password) {
 								email
 								token
-                loggedIn
+								loggedIn
+								errors
+								fname
+								lname
+								_id
             }
         }
     `,
@@ -15,14 +19,18 @@ export default {
             login(email: $email, password: $password) {
 						email
             token
-            loggedIn
+						loggedIn
+						errors
+						_id
             }
         }
     `,
     VERIFY_USER: gql`
         mutation VerifyUser($token: String!) {
             verifyUser(token: $token) {
-            loggedIn
+						loggedIn
+						_id
+						email
             }
         }
     `,

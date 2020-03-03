@@ -1,34 +1,45 @@
 import React from 'react';
 import { Link, withRouter } from "react-router-dom";
-import { Query } from "react-apollo";
 import Queries from "../../graphql/queries";
-import { ApolloConsumer } from "react-apollo"
+import { ApolloConsumer, Query} from "react-apollo"
 import SearchBar from "./SearchBar";
 import QuestionForm from "../questions/QuestionForm";
+import * as SessionUtil from "../../util/session_util";
+import SigninButton from "./SigninButton";
 const { IS_LOGGED_IN } = Queries;
 
 class NavBar extends React.Component {
     constructor(props) {
-        super(props);
-        this.logout = this.logout.bind(this);
-    }
-
+				super(props);
+				this.state = {
+					data: "",
+					isLoggedIn: "",
+					client: ""
+				};
+        // this.logout = this.logout.bind(this);
+		}
+		
     logout(client) {
         return (
+					<div>
             <button
-                onClick={e => {
-                    e.preventDefault();
-                    localStorage.removeItem("auth-token");
-                    client.writeData({ data: { isLoggedIn: false } });
-                    this.props.history.push("/");
-                }}
+						className="nav-ask-btn"
+						onClick={e => {
+								e.preventDefault();
+								localStorage.removeItem("auth-token");
+								client.writeData({ data: { isLoggedIn: false } });
+								this.props.history.push("/logout");
+						}}
             >
                 Logout
             </button>
+					</div>
         )
     }
 
     render() {
+			// let { data } = this.data;
+			let { logout } = this.logout;
         return (
             <div className="nav-container">
                 <div className="nav-content">
@@ -61,6 +72,7 @@ class NavBar extends React.Component {
                     </ul>
                     <SearchBar />
                     <QuestionForm />
+										<SigninButton />
                 </div>
             </div>
 
