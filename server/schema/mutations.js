@@ -11,6 +11,8 @@ const QuestionType = require("./types/question_type");
 const Question = mongoose.model("question");
 const AnswerType = require("./types/answer_type");
 const Answer = mongoose.model("answer");
+const CommentType = require("./types/comment_type");
+const Comment = mongoose.model("comment");
 
 const mutation = new GraphQLObjectType({
     name: "Mutation",
@@ -100,7 +102,24 @@ const mutation = new GraphQLObjectType({
                     return new Topic({ name, description }).save()
                 }
             }
-        }
+				},
+			newComment: {
+				type: CommentType,
+				args: {
+					comment: { type: GraphQLString },
+					questionId: { type: GraphQLID },
+					commenterId: { type: new GraphQLNonNull(GraphQLID) },
+				},
+				async resolve(_, { comment }, ctx)
+				{
+					const validUser = await AuthService.verifyUser({ token: ctx.token });
+					if (validUser.loggedIn) {
+						return new Answer({ comment, user: commenterId, question: questionId }).save()
+					} else {
+						throw new Error("Must be logged in to write a comment")
+					}
+				}
+			},
         // addQuestionToTopic: {
         //     type: TopicType,
         //     args: {
