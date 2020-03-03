@@ -1,6 +1,6 @@
 import React from "react";
 import TopicHeader from "./TopicHeader.js"
-
+import TopicNavBar from "./TopicNavBar.js"
 
 class TopicShow extends React.Component {
   constructor(props) {
@@ -15,7 +15,10 @@ class TopicShow extends React.Component {
 
   render() {
     return (
-      <TopicHeader />
+      <div>
+        <TopicHeader />
+        <TopicNavBar />
+      </div>
     );
   }
 }
