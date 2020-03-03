@@ -20,11 +20,10 @@ export default {
     CURRENT_USER: gql`
       query CurrentUser($token: String!) {
         currentUser(token: $token) {
-          currentUserId @client
-					curentUserFname @client
-					curentUserLname @client
-					curentUserEmail @client
-
+          _id
+          fname
+          lname
+          email
         }
       }
     `,
