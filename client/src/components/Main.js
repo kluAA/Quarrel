@@ -5,12 +5,14 @@ import NavBar from "./navigation/NavBar";
 import Login from "./session/Login";
 import Register from "./session/Register";
 import QuestionForm from "./questions/QuestionForm";
+import SessionForm from "./session/SessionForm";
 
 
 const Main = () => {
     return (
         <div className="main">
             <NavBar />
+						{/* <SessionForm /> */}
             <div className="main-body">
                 <Switch>
                 
