@@ -1,20 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom"
-
+import { Query } from "react-apollo";
+import Queries from "../../graphql/queries";
+const { CURRENT_USER } = Queries;
 class TopicHeader extends React.Component {
   constructor(props) {
     super(props);
-
-    // since we know we'll be receiving the god's name through props
-    // we can set it in our state
-    this.state = {
-      name: this.props.name || ""
-    };
   }
 
   render() {
     return (
-      <div className="TopicPageHeader">
+      <div className="TopicPageHeader" >
         <div className="TopicPageHeader-Top flex">
           <div className="photo-container">
             <div className="TopicPhoto">
@@ -30,7 +26,7 @@ class TopicHeader extends React.Component {
           </div>
           <div className="topic-content">
             <div className="TopicName">
-              <h1>Technology</h1>
+              <h1>{this.props.topic.name}</h1>
             </div>
             <div>
               <div className="icon_action_bar">
@@ -49,10 +45,10 @@ class TopicHeader extends React.Component {
                             </div>
                           </div>
                           <div className="ui_button_count_wrapper">
-                            <span className="ui_button_label">Follow</span>
+                            <span onclick={this.handleFollow} className="ui_button_label">Follow</span>
                             <span className="ui_button_count">
                               <span className="bullet">.</span>
-                              <span className="ui_button_count_inner">78.3m</span>
+                              <span className="ui_button_count_inner">{this.props.topic.followers ? this.props.topic.followers.length : 0}</span>
                             </span>
                           </div>
                         </div>

@@ -7,14 +7,14 @@ import Main from "./Main";
 import SessionForm from "./session/SessionForm";
 
 const App = () => {
-  return (
+	return (
 		<div>
 			{/* <SessionForm /> */}
 			<Switch>
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/signup" component={SessionForm} />
 				<AuthRoute exact path="/session" component={SessionForm} routeType="auth" />
-				<AuthRoute exact path="/" component={Main} />
+				<AuthRoute path="/" component={Main} />
 			</Switch>
 		</div>
 	);

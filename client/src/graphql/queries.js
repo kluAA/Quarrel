@@ -1,12 +1,12 @@
 import gql from "graphql-tag";
 
 export default {
-    IS_LOGGED_IN: gql`
+  IS_LOGGED_IN: gql`
       query isUserLoggedIn {
           isLoggedIn @client
       }
     `,
-    FETCH_QUESTIONS: gql`
+  FETCH_QUESTIONS: gql`
       {
         questions {
           _id
@@ -17,7 +17,7 @@ export default {
         }
       }
     `,
-    CURRENT_USER: gql`
+  CURRENT_USER: gql`
       query CurrentUser($token: String!) {
         currentUser(token: $token) {
           currentUserId @client
@@ -28,7 +28,7 @@ export default {
         }
       }
     `,
-    SIMILAR_QUESTIONS: gql`
+  SIMILAR_QUESTIONS: gql`
       query SimilarQuestions($question: String) {
         similarQuestions(question: $question) {
           _id 
@@ -38,5 +38,16 @@ export default {
           }
         }
       }
-    `
+    `,
+  FETCH_TOPICS: gql`
+      {
+        topics{
+          _id
+          name
+          followers {
+            fname
+          }
+        }
+      }
+    `,
 };
