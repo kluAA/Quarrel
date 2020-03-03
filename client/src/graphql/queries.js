@@ -16,5 +16,26 @@ export default {
           }
         }
       }
+    `,
+    CURRENT_USER: gql`
+      query CurrentUser($token: String!) {
+        currentUser(token: $token) {
+          _id
+          username
+          name
+          email
+        }
+      }
+    `,
+    SIMILAR_QUESTIONS: gql`
+      query SimilarQuestions($question: String) {
+        similarQuestions(question: $question) {
+          _id
+          question
+          answers {
+            _id
+          }
+        }
+      }
     `
 };

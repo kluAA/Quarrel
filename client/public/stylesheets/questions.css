@@ -47,7 +47,7 @@
 
 .modal-child {
   position: absolute;
-  top: 35%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -174,45 +174,4 @@
 .add-question-modal-x > span:hover {
     background: #f0efef;
     cursor: pointer;
-}
-
-.modal-message {
-    background: #656e75;
-    color: white;
-    height: 40px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    z-index: 11;
-    top: 0;
-    left: 0;
-}
-
-.modal-message > p {
-    font-size: 15px;
-}
-
-.hidden {
-    visibility: hidden;
-}
-
-.close-message {
-    margin-right: 25px;
-    cursor: pointer;
-}
-
-.hide-me {
-    animation: hideElement 5s forwards;
-}
-
-@keyframes hideElement {
-    0% { opacity: 1}
-    90% { opacity: 1}
-    100% { opacity: 0}
-}
-
-.success {
-    background-color: rgb(108, 189, 142);
 }

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLList, GraphQLID, GraphQLNonNull } = graphql;
-
+const { GraphQLObjectType, GraphQLList, GraphQLID, GraphQLNonNull, GraphQLString } = graphql;
+const AuthService = require("../../services/auth");
 const UserType = require("./user_type");
 const QuestionType = require("./question_type");
 const AnswerType = require("./answer_type");
@@ -28,6 +28,15 @@ const RootQueryType = new GraphQLObjectType({
                 return User.findById(args._id);
             }
         },
+        currentUser: {
+            type: UserType,
+            args: {
+                token: { type: GraphQLString }
+            },
+            resolve(_, args) {
+                return AuthService.currentUser(args);
+            }
+        },
         questions: {
             type: new GraphQLList(QuestionType),
             resolve() {
@@ -39,6 +48,13 @@ const RootQueryType = new GraphQLObjectType({
             args: { _id: { type: new GraphQLNonNull(GraphQLID) } },
             resolve(_, args) {
                 return Question.findById(args._id);
+            }
+        },
+        similarQuestions: {
+            type: new GraphQLList(QuestionType),
+            args: { question: { type: GraphQLString } },
+            resolve(_, args) {
+                return Question.findMatches(args.question);
             }
         },
         answers: {
