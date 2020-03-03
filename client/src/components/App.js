@@ -11,10 +11,17 @@ const App = () => {
 		<div>
 			{/* <SessionForm /> */}
 			<Switch>
+<<<<<<< HEAD
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/signup" component={SessionForm} />
 				<AuthRoute exact path="/session" component={SessionForm} routeType="auth" />
 				<AuthRoute exact path="/" component={Main} />
+=======
+				<Route exact path="/login" component={Login} routeType="auth" />
+				<Route exact path="/signup" component={Register} routeType="auth" />
+				{/* <Route path="/" component={SessionForm} /> */}
+				<Route path="/" component={Main} />
+>>>>>>> app & main conflict w/ merge
 			</Switch>
 		</div>
 	);

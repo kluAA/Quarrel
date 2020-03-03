@@ -6,7 +6,12 @@ import Feed from "./main/feed";
 import Login from "./session/Login";
 import Register from "./session/Register";
 import QuestionForm from "./questions/QuestionForm";
+<<<<<<< HEAD
 import TopicShow from "./topics/TopicShow"
+=======
+import SessionForm from "./session/SessionForm";
+
+>>>>>>> app & main conflict w/ merge
 
 const Main = () => {
     return (
