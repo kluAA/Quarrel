@@ -7,6 +7,7 @@ import Login from "./session/Login";
 import Register from "./session/Register";
 import QuestionForm from "./questions/QuestionForm";
 import TopicShow from "./topics/TopicShow"
+import QuestionShow from "./questions/QuestionShow";
 
 const Main = () => {
     return (
@@ -16,8 +17,8 @@ const Main = () => {
             <div className="main-body">
                 <Switch>
                     <Route exact path="/" component={Feed} />
-                    {/* <QuestionForm /> */}
                     <Route exact path="/topics" component={TopicShow} />
+                    <Route path="/q/:id" component={QuestionShow} />
                 </Switch>
             </div>
         </div>

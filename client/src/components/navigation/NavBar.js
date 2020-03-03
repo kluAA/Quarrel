@@ -47,7 +47,7 @@ class NavBar extends React.Component {
                         <Link to="/">Quarrel</Link>
                     </div>
                     <ul className="nav-links">
-                        <Link to="/home">
+                        <Link to="/">
                             <li className="nav-home">
                                 <i className="far fa-list-alt"></i>
                                 <span>Home</span>

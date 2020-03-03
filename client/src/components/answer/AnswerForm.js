@@ -1,6 +1,13 @@
 import React from 'react';
 import { Mutation } from "react-apollo";
 import Mutations from "../../graphql/mutations";
+
+const createDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+const window = (new JSDOM('')).window;
+const DOMPurify = createDOMPurify(window);
+const clean = DOMPurify.sanitize;
+
 const {NEW_ANSWER } = Mutations;
 
 class AnswerForm extends React.Component {
@@ -24,9 +31,10 @@ class AnswerForm extends React.Component {
 
     handleSubmit(e, newAnswer) {
         e.preventDefault();
+        const cleanBody = clean(this.state.body)
         newAnswer({
             variables: {
-                body: this.state.body,
+                body: cleanBody,
                 questionId: this.props.questionId
             }
         })
@@ -75,6 +83,7 @@ class AnswerForm extends React.Component {
                                 onInput={this.update}
                             >
                             </div>
+
                             <div className="answer-footer">
 
                                 <div className="answer-submit" 
