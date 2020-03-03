@@ -5,7 +5,8 @@ class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showModal: false
+            showModal: false,
+            searchFocus: ""
         };
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -13,24 +14,24 @@ class SearchBar extends React.Component {
 
     openModal(e) {
         e.preventDefault();
-        this.setState({ showModal: true });
+        this.setState({ showModal: true, searchFocus: "search-focus" });
     }
 
     closeModal(e) {
         e.preventDefault();
-        this.setState({ showModal: false });
+        this.setState({ showModal: false, searchFocus: "" });
     }
 
     componentDidUpdate (prevProps) {
         if (prevProps.location.pathname !== this.props.location.pathname) {
-            this.setState({ showModal: false });
+            this.setState({ showModal: false, searchFocus: "" });
         }
     }
 
     render() {
         return (
             <div>
-                <div className="search-container" onClick={this.openModal}>
+                <div className={`search-container ${this.state.searchFocus}`} onClick={this.openModal}>
                     <i className="fas fa-search"></i>
                     <input
                         className="search"
