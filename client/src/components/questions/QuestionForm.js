@@ -6,7 +6,7 @@ import { FaLink } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Validator = require("validator");
-const { FETCH_QUESTIONS, CURRENT_USER } = Queries;
+const { FETCH_QUESTIONS, CURRENT_USER, SIMILAR_QUESTIONS } = Queries;
 const { NEW_QUESTION } = Mutations;
 
 
@@ -89,6 +89,21 @@ class QuestionForm extends React.Component {
     }
 
     render () {
+        let matchesList = "";
+        let questionLength = this.state.question.length;
+        if (questionLength > 1) {
+            matchesList = (
+                <Query query={SIMILAR_QUESTIONS} variables={{ question: this.state.question }}>
+                    {({ loading, error, data }) => {
+                        if (loading) return "loading...";
+                        if (error) return `Error! ${error.message}`;
+                        return data.similarQuestions.map(match => {
+                            return <Link to={`${match._id}`}><li className="matches-item">{`${match.question}`}</li></Link>
+                        })
+                    }}
+                </Query>
+            )
+        }
         const button = (
             <div className="modal-background" onClick={this.handleModal}>
                 <div className="modal-child" onClick={e => e.stopPropagation()}>
@@ -140,6 +155,9 @@ class QuestionForm extends React.Component {
                                                 value={this.state.question}
                                                 placeholder='Start your question with "What", "How", "Why", etc.'
                                             />
+                                            <ul className="matches-list">
+                                                {matchesList}
+                                            </ul>
                                         </div>
                                         <div className="add-question-modal-link">
                                             <span><FaLink /></span>

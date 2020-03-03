@@ -82,6 +82,8 @@
 .add-question-modal-content {
     padding: 32px;
     padding-bottom: 70px;
+    height: 200px;
+    overflow-y: scroll;
 }
 
 .add-question-modal-user {
@@ -221,4 +223,23 @@
 
 .modal-message > p > a {
     text-decoration: underline;
+}
+
+.matches-list {
+
+}
+
+.matches-item {
+    font-size: 13px;
+    font-weight: 500;
+    font-weight: 600;
+    border-top: 1px solid #e2e2e2;
+    padding: 10px 5px;
+}
+
+.matches-item:hover {
+    cursor: pointer;
+    background-color: #f5f5f5;
+    text-decoration: underline;
+    color: #3e78ad;
 }

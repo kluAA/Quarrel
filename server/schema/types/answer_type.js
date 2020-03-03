@@ -7,7 +7,7 @@ const Answer = mongoose.model("answer");
 const AnswerType = new GraphQLObjectType({
   name: "AnswerType",
   fields: () => ({
-    id: { type: GraphQLID },
+    _id: { type: GraphQLID },
     body: { type: GraphQLString },
     user: {
             type: require("./user_type"),

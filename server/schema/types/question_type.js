@@ -19,7 +19,15 @@ const QuestionType = new GraphQLObjectType({
                     });
             }
         },
-        link: { type: GraphQLString }
+        link: { type: GraphQLString },
+        answers: {
+            type: require("./answer_type"),
+            resolve(parentValue) {
+                return Question.findById(parentValue._id)
+                    .populate("answers")
+                    .then(question => question.answers)
+            }
+        }
     })
 });
 

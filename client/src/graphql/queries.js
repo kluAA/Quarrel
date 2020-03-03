@@ -26,5 +26,16 @@ export default {
           email
         }
       }
+    `,
+    SIMILAR_QUESTIONS: gql`
+      query SimilarQuestions($question: String) {
+        similarQuestions(question: $question) {
+          _id
+          question
+          answers {
+            _id
+          }
+        }
+      }
     `
 };

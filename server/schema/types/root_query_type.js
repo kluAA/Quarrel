@@ -50,6 +50,13 @@ const RootQueryType = new GraphQLObjectType({
                 return Question.findById(args._id);
             }
         },
+        similarQuestions: {
+            type: new GraphQLList(QuestionType),
+            args: { question: { type: GraphQLString } },
+            resolve(_, args) {
+                return Question.findMatches(args.question);
+            }
+        },
         answers: {
             type: new GraphQLList(AnswerType),
             resolve() {
