@@ -41,7 +41,7 @@ export default {
                 question
                 link
                 user {
-                    name
+                    _id
                 }
             }
         }
@@ -53,7 +53,7 @@ export default {
                 _id
                 body
                 user {
-                    name
+                    _id
                 }
                 question {
                     _id

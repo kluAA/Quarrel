@@ -37,7 +37,7 @@ class AnswerForm extends React.Component {
             e.preventDefault();
             e.stopPropagation();
             document.execCommand(type, false, null);
-            this.setState({[type]: !this.state[type]})
+            this.setState({[type]: document.queryCommandState(type)});
         }
     }
 
