@@ -61,7 +61,7 @@ const mutation = new GraphQLObjectType({
                 question: { type: GraphQLString },
                 link: { type: GraphQLString }
             },
-            async resolve(_, { question, link}, ctx) {
+            async resolve(_, { question, link }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
                     return new Question({ question, user: validUser._id, link }).save()
@@ -79,7 +79,7 @@ const mutation = new GraphQLObjectType({
             async resolve(_, { body, questionId }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
-                    return new Answer({body, user: validUser._id, question: questionId }).save()
+                    return new Answer({ body, user: validUser._id, question: questionId }).save()
                 } else {
                     // throw new Error("Must be logged in to create an answer")
                     return new Answer({ body, user: validUser._id, question: questionId }).save()
@@ -101,17 +101,29 @@ const mutation = new GraphQLObjectType({
                     return new Topic({ name, description }).save()
                 }
             }
+        },
+        addTopicToUser: {
+            type: TopicType,
+            args: {
+                topicId: { type: GraphQLID },
+                userId: await AuthService.verifyUser({ token: ctx.token })._id
+            },
+            resolve(parentValue, { topicId, userId }) {
+                return Topic.addUser(topicId, userId).then(
+                    User.addTopic(topicId, userId)
+                )
+            }
+        },
+        addUserToTopic: {
+            type: TopicType,
+            args: {
+                topicId: { type: GraphQLID },
+                questionId: { type: GraphQLID },
+            },
+            resolve(parentValue, { topicId, questionId }) {
+                return Topic.addQuestion(topicId, questionId);
+            }
         }
-        // addQuestionToTopic: {
-        //     type: TopicType,
-        //     args: {
-        //         topicId: { type: GraphQLID },
-        //         questionId: { type: GraphQLID },
-        //     },
-        //     resolve(parentValue, { topicId, questionId }) {
-        //         return Topic.addQuestion(topicId, questionId);
-        //     }
-        // }
     }
 });
 

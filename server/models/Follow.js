@@ -14,11 +14,3 @@ const FollowSchema = new Schema({
     }
   ],
 });
-
-
-TopicSchema.statics.findData = function (topicId, type) {
-  return this.findById(topicId)
-    .populate(`${type}`)
-    .then(god => god[type])
-    .catch(err => null)
-};
