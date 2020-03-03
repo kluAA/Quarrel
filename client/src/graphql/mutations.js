@@ -25,10 +25,11 @@ export default {
         }
     `,
     NEW_QUESTION: gql`
-        mutation NewQuestion($question: String) {
-            newQuestion(question: $question) {
+        mutation NewQuestion($question: String, $link: String) {
+            newQuestion(question: $question, link: $link) {
                 _id
                 question
+                link
                 user {
                     name
                 }
