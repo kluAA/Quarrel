@@ -47,14 +47,34 @@ export default {
         }
 		`,
 		NEW_COMMENT: gql`
-				mutation NewComment($comment: String) {
-					newComment(comment:$comment) {
+				mutation NewComment($comment: String, $questionId: ID!) {
+					newComment(comment:$comment, questionId: $questionId) {
 						_id
 						comment
 						user {
-							name
+							email
+							_id
+						}
+						question {
+							_id
 						}
 					}
 				}
-		`
+    `,
+
+    NEW_ANSWER: gql`
+        mutation NewAnswer($body: String!, $questionId: ID!) {
+            newAnswer(body: $body, questionId: $questionId) {
+                _id
+                body
+                user {
+                    name
+                }
+                question {
+                    _id
+                }
+            }
+        }
+
+    `
 }

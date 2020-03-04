@@ -12,8 +12,19 @@ const UserType = new GraphQLObjectType({
         email: { type: GraphQLString },
         token: { type: GraphQLString },
 				loggedIn: { type: GraphQLBoolean },
-				errors: { type: new GraphQLList(GraphQLString) }
-    })
+				errors: { type: new GraphQLList(GraphQLString) },
+
+		}),
+		comments: {
+			type: require("./comment_type"),
+			resolve(parentValue)
+			{
+				return Question.findById(parentValue._id)
+					.populate("comments")
+					.then(question => question.comments)
+			}
+		},
+
 });
 
 module.exports = UserType;

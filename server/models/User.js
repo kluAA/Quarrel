@@ -20,7 +20,11 @@ const UserSchema = new Schema({
         required: true,
         min: 8,
         max: 32
-    }
+		},
+		comments: {
+			type: Schema.Types.ObjectId,
+			ref: "comment"
+		}
 });
 
 module.exports = mongoose.model("user", UserSchema);

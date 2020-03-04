@@ -37,9 +37,9 @@ class NavBar extends React.Component {
         )
     }
 
-    render() {
-			// let { data } = this.data;
-			let { logout } = this.logout;
+    getLinks() {
+			const { logout, currentUser, isLoggedIn} = this.props;
+			if (this.props.loggedIn === true) {
         return (
             <div className="nav-container">
                 <div className="nav-content">
@@ -75,9 +75,32 @@ class NavBar extends React.Component {
 										<SigninButton />
                 </div>
             </div>
-
         );
-    }
+    } else {
+			return (
+				<div className="nav-container">
+					<div className="nav-content">
+						<div className="nav-logo">
+							<Link to="/">Quarrel</Link>
+						</div>
+						<ul className="nav-links">
+							
+						</ul>
+						<SearchBar />
+						<SigninButton />
+					</div>
+				</div>
+			);
+		}
+	}
+
+	render () {
+		return (
+			<div>
+				{this.getLinks()}
+			</div>
+		);
+	}
 }
 
 export default NavBar;
