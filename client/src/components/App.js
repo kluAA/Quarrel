@@ -5,6 +5,7 @@ import Register from "./session/Register";
 import AuthRoute from "../util/route_util";
 import Main from "./Main";
 import SessionForm from "./session/SessionForm";
+import TopicShow from "./topics/TopicShow"
 
 const App = () => {
   return (
@@ -14,7 +15,9 @@ const App = () => {
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/signup" component={SessionForm} />
 				<AuthRoute exact path="/session" component={SessionForm} routeType="auth" />
-				<AuthRoute path="/" component={Main} />
+				{/* <AuthRoute path="/" component={Main} /> */}
+				<Route path="/" component={Main} />
+
 			</Switch>
 		</div>
 	);

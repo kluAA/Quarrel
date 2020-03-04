@@ -14,6 +14,7 @@ class Register extends React.Component {
 			email: "",
 			password: "",
 			errors: [],
+			errorsArray: []
 		};
 		this.renderErrors = this.renderErrors.bind(this);
 	}
@@ -74,15 +75,15 @@ class Register extends React.Component {
 				{registerUser => (
 					<div className="">
 						<div className="errorMsg">
-							{this.state.errors[0]}
-						</div>
-						{/* <div>{this.state.errors.map(error =>
+							{/* {this.state.errors[0]}
+						</div> */}
+						{this.state.errors.map(error =>
 						{
 							return (
 								<li key={error}>{error}</li>
 							);
 						})}
-						</div> */}
+						</div>
 
 						<form onSubmit={e => this.handleSubmit(e, registerUser, this.props.history)} className="signup-form-box">
 							<p className="session-label">Signup</p>

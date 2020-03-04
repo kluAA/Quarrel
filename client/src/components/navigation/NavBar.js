@@ -13,10 +13,10 @@ class NavBar extends React.Component {
 				super(props);
 				this.state = {
 					data: "",
-					isLoggedIn: "",
-					client: ""
+					// isLoggedIn: "",
+					client: "",
+					// loggedIn: ""
 				};
-        // this.logout = this.logout.bind(this);
 		}
 		
     logout(client) {
@@ -38,8 +38,8 @@ class NavBar extends React.Component {
     }
 
     getLinks() {
-			const { logout, currentUser, isLoggedIn} = this.props;
-			if (this.props.loggedIn === true) {
+			const { logout, currentUser, isLoggedIn, loggedIn } = this.props;
+			if (this.props.isLoggedIn == loggedIn) {
         return (
             <div className="nav-container">
                 <div className="nav-content">

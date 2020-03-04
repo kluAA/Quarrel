@@ -8,7 +8,7 @@ import Register from "./session/Register";
 import QuestionForm from "./questions/QuestionForm";
 import SessionForm from "./session/SessionForm";
 
-import TopicShow from "./topics/TopicShow"
+import TopicShow from "./topics/TopicShow";
 
 const Main = () => {
     return (
@@ -20,6 +20,8 @@ const Main = () => {
                     <Route exact path="/" component={Feed} />
                     {/* <QuestionForm /> */}
                     <Route path="/topics" component={TopicShow} />
+										{/* <AuthRoute path="/topics" component={TopicShow} routeType="auth"/> */}
+
                 </Switch>
             </div>
         </div>
