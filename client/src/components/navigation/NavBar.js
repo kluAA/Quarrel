@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from "react-router-dom";
 import Queries from "../../graphql/queries";
-import { ApolloConsumer, Query} from "react-apollo"
+import { ApolloConsumer, Query } from "react-apollo"
 import SearchBar from "./SearchBar";
 import QuestionForm from "../questions/QuestionForm";
 import * as SessionUtil from "../../util/session_util";
@@ -22,19 +22,19 @@ class NavBar extends React.Component {
 		
     logout(client) {
         return (
-					<div>
-            <button
-						className="nav-ask-btn"
-						onClick={e => {
-								e.preventDefault();
-								localStorage.removeItem("auth-token");
-								client.writeData({ data: { isLoggedIn: false } });
-								this.props.history.push("/logout");
-						}}
-            >
-                Logout
+            <div>
+                <button
+                    className="nav-ask-btn"
+                    onClick={e => {
+                        e.preventDefault();
+                        localStorage.removeItem("auth-token");
+                        client.writeData({ data: { isLoggedIn: false } });
+                        this.props.history.push("/logout");
+                    }}
+                >
+                    Logout
             </button>
-					</div>
+            </div>
         )
     }
 
@@ -45,8 +45,8 @@ class NavBar extends React.Component {
     }
 
     render() {
-			// let { data } = this.data;
-			let { logout } = this.logout;
+        // let { data } = this.data;
+        let { logout } = this.logout;
         return (
             <div className="nav-container">
                 <div className="nav-content">
@@ -54,7 +54,7 @@ class NavBar extends React.Component {
                         <Link to="/">Quarrel</Link>
                     </div>
                     <ul className="nav-links">
-                        <Link to="/home">
+                        <Link to="/">
                             <li className="nav-home">
                                 <i className="far fa-list-alt"></i>
                                 <span>Home</span>
