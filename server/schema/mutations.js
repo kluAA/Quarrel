@@ -79,10 +79,18 @@ const mutation = new GraphQLObjectType({
             async resolve(_, { body, questionId }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
-                    return new Answer({ body, user: validUser._id, question: questionId }).save()
+                    return new Answer({body, user: validUser._id, question: questionId }).save()
+                    .then(answer => {
+                        Question.findByIdAndUpdate(questionId, { $push: { answers: answer._id}}).exec();
+                        return answer;
+                    })
                 } else {
                     // throw new Error("Must be logged in to create an answer")
                     return new Answer({ body, user: validUser._id, question: questionId }).save()
+                        .then(answer => {
+                            Question.findByIdAndUpdate(questionId, { $push: { answers: answer._id } }).exec();
+                            return answer;
+                        })
                 }
             }
         },

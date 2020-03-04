@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLString, GraphQLID } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql;
 
 const Question = mongoose.model("question");
+const AnswerType = require("./answer_type");
 
 const QuestionType = new GraphQLObjectType({
     name: "QuestionType",
@@ -15,17 +16,17 @@ const QuestionType = new GraphQLObjectType({
                 return Question.findById(parentValue._id)
                     .populate("user")
                     .then(question => {
-                        return question.user
+                        return question.user;
                     });
             }
         },
         link: { type: GraphQLString },
         answers: {
-            type: require("./answer_type"),
+            type: new GraphQLList(AnswerType),
             resolve(parentValue) {
                 return Question.findById(parentValue._id)
                     .populate("answers")
-                    .then(question => question.answers)
+                    .then(question => question.answers);
             }
         }
     })
