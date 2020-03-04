@@ -56,6 +56,16 @@ export default {
                 }
             }
         }
-
+    `,
+    FOLLOW_TOPIC: gql`
+        mutation FollowTopic($topicId: ID!) {
+            addTopicToUser(topicId: $topicId) {
+                _id
+                name
+                followers {
+                    _id
+                }
+            }
+        }
     `
 }

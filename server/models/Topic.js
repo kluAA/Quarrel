@@ -36,20 +36,16 @@ const TopicSchema = new Schema({
 TopicSchema.statics.findData = function (topicId, type) {
   return this.findById(topicId)
     .populate(`${type}`)
-    .then(god => god[type])
+    .then(topic => topic[type])
     .catch(err => null)
 };
 
-// TopicSchema.statics.addQuestion = (topicId, questionId) => {
-//   const Topic = mongoose.model("topic");
+TopicSchema.statics.addUser = (topicId, userId) => {
+  const Topic = mongoose.model("topic");
 
-//   return Topic.findById(topicId).then(topic => {
-//     topic.questions.push(questionId);
-//     // question.topic.push(topic);
-
-//     return Promise.all([topic.save(), question.save()]).then(
-//       ([topic, question]) => topic
-//     );
-//   });
-// };
+  return Topic.findById(topicId).then(topic => {
+    topic.followers.push(userId);
+    return topic.save()
+  });
+};
 module.exports = mongoose.model("topic", TopicSchema);

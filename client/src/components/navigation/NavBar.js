@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from "react-router-dom";
 import Queries from "../../graphql/queries";
-import { ApolloConsumer, Query} from "react-apollo"
+import { ApolloConsumer, Query } from "react-apollo"
 import SearchBar from "./SearchBar";
 import QuestionForm from "../questions/QuestionForm";
 import * as SessionUtil from "../../util/session_util";
@@ -10,36 +10,36 @@ const { IS_LOGGED_IN } = Queries;
 
 class NavBar extends React.Component {
     constructor(props) {
-				super(props);
-				this.state = {
-					data: "",
-					isLoggedIn: "",
-					client: ""
-				};
+        super(props);
+        this.state = {
+            data: "",
+            isLoggedIn: "",
+            client: ""
+        };
         // this.logout = this.logout.bind(this);
-		}
-		
+    }
+
     logout(client) {
         return (
-					<div>
-            <button
-						className="nav-ask-btn"
-						onClick={e => {
-								e.preventDefault();
-								localStorage.removeItem("auth-token");
-								client.writeData({ data: { isLoggedIn: false } });
-								this.props.history.push("/logout");
-						}}
-            >
-                Logout
+            <div>
+                <button
+                    className="nav-ask-btn"
+                    onClick={e => {
+                        e.preventDefault();
+                        localStorage.removeItem("auth-token");
+                        client.writeData({ data: { isLoggedIn: false } });
+                        this.props.history.push("/logout");
+                    }}
+                >
+                    Logout
             </button>
-					</div>
+            </div>
         )
     }
 
     render() {
-			// let { data } = this.data;
-			let { logout } = this.logout;
+        // let { data } = this.data;
+        let { logout } = this.logout;
         return (
             <div className="nav-container">
                 <div className="nav-content">
@@ -72,7 +72,7 @@ class NavBar extends React.Component {
                     </ul>
                     <SearchBar />
                     <QuestionForm />
-										<SigninButton />
+                    <SigninButton />
                 </div>
             </div>
 
