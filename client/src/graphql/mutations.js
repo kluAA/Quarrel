@@ -39,10 +39,6 @@ export default {
             newQuestion(question: $question, link: $link) {
                 _id
                 question
-                link
-                user {
-                    name
-                }
             }
         }
     `,

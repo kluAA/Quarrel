@@ -17,7 +17,7 @@ const Main = () => {
                 <Switch>
                     <Route exact path="/" component={Feed} />
                     {/* <QuestionForm /> */}
-                    <Route path="/topic" component={TopicShow} />
+                    <Route path="/topics" component={TopicShow} />
                 </Switch>
             </div>
         </div>
