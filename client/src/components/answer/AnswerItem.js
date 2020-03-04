@@ -12,10 +12,15 @@ class AnswerItem extends React.Component {
         const { answer } = this.props;
         return (
             <div className="qns-answer-item">
+                <div className="ai-user-header">
+                    <div className="ai-user-pic">
+                        
+                    </div>
+                </div>
                 <div
                     id="test"
                     contentEditable={this.state.edit}
-                    className="qns-ai-content"
+                    className="ai-content"
                     dangerouslySetInnerHTML={{ __html: answer.body }}
                 >
                 </div>
