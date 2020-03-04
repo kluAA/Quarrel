@@ -39,6 +39,10 @@ export default {
             newQuestion(question: $question, link: $link) {
                 _id
                 question
+                link
+                user {
+                    _id
+                }
             }
         }
 		`,
@@ -64,13 +68,23 @@ export default {
                 _id
                 body
                 user {
-                    name
+                    _id
                 }
                 question {
                     _id
                 }
             }
         }
-
+    `,
+    FOLLOW_TOPIC: gql`
+        mutation FollowTopic($topicId: ID!) {
+            addTopicToUser(topicId: $topicId) {
+                _id
+                name
+                followers {
+                    _id
+                }
+            }
+        }
     `
 }

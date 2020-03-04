@@ -26,8 +26,8 @@ class FeedItem extends React.Component {
                 </h1>
                 <div className="feed-item-options">
                     <div onClick={e => this.toggleForm()} className="feed-item-answer">
-                        <i className="far fa-edit"></i>
-                        <span>Answer</span>
+                        <i className="far fa-angry"></i>
+                        <span>Quarrel</span>
                     </div>
                     {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={this.props.question._id}/> : null }
                 </div>

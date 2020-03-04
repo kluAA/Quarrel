@@ -11,19 +11,15 @@ const UserType = new GraphQLObjectType({
         lname: { type: GraphQLString },
         email: { type: GraphQLString },
         token: { type: GraphQLString },
-				loggedIn: { type: GraphQLBoolean },
-				errors: { type: new GraphQLList(GraphQLString) },
-
-		}),
-		comments: {
-			type: require("./comment_type"),
-			resolve(parentValue)
-			{
-				return Question.findById(parentValue._id)
-					.populate("comments")
-					.then(question => question.comments)
-			}
-		},
+        loggedIn: { type: GraphQLBoolean },
+        errors: { type: new GraphQLList(GraphQLString) },
+        followers: {
+            type: new GraphQLList(require("./user_type")),
+            resolve(parentValue) {
+                return Topic.findData(parentValue.id, 'users');
+            }
+        }
+    })
 
 });
 

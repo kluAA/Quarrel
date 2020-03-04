@@ -1,0 +1,72 @@
+.show {
+   height: 100%;
+   width: 100%;
+   position: fixed;
+   display: flex;
+   justify-content: center;
+}
+
+.show-body {
+    margin-top: 50px;
+    width: 990px;
+    padding: 20px 30px;
+}
+
+.qns-container {
+    margin-top: 20px;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.qns-container h1 {
+    color: #333333;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.qns-actions {
+    display: flex;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-left: -12px;
+}
+
+.qns-answer, .qns-follow {
+    cursor: pointer;
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 20px;
+}
+
+.qns-answer:hover, .qns-follow:hover {
+    background: #f8f8f8;
+}
+
+.qns-answer .fa-angry {
+    color: #2e69ff;
+}
+
+.qns-actions span {
+    margin-left: 5px;
+    font-weight: 500;
+    color: #636466;
+}
+
+.qns-follow .fa-user-secret {
+    color: #636466;
+}
+
+.qns-container h2 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333333;
+    margin-top: 15px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.qns-answer-item {
+    padding: 16px 0;
+    border-bottom: 1px solid #e2e2e2;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
 import Mutations from "../../graphql/mutations";
-import * as SessionUtil from "../../util/session_util";
+// import * as SessionUtil from "../../util/session_util";
 
 const { REGISTER_USER } = Mutations;
 
@@ -27,7 +27,7 @@ class Register extends React.Component {
 		let errorArray = errors.map((error) => (
 			error.message
 		))
-		this.setState({errors: errorArray})
+		this.setState({ errors: errorArray })
 		console.log(errorArray)
 	}
 
@@ -42,14 +42,14 @@ class Register extends React.Component {
 		e.preventDefault();
 		// const email = this.state.email;
 		// const password = this.state.password;
-			registerUser({
-				variables: {
-					fname: this.state.fname,
-					lname: this.state.lname,
-					email: this.state.email,
-					password: this.state.password
-				}
-			}).catch(err => console.log(err));
+		registerUser({
+			variables: {
+				fname: this.state.fname,
+				lname: this.state.lname,
+				email: this.state.email,
+				password: this.state.password
+			}
+		}).catch(err => console.log(err));
 	}
 
 	render() {
@@ -71,7 +71,7 @@ class Register extends React.Component {
 				}}
 				update={(client, data) => this.updateCache(client, data)}
 			>
-				
+
 				{registerUser => (
 					<div className="">
 						<div className="errorMsg">
@@ -88,21 +88,21 @@ class Register extends React.Component {
 						<form onSubmit={e => this.handleSubmit(e, registerUser, this.props.history)} className="signup-form-box">
 							<p className="session-label">Signup</p>
 							<div className="names-input-box">
-									<label>FIRST NAME<br />
+								<label>FIRST NAME<br />
 									<input
 										type="text"
 										value={this.state.fname}
 										onChange={this.update("fname")}
 										className="signup-input-box"
-										/></label>
-									<label className="lname-wrapper">LAST NAME
+									/></label>
+								<label className="lname-wrapper">LAST NAME
 									<input
 										type="text"
 										value={this.state.lname}
 										onChange={this.update("lname")}
 										className="signup-input-box"
 									/>
-									</label>
+								</label>
 							</div>
 							<div className="email-input-box">
 								<label className="">EMAIL</label>
@@ -111,8 +111,8 @@ class Register extends React.Component {
 									onChange={this.update("email")}
 									className="signup-input-box"
 								/>
-								</div>
-								<div className="email-input-box">
+							</div>
+							<div className="email-input-box">
 								<label className="">PASSWORD</label>
 								<input
 									value={this.state.password}
@@ -120,14 +120,14 @@ class Register extends React.Component {
 									type="password"
 									className="signup-input-box"
 								/>
-								</div>
-								<br />
+							</div>
+							<br />
 							{/* <a>Cancel</a> */}
 							<button type="submit" className="form-button">
 								Sign up
 							</button>
 
-							
+
 						</form>
 					</div>
 				)}

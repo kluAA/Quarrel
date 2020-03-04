@@ -20,11 +20,18 @@ const UserSchema = new Schema({
         required: true,
         min: 8,
         max: 32
-		},
-		comments: {
-			type: Schema.Types.ObjectId,
-			ref: "comment"
-		}
+    },
+    topics: {
+        type: Schema.Types.ObjectId,
+        ref: "topic"
+    }
 });
+UserSchema.statics.addTopic = (topicId, userId) => {
+    const User = mongoose.model("user");
 
+    return User.findById(userId).then(user => {
+        user.topics.push(topicId);
+        return user.save()
+    });
+};
 module.exports = mongoose.model("user", UserSchema);

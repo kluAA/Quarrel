@@ -1,7 +1,16 @@
 import React from 'react';
 import { Mutation } from "react-apollo";
 import Mutations from "../../graphql/mutations";
-const {NEW_ANSWER } = Mutations;
+import Queries from "../../graphql/queries";
+
+const createDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+const window = (new JSDOM('')).window;
+const DOMPurify = createDOMPurify(window);
+const clean = DOMPurify.sanitize;
+
+const { NEW_ANSWER } = Mutations;
+const { FETCH_QUESTION } = Queries;
 
 class AnswerForm extends React.Component {
     constructor(props) {
@@ -19,14 +28,18 @@ class AnswerForm extends React.Component {
     }
 
     updateCache(cache, { data }) {
-
+        // let answers;
+        // try { 
+        //     answers = cache.readQuery({ FETCH_QUESTIONS })
+        // }
     }
 
     handleSubmit(e, newAnswer) {
         e.preventDefault();
+        const cleanBody = clean(this.state.body)
         newAnswer({
             variables: {
-                body: this.state.body,
+                body: cleanBody,
                 questionId: this.props.questionId
             }
         })
@@ -37,7 +50,7 @@ class AnswerForm extends React.Component {
             e.preventDefault();
             e.stopPropagation();
             document.execCommand(type, false, null);
-            this.setState({[type]: !this.state[type]})
+            this.setState({[type]: document.queryCommandState(type)});
         }
     }
 
@@ -75,6 +88,7 @@ class AnswerForm extends React.Component {
                                 onInput={this.update}
                             >
                             </div>
+
                             <div className="answer-footer">
 
                                 <div className="answer-submit" 

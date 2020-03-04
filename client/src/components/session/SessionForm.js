@@ -1,6 +1,4 @@
 import React from "react";
-import { Mutation } from "react-apollo";
-import Mutations from "../../graphql/mutations";
 import Login from "./Login";
 import Register from "./Register";
 
