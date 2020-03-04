@@ -40,13 +40,12 @@ TopicSchema.statics.findData = function (topicId, type) {
     .catch(err => null)
 };
 
-TopicSchema.statics.addUser = (topicId, UserId) => {
+TopicSchema.statics.addUser = (topicId, userId) => {
   const Topic = mongoose.model("topic");
 
   return Topic.findById(topicId).then(topic => {
-    topic.followers.push(questionId);
-
-    return Promise.all([topic.save()])
+    topic.followers.push(userId);
+    return topic.save()
   });
 };
 module.exports = mongoose.model("topic", TopicSchema);

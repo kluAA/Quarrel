@@ -2,7 +2,6 @@ const graphql = require("graphql");
 const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLNonNull, GraphQLID } = graphql;
 const mongoose = require("mongoose");
 const AuthService = require("../services/auth");
-
 const UserType = require("./types/user_type");
 const User = mongoose.model("user");
 const TopicType = require("./types/topic_type");
@@ -105,23 +104,13 @@ const mutation = new GraphQLObjectType({
         addTopicToUser: {
             type: TopicType,
             args: {
-                topicId: { type: GraphQLID },
-                userId: await AuthService.verifyUser({ token: ctx.token })._id
+                topicId: { type: GraphQLID }
             },
-            resolve(parentValue, { topicId, userId }) {
-                return Topic.addUser(topicId, userId).then(
-                    User.addTopic(topicId, userId)
+            async resolve(parentValue, { topicId }, ctx) {
+                const validUser = await AuthService.verifyUser({ token: ctx.token });
+                return Topic.addUser(topicId, validUser._id).then(
+                    User.addTopic(topicId, validUser._id)
                 )
-            }
-        },
-        addUserToTopic: {
-            type: TopicType,
-            args: {
-                topicId: { type: GraphQLID },
-                questionId: { type: GraphQLID },
-            },
-            resolve(parentValue, { topicId, questionId }) {
-                return Topic.addQuestion(topicId, questionId);
             }
         }
     }

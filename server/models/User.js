@@ -26,13 +26,12 @@ const UserSchema = new Schema({
         ref: "topic"
     }
 });
-UserSchema.statics.addTopic = (topicId, UserId) => {
+UserSchema.statics.addTopic = (topicId, userId) => {
     const User = mongoose.model("user");
 
-    return User.findById(UserId).then(user => {
+    return User.findById(userId).then(user => {
         user.topics.push(topicId);
-
-        return Promise.all([user.save()])
+        return user.save()
     });
 };
 module.exports = mongoose.model("user", UserSchema);

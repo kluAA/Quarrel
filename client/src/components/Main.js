@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import AuthRoute from "../util/route_util";
+// import AuthRoute from "../util/route_util";
 import NavBar from "./navigation/NavBar";
 import Feed from "./main/feed";
 // import Login from "./session/Login";

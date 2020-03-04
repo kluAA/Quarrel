@@ -40,7 +40,7 @@ export default {
       }
     `,
   FETCH_TOPICS: gql`
-      {
+     query FetchTopics {
         topics{
           _id
           name
@@ -49,5 +49,5 @@ export default {
           }
         }
       }
-    `,
+    `
 };

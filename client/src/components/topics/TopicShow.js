@@ -6,10 +6,6 @@ import Queries from "../../graphql/queries";
 const { FETCH_TOPICS } = Queries;
 
 class TopicShow extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       < div >
@@ -25,6 +21,7 @@ class TopicShow extends React.Component {
               })
             )
           }}
+
         </Query>
         <TopicNavBar />
       </div >
