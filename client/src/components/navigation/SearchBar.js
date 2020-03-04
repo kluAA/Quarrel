@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Queries from "../../graphql/queries";
 import { Query } from "react-apollo";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 const { SIMILAR_QUESTIONS } = Queries;
 
 class SearchBar extends React.Component {
@@ -21,7 +21,10 @@ class SearchBar extends React.Component {
 
     handleSubmit (e) {
         e.preventDefault();
-        debugger
+        if (this.state.search.length > 0) {
+            this.props.closeModal(e);
+            this.props.history.push(`search/${this.state.search.split(" ").join("-")}`);
+        }
     }
 
     render() {
