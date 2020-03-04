@@ -14,11 +14,15 @@ class NavBar extends React.Component {
         this.state = {
             data: "",
             isLoggedIn: "",
-            client: ""
+            client: "",
+            showModal: false,
+            searchFocus: ""
         };
-        // this.logout = this.logout.bind(this);
-    }
-
+        this.handleModal = this.handleModal.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+	}
+		
     logout(client) {
         return (
             <div>
@@ -37,16 +41,31 @@ class NavBar extends React.Component {
         )
     }
 
+    handleModal (e) {
+        e.preventDefault();
+        this.setState({ showModal: !this.state.showModal });
+    }
+
+    openModal(e) {
+        e.preventDefault();
+        this.setState({ showModal: true, searchFocus: "search-focus" });
+    }
+
+    closeModal(e) {
+        e.preventDefault();
+        this.setState({ showModal: false, searchFocus: "" });
+    }
+
     render() {
         // let { data } = this.data;
         let { logout } = this.logout;
         return (
             <div className="nav-container">
                 <div className="nav-content">
-                    <div className="nav-logo">
+                    <div className="nav-logo" onClick={this.closeModal}>
                         <Link to="/">Quarrel</Link>
                     </div>
-                    <ul className="nav-links">
+                    <ul className="nav-links" onClick={this.closeModal}>
                         <Link to="/">
                             <li className="nav-home">
                                 <i className="far fa-list-alt"></i>
@@ -70,10 +89,16 @@ class NavBar extends React.Component {
                             <span>Notifications</span>
                         </li>
                     </ul>
-                    <SearchBar />
-                    <QuestionForm />
-                    <SigninButton />
+                    <SearchBar 
+                        openModal={this.openModal} 
+                        closeModal={this.closeModal} 
+                        showModal={this.state.showModal} 
+                        searchFocus={this.state.searchFocus}
+                    />
+                    <QuestionForm closeSearchModal={this.closeModal}/>
+					<SigninButton />
                 </div>
+                {this.state.showModal && <div className="search-modal-background" onClick={this.closeModal}></div>}
             </div>
 
         );
