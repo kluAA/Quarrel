@@ -1,4 +1,10 @@
 import React from 'react';
+import { Query } from 'react-apollo';
+import Queries from "../../graphql/queries";
+import { withRouter } from "react-router-dom";
+import CommentForm from "../comment/CommentForm";
+import CommentItem from "../comment/CommentItem";
+const { FETCH_QUESTION } = Queries;
 
 class AnswerItem extends React.Component {
     constructor(props) {

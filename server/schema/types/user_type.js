@@ -11,7 +11,8 @@ const UserType = new GraphQLObjectType({
         lname: { type: GraphQLString },
         email: { type: GraphQLString },
         token: { type: GraphQLString },
-        loggedIn: { type: GraphQLBoolean },
+				loggedIn: { type: GraphQLBoolean },
+				isLoggedIn: { type: GraphQLBoolean },
         errors: { type: new GraphQLList(GraphQLString) },
         followers: {
             type: new GraphQLList(require("./user_type")),

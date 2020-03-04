@@ -32,6 +32,18 @@ const CommentType = new GraphQLObjectType({
 						return comment.question
 					});
 			}
+		},
+		answer: {
+			type: require("./answer_type"),
+			resolve(parentValue)
+			{
+					return Answer.findById(parentValue._id)
+						.populate("answer")
+						.then(comment =>
+						{
+							return comment.answer
+						});
+			}
 		}
 	})
 });

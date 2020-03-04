@@ -123,7 +123,31 @@ const mutation = new GraphQLObjectType({
                     User.addTopic(topicId, validUser._id)
                 )
             }
-        }
+				},
+				newComment: {
+            type: CommentType,
+            args: {
+                body: { type: GraphQLString },
+                questionId: { type: GraphQLID },
+            },
+            async resolve(_, { comment, answerId }, ctx) {
+                const validUser = await AuthService.verifyUser({ token: ctx.token });
+                if (validUser.loggedIn) {
+                    return new Comment({comment, user: validUser._id, answer: answerId }).save()
+                    .then(comment => {
+                        Answer.findByIdAndUpdate(answerId, { $push: { comments: comment._id}}).exec();
+                        return comment;
+                    })
+                } else {
+                    // throw new Error("Must be logged in to create an comment")
+                    return new Comment({ comment, user: validUser._id, answer: answerId }).save()
+                        .then(comment => {
+                            Answer.findByIdAndUpdate(answerId, { $push: { comments: comment._id } }).exec();
+                            return comment;
+                        })
+                }
+            }
+        },
     }
 });
 

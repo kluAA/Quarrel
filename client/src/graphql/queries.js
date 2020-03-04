@@ -60,5 +60,28 @@ export default {
           }
         }
       }
-    `
+		`,
+	FETCH_ANSWERS: gql`
+      {
+        answers {
+          _id
+          answer
+          user {
+            email
+          }
+        }
+      }
+    `,
+	FETCH_ANSWER: gql`
+      query FetchQuestion($id: ID!) {
+        answer(_id: $id) {
+          _id
+          answer
+          comments {
+            _id
+            comment
+          }
+        }
+      }
+    `,
 };

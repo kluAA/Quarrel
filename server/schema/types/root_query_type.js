@@ -6,11 +6,13 @@ const UserType = require("./user_type");
 const QuestionType = require("./question_type");
 const AnswerType = require("./answer_type");
 const TopicType = require("./topic_type");
+const CommentType = require("./comment_type");
 
 const Topic = mongoose.model("topic");
 const User = mongoose.model("user");
 const Question = mongoose.model("question");
 const Answer = mongoose.model("answer");
+const Comment = mongoose.model("comment");
 
 const RootQueryType = new GraphQLObjectType({
     name: "RootQueryType",
@@ -82,7 +84,22 @@ const RootQueryType = new GraphQLObjectType({
             resolve(parentValue, { _id }) {
                 return Topic.findById(_id);
             }
-        }
+				},
+			comments: {
+				type: new GraphQLList(CommentType),
+				resolve()
+				{
+					return Comment.find({});
+				}
+			},
+			topic: {
+				type: CommentType,
+				args: { _id: { type: new GraphQLNonNull(GraphQLID) } },
+				resolve(parentValue, { _id })
+				{
+					return Comment.findById(_id);
+				}
+			}
     })
 });
 
