@@ -39,6 +39,10 @@ export default {
             newQuestion(question: $question, link: $link) {
                 _id
                 question
+                link
+                user {
+                    _id
+                }
             }
         }
     `,
@@ -49,7 +53,7 @@ export default {
                 _id
                 body
                 user {
-                    name
+                    _id
                 }
                 question {
                     _id

@@ -17,6 +17,18 @@ export default {
         }
       }
     `,
+    FETCH_QUESTION: gql`
+      query FetchQuestion($id: ID!) {
+        question(_id: $id) {
+          _id
+          question
+          answers {
+            _id
+            body
+          }
+        }
+      }
+    `,
   CURRENT_USER: gql`
       query CurrentUser($token: String!) {
         currentUser(token: $token) {
