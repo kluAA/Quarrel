@@ -13,21 +13,21 @@ const TopicType = new GraphQLObjectType({
       type: new GraphQLList(require("./user_type")),
       resolve(parentValue) {
 
-        return Topic.findData(parentValue.id, 'users');
+        return Topic.findData(parentValue.id, 'followers');
       }
     },
     questions: {
       type: new GraphQLList(require("./question_type")),
       resolve(parentValue) {
 
-        return Topic.findData(parentValue.id, 'users');
+        return Topic.findData(parentValue.id, 'questions');
       }
     },
     answers: {
       type: new GraphQLList(require("./answer_type")),
       resolve(parentValue) {
 
-        return Topic.findData(parentValue.id, 'users');
+        return Topic.findData(parentValue.id, 'answers');
       }
     }
   })
