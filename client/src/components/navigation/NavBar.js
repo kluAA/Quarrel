@@ -12,9 +12,9 @@ class NavBar extends React.Component {
     constructor(props) {
 				super(props);
 				this.state = {
-					data: "",
+					// data: "",
 					// isLoggedIn: "",
-					client: "",
+					// client: "",
 					// loggedIn: ""
 				};
 		}
@@ -37,10 +37,9 @@ class NavBar extends React.Component {
         )
     }
 
-    getLinks() {
-			const { logout, currentUser, isLoggedIn, loggedIn } = this.props;
-			if (this.props.isLoggedIn == loggedIn) {
-        return (
+		getLinks = (isLoggedIn) => {
+			// if ({ data: { isLoggedIn } }) {
+        return isLoggedIn ? (
             <div className="nav-container">
                 <div className="nav-content">
                     <div className="nav-logo">
@@ -75,9 +74,10 @@ class NavBar extends React.Component {
                     <SigninButton />
                 </div>
             </div>
-        );
-    } else {
-			return (
+				) : (
+    //     );
+    // } else {
+		// 	return (
 				<div className="nav-container">
 					<div className="nav-content">
 						<div className="nav-logo">
@@ -91,13 +91,22 @@ class NavBar extends React.Component {
 					</div>
 				</div>
 			);
-		}
+		// }
 	}
 
 	render () {
+		const { currentUser } = this.props;
+
 		return (
 			<div>
-				{this.getLinks()}
+				<ApolloConsumer>
+					{client => (
+						<Query query={IS_LOGGED_IN}>
+							{({ data: { isLoggedIn } }) => this.getLinks(isLoggedIn)}
+						</Query>
+					)}
+				</ApolloConsumer>
+				{/* {this.getLinks()} */}
 			</div>
 		);
 	}
