@@ -31,7 +31,7 @@ class QuestionForm extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState.redirectId !== this.state.redirectId) {
-            this.props.history.push(this.state.redirectId);
+            this.props.history.push(`q/${this.state.redirectId}`);
         }
     }
 
@@ -46,6 +46,7 @@ class QuestionForm extends React.Component {
 
     handleModal(e) {
         e.preventDefault();
+        this.props.closeSearchModal(e);
         this.setState({ 
             showModal: !this.state.showModal,
             message: "",

@@ -9,30 +9,10 @@ class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showModal: false,
-            searchFocus: "",
             search: ""
         };
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
         this.update = this.update.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    openModal(e) {
-        e.preventDefault();
-        this.setState({ showModal: true, searchFocus: "search-focus" });
-    }
-
-    closeModal(e) {
-        e.preventDefault();
-        this.setState({ showModal: false, searchFocus: "" });
-    }
-
-    componentDidUpdate (prevProps) {
-        if (prevProps.location.pathname !== this.props.location.pathname) {
-            this.setState({ showModal: false, searchFocus: "" });
-        }
     }
 
     update (e) {
@@ -51,19 +31,18 @@ class SearchBar extends React.Component {
             searchList = (
                 <Query query={SIMILAR_QUESTIONS} variables={{ question: this.state.search }}>
                     {({loading, error, data}) => {
-                        debugger
                         if (loading) return "loading...";
                         if (error) return `Error! ${error.message}`;
                         return data.similarQuestions.map(match => {
-                            return <Link to={`${match._id}`}><li>{match.question}</li></Link>
+                            return <Link to={`q/${match._id}`}><li>{match.question}</li></Link>
                         })
                     }}
                 </Query>
             )
         }
         return (
-            <div>
-                <div className={`search-container ${this.state.searchFocus}`} onClick={this.openModal}>
+            <div className="search-wrapper">
+                <div className={`search-container ${this.props.searchFocus}`} onClick={this.props.openModal}>
                     <i className="fas fa-search"></i>
                     <form onSubmit={this.handleSubmit}>
                         <input
@@ -75,8 +54,9 @@ class SearchBar extends React.Component {
                         />
                     </form>
                 </div>
-                {searchList}
-                {this.state.showModal && <div className="search-modal-background" onClick={this.closeModal}></div>}
+                {
+                    this.props.showModal && <ul className="search-list">{searchList}</ul>
+                }
             </div>
         )
     }
