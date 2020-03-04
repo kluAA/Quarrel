@@ -1,14 +1,14 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Login from "./session/Login";
-import Register from "./session/Register";
+// import Register from "./session/Register";
 import AuthRoute from "../util/route_util";
 import Main from "./Main";
 import SessionForm from "./session/SessionForm";
 import Show from "./Show";
 
 const App = () => {
-  return (
+	return (
 		<div>
 			{/* <SessionForm /> */}
 			<Switch>

@@ -2,7 +2,6 @@ const graphql = require("graphql");
 const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLNonNull, GraphQLID } = graphql;
 const mongoose = require("mongoose");
 const AuthService = require("../services/auth");
-
 const UserType = require("./types/user_type");
 const User = mongoose.model("user");
 const TopicType = require("./types/topic_type");
@@ -61,9 +60,10 @@ const mutation = new GraphQLObjectType({
                 question: { type: GraphQLString },
                 link: { type: GraphQLString }
             },
-            async resolve(_, { question, link}, ctx) {
+            async resolve(_, { question, link }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
+                    console.log(validUser);
                     return new Question({ question, user: validUser._id, link }).save()
                 } else {
                     throw new Error("Must be logged in to create a question")
@@ -79,7 +79,7 @@ const mutation = new GraphQLObjectType({
             async resolve(_, { body, questionId }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
-                    return new Answer({body, user: validUser._id, question: questionId }).save()
+                    return new Answer({ body, user: validUser._id, question: questionId }).save()
                 } else {
                     // throw new Error("Must be logged in to create an answer")
                     return new Answer({ body, user: validUser._id, question: questionId }).save()
@@ -101,17 +101,19 @@ const mutation = new GraphQLObjectType({
                     return new Topic({ name, description }).save()
                 }
             }
+        },
+        addTopicToUser: {
+            type: TopicType,
+            args: {
+                topicId: { type: GraphQLID }
+            },
+            async resolve(parentValue, { topicId }, ctx) {
+                const validUser = await AuthService.verifyUser({ token: ctx.token });
+                return Topic.addUser(topicId, validUser._id).then(
+                    User.addTopic(topicId, validUser._id)
+                )
+            }
         }
-        // addQuestionToTopic: {
-        //     type: TopicType,
-        //     args: {
-        //         topicId: { type: GraphQLID },
-        //         questionId: { type: GraphQLID },
-        //     },
-        //     resolve(parentValue, { topicId, questionId }) {
-        //         return Topic.addQuestion(topicId, questionId);
-        //     }
-        // }
     }
 });
 
