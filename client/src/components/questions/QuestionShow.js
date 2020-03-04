@@ -2,6 +2,7 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import Queries from "../../graphql/queries";
 import { withRouter } from "react-router-dom";
+import AnswerForm from "../answer/AnswerForm";
 const { FETCH_QUESTION } = Queries;
 
 class QuestionShow extends React.Component {
@@ -9,7 +10,23 @@ class QuestionShow extends React.Component {
         super(props);
         this.state = {
             edit: false,
-            body: ""
+            body: "",
+            showForm: false
+        }
+        this.toggleForm = this.toggleForm.bind(this);
+        this.numAnswers = this.numAnswers.bind(this);
+    }
+
+    toggleForm() {
+        this.setState({ showForm: !this.state.showForm })
+    }
+
+    numAnswers(question) {
+        const num = question.answers.length;
+        if (num === 1) {
+            return "1 Answer";
+        } else {
+            return `${num} Answers`;
         }
     }
 
@@ -23,9 +40,10 @@ class QuestionShow extends React.Component {
                 {({ loading, error, data}) => {
                     if (loading) return "Loading...";
                     if (error) return `Error! ${error.message}`;
+                    const { question } = data;
                     return (
-                        <div>
-                            {data.question.question}
+                        <div className="qns-container">
+                            {/* {data.question.question}
                             <br />
                             <br />
                             <div id="test" contentEditable={this.state.edit}
@@ -43,7 +61,22 @@ class QuestionShow extends React.Component {
                                 
                                 }}>
                                 TOGGLE
-                            </p>
+                            </p> */}
+                            <h1>{question.question}</h1>
+                            <div className="qns-actions">
+                                <div className="qns-answer"
+                                    onClick={this.toggleForm}
+                                >
+                                    <i className="far fa-angry"></i>
+                                    <span>Quarrel</span>
+                                </div>
+                                <div className="qns-follow">
+                                    <i className="fas fa-user-secret"></i>
+                                    <span>Track</span>
+                                </div>
+                            </div>
+                            {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={question._id} /> : null }
+                            <h2>{this.numAnswers(question)}</h2>
                         </div>
                     )
                 }}
