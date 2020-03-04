@@ -31,7 +31,7 @@ class QuestionForm extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState.redirectId !== this.state.redirectId) {
-            this.props.history.push(`q/${this.state.redirectId}`);
+            this.props.history.push(`/q/${this.state.redirectId}`);
         }
     }
 
