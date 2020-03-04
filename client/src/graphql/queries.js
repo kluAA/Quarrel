@@ -17,7 +17,7 @@ export default {
         }
       }
     `,
-    FETCH_QUESTION: gql`
+  FETCH_QUESTION: gql`
       query FetchQuestion($id: ID!) {
         question(_id: $id) {
           _id
@@ -56,7 +56,7 @@ export default {
           _id
           name
           followers {
-            fname
+            _id
           }
         }
       }

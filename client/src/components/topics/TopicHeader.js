@@ -15,22 +15,29 @@ class TopicHeader extends React.Component {
       follow: false
     }
     this.renderFollowIcon = this.renderFollowIcon.bind(this)
+    this.countFollowers = this.countFollowers.bind(this)
   }
   updateCache(cache, { data }) {
-    let topics = cache.readQuery({ query: FETCH_TOPICS })
-    try {
-      topics = cache.readQuery({ query: FETCH_TOPICS });
-    } catch (err) {
-      return;
-    }
-    if (topics) {
-      let topicsArray = topics.topics;
-      let newTopic = data.newTopic;
-      cache.writeQuery({
-        query: FETCH_TOPICS,
-        data: { topics: topicsArray.concat(newTopic) }
-      });
-    }
+    // let topics = cache.readQuery({ query: FETCH_TOPICS })
+    // try {
+    //   topics = cache.readQuery({ query: FETCH_TOPICS });
+    // } catch (err) {
+    //   return;
+    // }
+    // if (topics) {
+    //   let topicsArray = topics.topics;
+    //   let newTopic = data.newTopic;
+    //   cache.writeQuery({
+    //     query: FETCH_TOPICS,
+    //     data: { topics: topicsArray.concat(newTopic) }
+    //   });
+    // }
+  }
+  countFollowers() {
+    console.log(this.props.topic)
+    // let followers = Array.from(this.props.topic.followers)
+    // console.log(followers.length)
+    return 4
   }
 
   handleClick(e, followTopic) {
@@ -96,20 +103,20 @@ class TopicHeader extends React.Component {
                           this.updateCache(data)
                         }}
                       >
-                        {(followTopic) => (<a className="ui_button" href="#">
-                          <div className="ui_button-inner flex">
-                            <div className="ui_button_icon_wrapper" onClick={(e) => this.handleClick(e, followTopic)}>
+                        {(followTopic) => (
+                          <div className="ui_button-inner flex" onClick={(e) => this.handleClick(e, followTopic)}>
+                            <div className="ui_button_icon_wrapper" >
                               {this.renderFollowIcon()}
                             </div>
                             <div className="ui_button_count_wrapper">
                               <span className="ui_button_label">Follow</span>
                               <span className="ui_button_count">
                                 <span className="bullet">.</span>
-                                {/* <span className="ui_button_count_inner">{this.props.topic.followers.length}</span> */}
+                                <span className="ui_button_count_inner">{this.countFollowers()}</span>
                               </span>
                             </div>
                           </div>
-                        </a>)}
+                        )}
                       </Mutation>
                     </span>
                   </div>
