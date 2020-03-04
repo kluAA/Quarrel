@@ -23,7 +23,7 @@ class SearchBar extends React.Component {
         e.preventDefault();
         if (this.state.search.length > 0) {
             this.props.closeModal(e);
-            this.props.history.push(`search/${this.state.search.split(" ").join("-")}`);
+            this.props.history.push(`/search/${this.state.search.split(" ").join("-")}`);
         }
     }
 

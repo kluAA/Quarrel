@@ -47,7 +47,7 @@
 
 .modal-child {
   position: absolute;
-  top: 35%;
+  top: 245px;
   left: 50%;
   transform: translate(-50%, -50%);
 }

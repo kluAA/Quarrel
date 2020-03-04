@@ -207,7 +207,7 @@ class QuestionForm extends React.Component {
                     this.state.message.length > 0 &&
                     <div className={`modal-message hide-me ${this.state.success}`}>
                         <div className="hidden">x</div>
-                        <p>{this.state.message}<Link to={`${this.state.successfulQId}`}>{this.state.successfulQuestion}</Link></p>
+                        <p>{this.state.message}<Link to={`/q/${this.state.successfulQId}`}>{this.state.successfulQuestion}</Link></p>
                         <div className="close-message" onClick={this.closeMessage}>x</div>
                     </div>
                 }
