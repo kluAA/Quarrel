@@ -21,7 +21,16 @@ class SearchResults extends React.Component {
                             if (error) return `Error! ${error.message}`;
                             if (data.similarQuestions.length === 0) return <li id="no-results"><strong>0</strong> results found</li>;
                             return data.similarQuestions.map(match => {
-                                return <Link to={`/q/${match._id}`}><li>{match.question}</li></Link>
+                                return (
+                                    <Link to={`/q/${match._id}`}>
+                                        <li>
+                                            <div className="search-results-match">{match.question}</div>
+                                            <div className="search-results-answers-number">
+                                                {`${match.answers.length} ${match.answers.length === 1 ? "answer" : "answers"}`}
+                                            </div>
+                                        </li>
+                                    </Link>
+                                )
                             })
                         }}
                     </Query>

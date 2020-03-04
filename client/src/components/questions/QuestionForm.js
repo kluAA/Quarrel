@@ -120,7 +120,14 @@ class QuestionForm extends React.Component {
                         if (loading) return "loading...";
                         if (error) return `Error! ${error.message}`;
                         return data.similarQuestions.map(match => {
-                            return <li className="matches-item" onClick={this.redirect(match._id)}>{`${match.question}`}</li>
+                            return (
+                                <li className="matches-item" onClick={this.redirect(match._id)}>
+                                    <div>{`${match.question}`}</div>
+                                    <div className="question-form-answers-number">
+                                        {`${match.answers.length} ${match.answers.length === 1 ? "answer" : "answers"}`}
+                                    </div>
+                                </li>
+                            )
                         })
                     }}
                 </Query>

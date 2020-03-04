@@ -243,3 +243,8 @@
     text-decoration: underline;
     color: #3e78ad;
 }
+
+.question-form-answers-number {
+    color: #949494;
+    font-weight: 500;
+}

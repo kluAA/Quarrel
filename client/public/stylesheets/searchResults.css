@@ -33,3 +33,13 @@
     color: #636466;
     font-weight: 500;
 }
+
+.search-results-answers-number {
+    color: #636466;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.search-results-list li:hover .search-results-match {
+    text-decoration: underline;
+}
