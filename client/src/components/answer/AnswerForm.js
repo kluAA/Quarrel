@@ -1,6 +1,7 @@
 import React from 'react';
 import { Mutation } from "react-apollo";
 import Mutations from "../../graphql/mutations";
+import Queries from "../../graphql/queries";
 
 const createDOMPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
@@ -8,7 +9,8 @@ const window = (new JSDOM('')).window;
 const DOMPurify = createDOMPurify(window);
 const clean = DOMPurify.sanitize;
 
-const {NEW_ANSWER } = Mutations;
+const { NEW_ANSWER } = Mutations;
+const { FETCH_QUESTION } = Queries;
 
 class AnswerForm extends React.Component {
     constructor(props) {
@@ -26,7 +28,10 @@ class AnswerForm extends React.Component {
     }
 
     updateCache(cache, { data }) {
-
+        // let answers;
+        // try { 
+        //     answers = cache.readQuery({ FETCH_QUESTIONS })
+        // }
     }
 
     handleSubmit(e, newAnswer) {

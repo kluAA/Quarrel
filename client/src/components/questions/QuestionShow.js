@@ -3,6 +3,7 @@ import { Query } from 'react-apollo';
 import Queries from "../../graphql/queries";
 import { withRouter } from "react-router-dom";
 import AnswerForm from "../answer/AnswerForm";
+import AnswerItem from "../answer/AnswerItem";
 const { FETCH_QUESTION } = Queries;
 
 class QuestionShow extends React.Component {
@@ -31,7 +32,6 @@ class QuestionShow extends React.Component {
     }
 
     render() {
-
         return (
             <Query
                 query={FETCH_QUESTION}
@@ -41,6 +41,14 @@ class QuestionShow extends React.Component {
                     if (loading) return "Loading...";
                     if (error) return `Error! ${error.message}`;
                     const { question } = data;
+                    const answers = question.answers.map(answer => {
+                        return (
+                            <AnswerItem 
+                                key={answer._id}
+                                answer={answer}
+                            />
+                        )
+                    })
                     return (
                         <div className="qns-container">
                             {/* {data.question.question}
@@ -77,6 +85,7 @@ class QuestionShow extends React.Component {
                             </div>
                             {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={question._id} /> : null }
                             <h2>{this.numAnswers(question)}</h2>
+                            {answers}
                         </div>
                     )
                 }}
