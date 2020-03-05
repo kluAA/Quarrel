@@ -24,6 +24,9 @@ const UserSchema = new Schema({
     topics: {
         type: Schema.Types.ObjectId,
         ref: "topic"
+    },
+    profileUrl: {
+        type: String
     }
 });
 UserSchema.statics.addTopic = (topicId, userId) => {

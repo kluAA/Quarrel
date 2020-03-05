@@ -13,9 +13,7 @@ class AnswerItem extends React.Component {
         return (
             <div className="qns-answer-item">
                 <div className="ai-user-header">
-                    <div className="ai-user-pic">
-                        
-                    </div>
+                    <img className="ai-user-pic" src={answer.user.profileUrl} />
                 </div>
                 <div
                     id="test"
