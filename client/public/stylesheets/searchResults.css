@@ -44,7 +44,22 @@
     text-decoration: underline;
 }
 
-.search-results-match > span {
+.search-results-topic-name > span {
     color: #636466;
     font-weight: 500;
+}
+
+.search-results-topic-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+}
+
+.search-results-topic-name {
+    padding-top: 11px;
+    padding-left: 5px;
+}
+
+.search-results-match {
+    display: flex;
 }

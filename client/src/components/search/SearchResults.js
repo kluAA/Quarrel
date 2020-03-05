@@ -43,7 +43,14 @@ class SearchResults extends React.Component {
                                 return (
                                     <Link to={`/topic/${match.name}`}>
                                         <li key={match._id}>
-                                            <div className="search-results-match"><span>Topic: </span>{match.name}</div>
+                                            <div className="search-results-match">
+                                                <div>
+                                                    <img className="search-results-topic-image" src={match.imageUrl} />
+                                                </div>
+                                                <div className="search-results-topic-name">
+                                                    <span>Topic: </span>{match.name}
+                                                </div>
+                                            </div>
                                         </li>
                                     </Link>
                                 )

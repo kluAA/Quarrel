@@ -96,6 +96,7 @@ export default {
         searchTopics(query: $query) {
           _id
           name
+          imageUrl
         }
       }
     `
