@@ -10,6 +10,7 @@ const QuestionType = require("./types/question_type");
 const Question = mongoose.model("question");
 const AnswerType = require("./types/answer_type");
 const Answer = mongoose.model("answer");
+const Upvote = mongoose.model("upvote");
 
 const mutation = new GraphQLObjectType({
     name: "Mutation",
@@ -135,6 +136,19 @@ const mutation = new GraphQLObjectType({
                 } else {
                     throw new Error("Must be logged in to upload!")
                 }
+            }
+        },
+        upvoteAnswer: {
+            type: AnswerType,
+            args: {
+                answerId: { type: GraphQLString },
+            },
+            async resolve(parentValue, { answerId }, ctx) {
+                const validUser = await AuthService.verifyUser({ token: ctx.token });
+                return Upvote.new({ user: validUser._id, answer: answerId }).save()
+                    .then(upvote => {
+                        return Answer.findByIdAndUpdate(answerId, { $push: { upvotes: upvote._id } }).exec();
+                    })
             }
         }
     }
