@@ -41,6 +41,7 @@ class NavBar extends React.Component {
             </div>
         )
     }
+		
 
     handleModal (e) {
         e.preventDefault();
