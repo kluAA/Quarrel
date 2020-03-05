@@ -14,10 +14,12 @@ const UserType = new GraphQLObjectType({
         token: { type: GraphQLString },
         loggedIn: { type: GraphQLBoolean },
         errors: { type: new GraphQLList(GraphQLString) },
-        followers: {
-            type: new GraphQLList(require("./user_type")),
+        topics: {
+            type: new GraphQLList(require("./topic_type")),
             resolve(parentValue) {
-                return Topic.findData(parentValue.id, 'users');
+                return User.findById(parentValue._id)
+                    .populate("answers")
+                    .then(user => user.topics);
             }
         }
     })
