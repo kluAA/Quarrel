@@ -28,10 +28,24 @@ class AnswerForm extends React.Component {
     }
 
     updateCache(cache, { data }) {
-        // let answers;
-        // try { 
-        //     answers = cache.readQuery({ FETCH_QUESTIONS })
-        // }
+        let question;
+        try { 
+            question = cache.readQuery({ 
+                query: FETCH_QUESTION,
+                variables: { id: this.props.questionId } 
+            }).question;
+        } catch (err) {
+            console.log(err);
+        }
+        if (question) {
+            console.log(question);
+            let newAnswer = data.newAnswer;
+            question.answers.push(newAnswer)
+            cache.writeQuery({
+                query: FETCH_QUESTION,
+                data: { question: question }
+            });
+        }
     }
 
     handleSubmit(e, newAnswer) {
@@ -59,7 +73,7 @@ class AnswerForm extends React.Component {
         return (
             <Mutation 
                 mutation={NEW_ANSWER}
-                // update={(cache, data) => this.updateCache(cache, data)}
+                update={(cache, data) => this.updateCache(cache, data)}
                 onCompleted={data => {
                     this.props.toggleForm();
                 }}

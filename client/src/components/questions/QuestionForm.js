@@ -31,7 +31,7 @@ class QuestionForm extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState.redirectId !== this.state.redirectId) {
-            this.props.history.push(this.state.redirectId);
+            this.props.history.push(`/q/${this.state.redirectId}`);
         }
     }
 
@@ -46,6 +46,7 @@ class QuestionForm extends React.Component {
 
     handleModal(e) {
         e.preventDefault();
+        this.props.closeSearchModal(e);
         this.setState({ 
             showModal: !this.state.showModal,
             message: "",
@@ -104,6 +105,7 @@ class QuestionForm extends React.Component {
             setTimeout(this.closeMessage, 5001)
         }
     }
+    
     capitalize (word) {
         return word[0].toUpperCase() + word.slice(1);
     }
@@ -118,7 +120,14 @@ class QuestionForm extends React.Component {
                         if (loading) return "loading...";
                         if (error) return `Error! ${error.message}`;
                         return data.similarQuestions.map(match => {
-                            return <li className="matches-item" onClick={this.redirect(match._id)}>{`${match.question}`}</li>
+                            return (
+                                <li className="matches-item" onClick={this.redirect(match._id)}>
+                                    <div>{`${match.question}`}</div>
+                                    <div className="question-form-answers-number">
+                                        {`${match.answers.length} ${match.answers.length === 1 ? "answer" : "answers"}`}
+                                    </div>
+                                </li>
+                            )
                         })
                     }}
                 </Query>
@@ -205,7 +214,7 @@ class QuestionForm extends React.Component {
                     this.state.message.length > 0 &&
                     <div className={`modal-message hide-me ${this.state.success}`}>
                         <div className="hidden">x</div>
-                        <p>{this.state.message}<Link to={`${this.state.successfulQId}`}>{this.state.successfulQuestion}</Link></p>
+                        <p>{this.state.message}<Link to={`/q/${this.state.successfulQId}`}>{this.state.successfulQuestion}</Link></p>
                         <div className="close-message" onClick={this.closeMessage}>x</div>
                     </div>
                 }

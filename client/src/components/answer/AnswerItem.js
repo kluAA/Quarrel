@@ -35,6 +35,7 @@ class AnswerItem extends React.Component
 				<CommentIndex answerId={this.props.answer._id} />
 
 				{/* <br />
+
                 <p onClick={e => this.setState({edit: true})}>Toggle Edit</p> */}
 			</div>
 		)

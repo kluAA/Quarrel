@@ -10,6 +10,7 @@
     margin-top: 50px;
     width: 990px;
     padding: 20px 30px;
+    display: flex;
 }
 
 .qns-container {
@@ -69,4 +70,8 @@
 .qns-answer-item {
     padding: 16px 0;
     border-bottom: 1px solid #e2e2e2;
+}
+
+.qns-ai-user-header {
+    display: flex;
 }
