@@ -13,8 +13,8 @@ class TopicHeader extends React.Component {
       message: "",
       follow: this.props.topic.followers
     }
-    debugger
     this.renderFollowIcon = this.renderFollowIcon.bind(this)
+    this.renderImg = this.renderImg.bind(this)
   }
 
 
@@ -47,6 +47,32 @@ class TopicHeader extends React.Component {
     }
   }
 
+  renderImg(topicId) {
+    console.log(topicId)
+    switch (topicId) {
+      //science
+      case "5e5fe9021c9d44000044726d":
+        return "https://quarrel-images.s3.us-east-2.amazonaws.com/1583426339036"
+      // Technology
+      case "5e5fece11c9d4400006c46fc":
+        return "https://quarrel-images.s3.us-east-2.amazonaws.com/1583429486218"
+      // Movies
+      case "5e5fed3e1c9d4400006c46fe":
+        return "https://quarrel-images.s3.us-east-2.amazonaws.com/1583428284510"
+      // History
+      case "5e5fed2f1c9d4400006c46fd":
+        return "https://quarrel-images.s3.us-east-2.amazonaws.com/1583428364362"
+      // Cooking
+      case "5e5fed4a1c9d4400006c46ff":
+        return "https://quarrel-images.s3.us-east-2.amazonaws.com/1583428715540"
+      // Music
+      case "5e5fee2e1c9d4400006c4700":
+        return "https://quarrel-images.s3.us-east-2.amazonaws.com/1583429288811"
+      default:
+        return ""
+    }
+  }
+
   render() {
     return (
       <div className="TopicPageHeader" >
@@ -55,10 +81,8 @@ class TopicHeader extends React.Component {
             <div className="TopicPhoto">
               <div className="topic_photo_img">
                 <Link to="/topic/Technology">
-                  <div className="icon-background">
-                    <div className="icon">
-                    </div>
-                  </div>
+                  <img className="icon" src={this.renderImg(this.props.topic._id)}>
+                  </img>
                 </Link>
               </div>
             </div>
