@@ -48,11 +48,10 @@ export default {
 		`,
 		NEW_COMMENT: gql`
 				mutation NewComment($comment: String, $answerId: ID!) {
-					newComment(comment:$comment, answerId: $answerId) {
+					newComment(comment: $comment, answerId: $answerId) {
 						_id
 						comment
 						user {
-							email
 							_id
 						}
 						answer {

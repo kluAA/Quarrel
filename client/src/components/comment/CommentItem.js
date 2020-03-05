@@ -38,7 +38,7 @@ class CommentItem extends React.Component
 
 			<Query
 				query={FETCH_COMMENT}
-				variables={{ id: this.props.match.params.toyId }}
+				variables={{ id: this.props.match.params.commentId }}
 			>
 				{({ loading, error, data, comment }) =>
 				{

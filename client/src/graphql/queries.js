@@ -25,10 +25,6 @@ export default {
           answers {
             _id
 						body
-						comments {
-							_id
-							comment
-						}
 					}
         }
       }

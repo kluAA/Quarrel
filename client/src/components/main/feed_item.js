@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import AnswerForm from "../answer/AnswerForm";
-import CommentForm from "../comment/CommentForm";
 
 class FeedItem extends React.Component {
     constructor(props) {
@@ -17,8 +16,7 @@ class FeedItem extends React.Component {
     }
 
     render() {
-			 const { question, _id } = this.props.question;
-			//  const { answer, _id } = this.props.answer;
+       const { question, _id } = this.props.question;
         return(
             <li className="feed-item">
                 <h1>
@@ -33,18 +31,6 @@ class FeedItem extends React.Component {
                     </div>
                     {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={this.props.question._id}/> : null }
                 </div>
-							{/* <h1>
-								<Link to={`/a/${_id}`}>
-									{answer}
-								</Link>
-							</h1>
-							<div className="feed-item-options">
-								<div onClick={e => this.toggleForm()} className="feed-item-answer">
-									<i className="far fa-angry"></i>
-									<span>Comment</span>
-								</div>
-								{this.state.showForm ? <CommentForm toggleForm={this.toggleForm} answerId={this.props.answer._id} /> : null}
-							</div> */}
             </li>
         )
     }

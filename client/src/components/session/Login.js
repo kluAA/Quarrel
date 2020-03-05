@@ -13,11 +13,11 @@ class Login extends React.Component {
 			password: "",
 			errors: [],
 			errorArray: [],
-			errorMessage: "",
+			// errorMessage: "",
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.demoLogin = this.demoLogin.bind(this);
-		this.handleGraphQLError.bind(this);
+		// this.handleGraphQLError.bind(this);
 	}
 
 	componentDidMount()
@@ -74,24 +74,24 @@ class Login extends React.Component {
 			}})
 	}
 
-	// renderErrors(errors)
-	// {
-	// 	let errorArray = errors.map((error) => (
-	// 		error.message
-	// 	))
-	// 	this.setState({ errors: errorArray })
-	// 	console.log(errorArray)
-	// }
+	renderErrors(errors)
+	{
+		let errorArray = errors.map((error) => (
+			error.message
+		))
+		this.setState({ errors: errorArray })
+		console.log(errorArray)
+	}
 
-	renderErrorMessage()
-	{
-		const { errorMessage } = this.state;
-		return (errorMessage) ? <p>{SessionUtil.stripGraphQLPrefix(errorMessage)}</p> : null;
-	}
-	handleGraphQLError(error)
-	{
-		if (this._isMounted) this.setState({ errorMessage: error.message })
-	}
+	// renderErrorMessage()
+	// {
+	// 	const { errorMessage } = this.state;
+	// 	return (errorMessage) ? <p>{SessionUtil.stripGraphQLPrefix(errorMessage)}</p> : null;
+	// }
+	// handleGraphQLError(error)
+	// {
+	// 	if (this._isMounted) this.setState({ errorMessage: error.message })
+	// }
 	
 
 	render() {
@@ -104,8 +104,8 @@ class Login extends React.Component {
 					localStorage.setItem("auth-token", token);
 					this.loginAndRedirectTo("/", data)
 				}}
-				// onError={err => this.renderErrors(err.graphQLErrors)}
-				onError={error => this.handleGraphQLError(error)}
+				onError={err => this.renderErrors(err.graphQLErrors)}
+				// onError={error => this.handleGraphQLError(error)}
 				update={(client, data) => this.updateCache(client, data)}
 			>
 				{loginUser => (

@@ -1,4 +1,5 @@
 import React from 'react';
+import CommentForm from '../comment//CommentForm';
 
 class AnswerItem extends React.Component
 {
@@ -27,6 +28,10 @@ class AnswerItem extends React.Component
 					dangerouslySetInnerHTML={{ __html: answer.body }}
 				>
 				</div>
+				{/* <CommentForm /> */}
+
+				<CommentForm answerId={this.props.answer._id} />
+
 				{/* <br />
                 <p onClick={e => this.setState({edit: true})}>Toggle Edit</p> */}
 			</div>

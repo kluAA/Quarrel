@@ -128,7 +128,7 @@ const mutation = new GraphQLObjectType({
             type: CommentType,
             args: {
                 comment: { type: GraphQLString },
-                answerId: { type: GraphQLID },
+								answerId: { type: new GraphQLNonNull(GraphQLID) },
             },
             async resolve(_, { comment, answerId }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
