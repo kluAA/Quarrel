@@ -81,3 +81,12 @@
     width: 40px;
     border-radius: 50%;
 }
+
+.ai-user-details {
+    display: flex;
+    align-items: center;
+}
+
+.ai-user-name {
+    text-transform: capitalize;
+}
