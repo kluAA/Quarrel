@@ -13,7 +13,6 @@ class TopicHeader extends React.Component {
       message: "",
       follow: this.props.topic.followers
     }
-    debugger
     this.renderFollowIcon = this.renderFollowIcon.bind(this)
   }
 

@@ -76,5 +76,13 @@ export default {
           }
         } 
       }
+    `,
+    SEARCH_TOPICS: gql`
+      query SearchTopics($query: String) {
+        searchTopics(query: $query) {
+          _id
+          name
+        }
+      }
     `
 };
