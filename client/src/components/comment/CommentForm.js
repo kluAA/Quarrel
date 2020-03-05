@@ -4,7 +4,7 @@ import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
 import CommentIndex from "./CommentItem";
 const { NEW_COMMENT } = Mutations;
-const { FETCH_COMMENTS, CURRENT_USER } = Queries;
+const { FETCH_COMMENTS, CURRENT_USER, FETCH_QUESTION} = Queries;
 
 class CommentForm extends React.Component
 {
@@ -32,18 +32,28 @@ class CommentForm extends React.Component
 	}
 
 	updateCache(cache, { data: { newComment } }) {
-		let comments;
-		try { 
-			comments = cache.readQuery({ query: FETCH_COMMENTS });
+		let question;
+		try {
+			question = cache.readQuery({
+					query: FETCH_QUESTION,
+					variables: {id: this.props.questionId}
+			}).question;
 		} catch (err) {
-			return;
+			console.log(err);
 		}
-		if (comments) {
-			let commentArray = comments.comments;
-			cache.writeQuery({
-				query: FETCH_COMMENTS,
-				data: { comments: commentArray.concat(newComment) }
+		if (question) {
+			console.log(question);
+			console.log("newComment", newComment);
+			// debugger
+			question.answers.map((answer) => { 
+				if (answer._id === newComment.answer._id) { 
+					answer.comments = answer.comments.concat(newComment) 
+				}
 			});
+			cache.writeQuery({
+				query: FETCH_QUESTION,
+				data: { question: question }
+			})
 		}
 	}
 

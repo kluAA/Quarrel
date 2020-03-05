@@ -13,36 +13,24 @@ class CommentIndex extends React.Component {
 	render() {
 		return (
 			<div className="question-index">
-				<Query query={FETCH_COMMENTS}>
-					{({ loading, error, data }) => {
-						if (loading) return "Loading...";
-						if (error) return `Error! ${error.message}`;
+				<div className="comment-index-container">
+					<div className="comment-index-header">
+						{/* <div className="comment-form-user-icon">
 
-						return (
-							<div className="comment-index-container">
-								<div className="comment-index-header">
-									{/* <div className="comment-form-user-icon">
-
-									</div> */}
-									<ul className="comment-index-content">
-									{data.comments.map(comment => (
-										<div key={comment._id} className="comment-item">
-											<div>
-												<Link to={`/comment/${comment._id}`} className="">
-													{comment.comment}
-												</Link>
-											</div>
-										</div>
-									))}
-								</ul>
+						</div> */}
+						<ul className="comment-index-content">
+						{this.props.comments.map(comment => (
+							<div key={comment._id} className="comment-item">
+								<div>
+									<Link to={`/comment/${comment._id}`} className="">
+										{comment.comment}
+									</Link>
 								</div>
 							</div>
-
-						)
-					}
-
-					}
-				</Query>
+						))}
+					</ul>
+					</div>
+				</div>
 			</div>
 		)
 	}

@@ -29,7 +29,17 @@ export default {
               fname
               lname
               profileUrl
-            }
+						}
+					comments {
+						_id
+						comment
+						user {
+							_id
+							fname
+							lname
+							profileUrl
+						}
+					}
           }
         }
       }
