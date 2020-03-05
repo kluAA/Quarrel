@@ -10,14 +10,18 @@ const { IS_LOGGED_IN } = Queries;
 
 class NavBar extends React.Component {
     constructor(props) {
-				super(props);
-				this.state = {
-					// data: "",
-					// isLoggedIn: "",
-					// client: "",
-					// loggedIn: ""
-				};
-		}
+        super(props);
+        this.state = {
+            data: "",
+            isLoggedIn: "",
+            client: "",
+            showModal: false,
+            searchFocus: ""
+        };
+        this.handleModal = this.handleModal.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+	}
 		
     logout(client) {
         return (
@@ -37,15 +41,30 @@ class NavBar extends React.Component {
         )
     }
 
+    handleModal (e) {
+        e.preventDefault();
+        this.setState({ showModal: !this.state.showModal });
+    }
+
+    openModal(e) {
+        e.preventDefault();
+        this.setState({ showModal: true, searchFocus: "search-focus" });
+    }
+
+    closeModal(e) {
+        e.preventDefault();
+        this.setState({ showModal: false, searchFocus: "" });
+    }
+
+ 
 		getLinks = (isLoggedIn) => {
-			// if ({ data: { isLoggedIn } }) {
         return isLoggedIn ? (
             <div className="nav-container">
                 <div className="nav-content">
-                    <div className="nav-logo">
+                    <div className="nav-logo" onClick={this.closeModal}>
                         <Link to="/">Quarrel</Link>
                     </div>
-                    <ul className="nav-links">
+                    <ul className="nav-links" onClick={this.closeModal}>
                         <Link to="/">
                             <li className="nav-home">
                                 <i className="far fa-list-alt"></i>
@@ -69,15 +88,18 @@ class NavBar extends React.Component {
                             <span>Notifications</span>
                         </li>
                     </ul>
-                    <SearchBar />
-                    <QuestionForm />
-                    <SigninButton />
+                    <SearchBar 
+                        openModal={this.openModal} 
+                        closeModal={this.closeModal} 
+                        showModal={this.state.showModal} 
+                        searchFocus={this.state.searchFocus}
+                    />
+                    <QuestionForm closeSearchModal={this.closeModal}/>
+										<SigninButton />
                 </div>
+                {this.state.showModal && <div className="search-modal-background" onClick={this.closeModal}></div>}
             </div>
 				) : (
-    //     );
-    // } else {
-		// 	return (
 				<div className="nav-container">
 					<div className="nav-content">
 						<div className="nav-logo">
@@ -91,7 +113,6 @@ class NavBar extends React.Component {
 					</div>
 				</div>
 			);
-		// }
 	}
 
 	render () {

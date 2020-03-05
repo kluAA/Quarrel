@@ -9,8 +9,7 @@ const TopicSchema = new Schema({
     unique: true
   },
   description: {
-    type: String,
-    required: true
+    type: String
   },
   followers: [
     {
@@ -44,8 +43,13 @@ TopicSchema.statics.addUser = (topicId, userId) => {
   const Topic = mongoose.model("topic");
 
   return Topic.findById(topicId).then(topic => {
-    topic.followers.push(userId);
-    return topic.save()
+    if (!topic.followers.includes(userId)) {
+      topic.followers.push(userId);
+      return topic.save()
+    } else {
+      topic.followers.pull(userId)
+      return topic.save();
+    }
   });
 };
 module.exports = mongoose.model("topic", TopicSchema);

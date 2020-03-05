@@ -25,12 +25,12 @@ class CommentItem extends React.Component {
 					if (loading) return <h1>Loading...</h1>;
 					return (
 						<div onClick={() => this.setState({ edit: true })}>
-							{/* <h1>Details About {data.toy.name}</h1> */}
+							{/* <h1>Details About {data.comment.comment}</h1> */}
 							<p>Comment: {this.props.comment.comment}</p>
-							{/* <ToyEdit
-								toy={data.toy}
+							{/* <CommentEdit
+								commment={data.comment}
 								history={this.props.history}
-								editing={this.state.editing}
+								edit={this.state.edit}
 							/> */}
 						</div>
 					);

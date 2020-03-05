@@ -99,7 +99,7 @@ class CommentForm extends React.Component
 				onCompleted={data => {
 					const { comment } = data.newComment;
 					// this.props.history.push(`c/${this.state.questionId}`)
-					this.loginAndRedirectTo("/", data)
+					// this.loginAndRedirectTo("/", data)
 
 				}}
 			>
@@ -120,23 +120,25 @@ class CommentForm extends React.Component
 						// 		</button>
 						// 	</div>
 
-						<div className="comment-container">
-							<div className="comment-box">
-							<div className="comment-header">
-							<form onSubmit={e => this.handleSubmit(e, newComment)} className="comment-form">
-								<div className="user-icon">
+						<div className="comment-form-container">
+							<div className="comment-form-box">
+							<div className="comment-form-header">
+								<form onSubmit={e => this.handleSubmit(e, newComment)} className="comment-form">
+									<div className="comment-form-user-icon">
 
+									</div>
+								<div className="comment-form-input-box">
+									<input
+										onChange={this.update("comment")}
+										value={this.state.comment}
+										placeholder="Your comment"
+										className="comment-form-input-box"
+									/>
 								</div>
-								<input
-									onChange={this.update("comment")}
-									value={this.state.comment}
-									placeholder="Your comment"
-									className="comment-input-box"
-								/>
-								<div className="comment-footer">
+								<div className="comment-form-button">
+									<button type="submit" className="comment-form-button">Add Comment</button>
+								</div>
 
-								</div>
-								<button type="submit" className="comment-submit-button">Add Comment</button>
 							</form>
 							</div>
 							</div>

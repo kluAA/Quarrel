@@ -3,6 +3,7 @@ import { Query } from "react-apollo";
 import Queries from "../../graphql/queries";
 import { Link } from "react-router-dom";
 const { FETCH_COMMENTS } = Queries;
+const { FETCH_ANSWER } = Queries;
 
 class CommentIndex extends React.Component {
 	constructor(props) {
@@ -18,17 +19,25 @@ class CommentIndex extends React.Component {
 						if (error) return `Error! ${error.message}`;
 
 						return (
-							<div>
-								{data.comments.map(comment => (
-									<div key={comment._id} className="question-item">
-										<div>
-											<Link to={`/comment/${comment._id}`}>
-												{comment.comment}
-											</Link>
+							<div className="comment-index-container">
+								<div className="comment-index-header">
+									{/* <div className="comment-form-user-icon">
+
+									</div> */}
+									<ul className="comment-index-content">
+									{data.comments.map(comment => (
+										<div key={comment._id} className="comment-item">
+											<div>
+												<Link to={`/comment/${comment._id}`} className="">
+													{comment.comment}
+												</Link>
+											</div>
 										</div>
-									</div>
-								))}
+									))}
+								</ul>
+								</div>
 							</div>
+
 						)
 					}
 

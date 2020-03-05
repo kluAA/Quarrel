@@ -12,29 +12,26 @@ class AnswerItem extends React.Component
 		}
 	}
 
-	render()
-	{
-		const { answer } = this.props;
-		return (
-			<div className="qns-answer-item">
-				<div className="ai-user-header">
-					<div className="ai-user-pic">
+    render() {
+        const { answer } = this.props;
+        return (
+            <div className="qns-answer-item">
+                <div className="ai-user-header">
+                    <div className="ai-user-pic">
+                        
+                    </div>
+                </div>
+                <div
+                    id="test"
+                    contentEditable={this.state.edit}
+                    className="ai-content"
+                    dangerouslySetInnerHTML={{ __html: answer.body }}
+                >
+                </div>
 
-					</div>
-				</div>
-				<div
-					id="test"
-					contentEditable={this.state.edit}
-					className="ai-content"
-					dangerouslySetInnerHTML={{ __html: answer.body }}
-				>
-				</div>
-				{/* <CommentForm /> */}
-
-				<CommentForm answerId={this.props.answer._id} />
-				<CommentIndex answerId={this.props.answer._id} />
-
-				{/* <br />
+							<CommentForm answerId={this.props.answer._id} />
+							<CommentIndex answerId={this.props.answer._id} />
+                {/* <br />
                 <p onClick={e => this.setState({edit: true})}>Toggle Edit</p> */}
 			</div>
 		)

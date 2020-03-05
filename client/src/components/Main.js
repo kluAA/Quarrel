@@ -9,6 +9,7 @@ import Feed from "./main/feed";
 import TopicShow from "./topics/TopicShow"
 import QuestionShow from "./questions/QuestionShow";
 import CommentItem from "./comment/CommentItem";
+import SearchResults from "./search/SearchResults";
 
 const Main = () => {
     return (
@@ -20,6 +21,7 @@ const Main = () => {
                     <Route exact path="/" component={Feed} />
                     <Route exact path="/topics" component={TopicShow} />
 										<Route path="/a" component={CommentItem} />
+                    <Route exact path="/search/:query" component={SearchResults} />
                 </Switch>
             </div>
         </div>
