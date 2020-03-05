@@ -13,11 +13,14 @@ class Login extends React.Component {
 			password: "",
 			errors: [],
 			errorArray: [],
-			// errorMessage: "",
+			error: "",
+			errorMessage: "",
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.demoLogin = this.demoLogin.bind(this);
-		// this.handleGraphQLError.bind(this);
+		this.handleGraphQLError.bind(this);
+		// this.renderErrors = this.renderErrors.bind(this);
+
 	}
 
 	componentDidMount()
@@ -38,9 +41,9 @@ class Login extends React.Component {
 	updateCache(client, { data }) {
 		SessionUtil.saveUserToCache(client, data.login);
 		// console.log(data);
-		// client.writeData({
-		// 	data: { isLoggedIn: data.login.loggedIn }
-		// });
+		client.writeData({
+			data: { isLoggedIn: data.login.loggedIn }
+		});
 	}
 
 	loginAndRedirectTo(url, data)
@@ -74,24 +77,24 @@ class Login extends React.Component {
 			}})
 	}
 
-	renderErrors(errors)
-	{
-		let errorArray = errors.map((error) => (
-			error.message
-		))
-		this.setState({ errors: errorArray })
-		console.log(errorArray)
-	}
+	// renderErrors(errors)
+	// {
+	// 	let errorArray = errors.map((error) => (
+	// 		error.message
+	// 	))
+	// 	this.setState({ errors: errorArray })
+	// 	console.log(errorArray)
+	// }
 
-	// renderErrorMessage()
-	// {
-	// 	const { errorMessage } = this.state;
-	// 	return (errorMessage) ? <p>{SessionUtil.stripGraphQLPrefix(errorMessage)}</p> : null;
-	// }
-	// handleGraphQLError(error)
-	// {
-	// 	if (this._isMounted) this.setState({ errorMessage: error.message })
-	// }
+	renderErrorMessage()
+	{
+		const { errorMessage } = this.state;
+		return (errorMessage) ? <p>{SessionUtil.stripGraphQLPrefix(errorMessage)}</p> : null;
+	}
+	handleGraphQLError(error)
+	{
+		if (this._isMounted) this.setState({ errorMessage: error.message })
+	}
 	
 
 	render() {
@@ -102,22 +105,24 @@ class Login extends React.Component {
 				onCompleted={data => {
 					const { token } = data.login;
 					localStorage.setItem("auth-token", token);
+					// this.props.history.push("/");
 					this.loginAndRedirectTo("/", data)
 				}}
-				onError={err => this.renderErrors(err.graphQLErrors)}
-				// onError={error => this.handleGraphQLError(error)}
-				update={(client, data) => this.updateCache(client, data)}
+				// onError={err => this.renderErrors(err.graphQLErrors)}
+				onError={error => this.handleGraphQLError(error)}
+				// onError={console.log(err.graphQLErrors)}
+				update={(client, cache, data) => this.updateCache(client, cache, data)}
 			>
 				{loginUser => (
 					<div>
 					<div className="errorMsg">
 						{/* {this.state.errors[0]} */}
-						{this.state.errors.map(error =>
+						{/* {this.state.errors.map(error =>
 						{
 							return (
 								<li key={error}>{error}</li>
 							);
-						})}
+						})} */}
 					</div>
 					<div className="login-form-box">
 						<label className="session-label">Login</label>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
 import Mutations from "../../graphql/mutations";
-// import * as SessionUtil from "../../util/session_util";
+import * as SessionUtil from "../../util/session_util";
 
 const { REGISTER_USER } = Mutations;
 
@@ -14,7 +14,7 @@ class Register extends React.Component {
 			email: "",
 			password: "",
 			errors: [],
-			errorsArray: []
+			errorArray: []
 		};
 		this.renderErrors = this.renderErrors.bind(this);
 	}
@@ -58,7 +58,7 @@ class Register extends React.Component {
 			<Mutation
 				mutation={REGISTER_USER}
 				onError={err => this.renderErrors(err.graphQLErrors)}
-				// {console.log(err.graphQLErrors)}}
+				// onError={console.log(err.graphQLErrors)}
 				update={(client, cache, data) => this.updateCache(client, cache, data)}
 				onCompleted={data => {
 					const { token } = data.register;

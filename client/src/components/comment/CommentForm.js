@@ -1,16 +1,10 @@
 import React from 'react';
-import { Mutation } from "react-apollo";
+import { Mutation, Query } from "react-apollo";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
-
-const createDOMPurify = require('dompurify');
-const { JSDOM } = require('jsdom');
-const window = (new JSDOM('')).window;
-const DOMPurify = createDOMPurify(window);
-const clean = DOMPurify.sanitize;
-
+import CommentIndex from "./CommentItem";
 const { NEW_COMMENT } = Mutations;
-const { FETCH_COMMENTS } = Queries;
+const { FETCH_COMMENTS, CURRENT_USER } = Queries;
 
 class CommentForm extends React.Component
 {
@@ -18,41 +12,39 @@ class CommentForm extends React.Component
 	{
 		super(props);
 		this.state = {
-			// answerId: this.props.match.params.id,
+			answerId: this.props.answerId,
 			comment: "",
 			bold: false,
-			italic: false
+			italic: false,
+			history: this.props.history
 		}
 		this.update = this.update.bind(this);
 	}
 
-	// componentDidMount()
-	// {
-	// 	this.setState({
-	// 		answerId: this.props.answerId,
-	// 		comment: "",
-	// 	});
-	// }
-
-	update(e)
+	update(field)
 	{
-		this.setState({ comment: e.target.value })
+		return (e) =>
+		{
+			this.setState({
+				[field]: e.target.value
+			});
+		};
 	}
 
 	updateCache(cache, { data: { newComment } }) {
-		// let comments;
-		// try { 
-		// 	comments = cache.readQuery({ query: FETCH_COMMENTS });
-		// } catch (err) {
-		// 	return;
-		// }
-		// if (comments) {
-		// 	let commentArray = comments.comments;
-		// 	cache.writeQuery({
-		// 		query: FETCH_COMMENTS,
-		// 		data: { comments: commentArray.concat(newComment) }
-		// 	});
-		// }
+		let comments;
+		try { 
+			comments = cache.readQuery({ query: FETCH_COMMENTS });
+		} catch (err) {
+			return;
+		}
+		if (comments) {
+			let commentArray = comments.comments;
+			cache.writeQuery({
+				query: FETCH_COMMENTS,
+				data: { comments: commentArray.concat(newComment) }
+			});
+		}
 	}
 
 	// updateState(comment)
@@ -71,25 +63,19 @@ class CommentForm extends React.Component
 	handleSubmit(e, newComment)
 	{
 		e.preventDefault();
-		const cleanBody = clean(this.state.comment)
+		const comment = this.state.comment;
 		newComment({
 			variables: {
 				comment: this.state.comment,
-				// comment: cleanBody,
 				answerId: this.state.answerId
 			}
 		})
 			.then(() =>
 			{
-				this.props.history.push(`/a`)
+				// this.props.history.push("/comments")
 				// this.props.history.push(`/a/${this.state.answerId}`)
 			})
 	}
-
-	// componentWillReceiveProps()
-	// {
-
-	// }
 
 	format(type)
 	{
@@ -102,18 +88,26 @@ class CommentForm extends React.Component
 		}
 	}
 
+
+	loginAndRedirectTo(url, data)
+	{
+		this.props.history.push(url);
+	}
+		
 	render() {
 		const { bold, italic } = this.state;
 		return (
 			<Mutation
 				mutation={NEW_COMMENT}
-				// update={(cache, data) => this.updateCache(cache, data)}
-				// onCompleted={data =>
-				// {
-				// 	this.props.toggleForm();
-				// }}
+				update={(cache, data) => this.updateCache(cache, data)}
+				onCompleted={data => {
+					const { comment } = data.newComment;
+					this.props.history.push(`comment/${this.state.answerId}`)
+					// this.loginAndRedirectTo("/", data)
+
+				}}
 			>
-				{(newComment, {data}) => {
+				{(newComment, {comment}) => {
 					return (
 						<div className="answer-form">
 							<div className="answer-header">
@@ -130,31 +124,29 @@ class CommentForm extends React.Component
 								</button>
 							</div>
 							<form onSubmit={e => this.handleSubmit(e, newComment)}>
-								<textarea
-									onChange={this.update}
-									// onInput={this.update}
-									// value={this.state.comment}
+								{/* <Query
+									query={CURRENT_USER} variables={{ token: localStorage.getItem("auth-token") }}>
+									{({ loading, error, data }) =>
+									{
+										if (loading) return "Loading...";
+										if (error) return `Error! ${error.message}`
+										return (
+											<div className="add-question-modal-user">
+												{`${this.data.currentUser.fname} ${this.data.currentUser.lname} commented`}
+											</div>
+										)
+									}}
+								</Query> */}
+								<input
+									onChange={this.update("comment")}
+									value={this.state.comment}
 									placeholder="Your comment"
 								/>
 								<div className="answer-footer">
 
-									<div className="answer-submit"
-										onClick={e => this.handleSubmit(e, newComment)}>
-										Submit
-                </div>
 								</div>
-								{/* <button type="submit">Submit</button> */}
+								<button type="submit">Add Comment</button>
 							</form>
-							{/* <div
-								id="editable"
-								// className="answer-content"
-								contentEditable="true"
-								spellCheck="false"
-								onInput={this.update}
-							>
-							</div> */}
-
-							
 						</div>
 					)
 				}}

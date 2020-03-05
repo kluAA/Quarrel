@@ -20,7 +20,7 @@ const SessionButton = props =>
 	const renderSessionButton = (client, isLoggedIn) =>
 	{
 		return isLoggedIn ? (
-			<button className="nav-ask-btn" onClick={logout(client)}>Logout</button>
+				<button className="nav-ask-btn" onClick={logout(client)}>Logout</button>
 		) : (
 				<button className="nav-ask-btn">
 					<Link to="/session" className="">Signin</Link>
