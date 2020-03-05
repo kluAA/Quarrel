@@ -68,8 +68,7 @@ class Login extends React.Component
 		})
 	}
 
-	renderErrors(errors)
-	{
+	renderErrors(errors) {
 		if (!errors) return null;
 		let errorArray = errors.map((error) => (
 			error.message
