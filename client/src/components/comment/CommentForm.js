@@ -72,13 +72,11 @@ class CommentForm extends React.Component
 		})
 			.then(() =>
 			{
-				// this.props.history.push("/comments")
-				// this.props.history.push(`/a/${this.state.answerId}`)
+				// this.props.history.push(`/q/${this.state.questionId}`)
 			})
 	}
 
-	format(type)
-	{
+	format(type) {
 		return e =>
 		{
 			e.preventDefault();
@@ -88,9 +86,7 @@ class CommentForm extends React.Component
 		}
 	}
 
-
-	loginAndRedirectTo(url, data)
-	{
+	loginAndRedirectTo(url, data) {
 		this.props.history.push(url);
 	}
 		
@@ -102,51 +98,48 @@ class CommentForm extends React.Component
 				update={(cache, data) => this.updateCache(cache, data)}
 				onCompleted={data => {
 					const { comment } = data.newComment;
-					this.props.history.push(`comment/${this.state.answerId}`)
-					// this.loginAndRedirectTo("/", data)
+					// this.props.history.push(`c/${this.state.questionId}`)
+					this.loginAndRedirectTo("/", data)
 
 				}}
 			>
 				{(newComment, {comment}) => {
 					return (
-						<div className="answer-form">
-							<div className="answer-header">
+						// <div className="comment-form">
+						// 	<div className="comment-header">
+						// 		<div className="user-icon">
+
+						// 		</div>
+						// 	</div>
+						// 	<div className="comment-format">
+						// 		<button className="format" id={bold ? "btn-active" : null} onClick={this.format("bold")}>
+						// 			<i className="fas fa-bold"></i>
+						// 		</button>
+						// 		<button className="format" id={italic ? "btn-active" : null} onClick={this.format("italic")}>
+						// 			<i className="fas fa-italic"></i>
+						// 		</button>
+						// 	</div>
+
+						<div className="comment-container">
+							<div className="comment-box">
+							<div className="comment-header">
+							<form onSubmit={e => this.handleSubmit(e, newComment)} className="comment-form">
 								<div className="user-icon">
 
 								</div>
-							</div>
-							<div className="answer-format">
-								<button className="format" id={bold ? "btn-active" : null} onClick={this.format("bold")}>
-									<i className="fas fa-bold"></i>
-								</button>
-								<button className="format" id={italic ? "btn-active" : null} onClick={this.format("italic")}>
-									<i className="fas fa-italic"></i>
-								</button>
-							</div>
-							<form onSubmit={e => this.handleSubmit(e, newComment)}>
-								{/* <Query
-									query={CURRENT_USER} variables={{ token: localStorage.getItem("auth-token") }}>
-									{({ loading, error, data }) =>
-									{
-										if (loading) return "Loading...";
-										if (error) return `Error! ${error.message}`
-										return (
-											<div className="add-question-modal-user">
-												{`${this.data.currentUser.fname} ${this.data.currentUser.lname} commented`}
-											</div>
-										)
-									}}
-								</Query> */}
 								<input
 									onChange={this.update("comment")}
 									value={this.state.comment}
 									placeholder="Your comment"
+									className="comment-input-box"
 								/>
-								<div className="answer-footer">
+								<div className="comment-footer">
 
 								</div>
-								<button type="submit">Add Comment</button>
+								<button type="submit" className="comment-submit-button">Add Comment</button>
 							</form>
+							</div>
+							</div>
 						</div>
 					)
 				}}

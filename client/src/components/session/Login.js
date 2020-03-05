@@ -20,16 +20,13 @@ class Login extends React.Component {
 		this.demoLogin = this.demoLogin.bind(this);
 		this.handleGraphQLError.bind(this);
 		// this.renderErrors = this.renderErrors.bind(this);
-
 	}
 
-	componentDidMount()
-	{
+	componentDidMount() {
 		this._isMounted = true;
 	}
 
-	componentWillUnmount()
-	{
+	componentWillUnmount() {
 		this.setState({ errorMessage: "" });
 		this._isMounted = false;
 	}
@@ -46,8 +43,7 @@ class Login extends React.Component {
 		});
 	}
 
-	loginAndRedirectTo(url, data)
-	{
+	loginAndRedirectTo(url, data) {
 		SessionUtil.saveUserToLocalStorage(data.login);
 		this.props.history.push(url);
 	}
