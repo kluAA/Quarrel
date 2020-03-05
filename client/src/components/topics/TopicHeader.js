@@ -66,6 +66,21 @@ class TopicHeader extends React.Component {
               return null
             }
 
+            // if (data.currentUser.topics.find(topic => topic._id === this.props.topic._id)) {
+            //   if (!this.state.follow) {
+            //     this.setState({
+            //       follow: true
+            //     })
+            //   }
+            // } else {
+            //   if (this.state.follow) {
+            //     this.setState({
+            //       follow: false
+            //     })
+            //   }
+            // }
+
+            //need to refactor to make more effecient
             if (this.props.topic.followers.find(object => object._id === data.currentUser._id)) {
               if (!this.state.follow) {
                 this.setState({

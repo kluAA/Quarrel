@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const graphql = require("graphql");
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLBoolean, GraphQLList } = graphql;
-const Topic = mongoose.model("topic");
+const User = mongoose.model("user");
 
 const UserType = new GraphQLObjectType({
     name: "UserType",
@@ -17,7 +17,9 @@ const UserType = new GraphQLObjectType({
         topics: {
             type: new GraphQLList(require("./topic_type")),
             resolve(parentValue) {
-                return Topic.findData(parentValue.id, 'topics');
+                return User.findById(parentValue._id)
+                    .populate("answers")
+                    .then(user => user.topics);
             }
         }
     })
