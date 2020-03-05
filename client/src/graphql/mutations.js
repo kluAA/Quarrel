@@ -54,6 +54,9 @@ export default {
                 body
                 user {
                     _id
+                    fname
+                    lname
+                    profileUrl
                 }
                 question {
                     _id

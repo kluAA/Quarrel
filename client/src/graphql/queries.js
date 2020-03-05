@@ -26,9 +26,13 @@ export default {
             _id
             body
             user {
+              _id
               fname
               lname
               profileUrl
+            }
+            question {
+              _id
             }
           }
         }

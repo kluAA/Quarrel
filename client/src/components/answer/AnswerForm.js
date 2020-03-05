@@ -2,6 +2,7 @@ import React from 'react';
 import { Mutation } from "react-apollo";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
+import { withRouter } from "react-router-dom";
 
 const createDOMPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
@@ -10,7 +11,7 @@ const DOMPurify = createDOMPurify(window);
 const clean = DOMPurify.sanitize;
 
 const { NEW_ANSWER } = Mutations;
-const { FETCH_QUESTION } = Queries;
+const { FETCH_QUESTION, FETCH_QUESTIONS } = Queries;
 
 class AnswerForm extends React.Component {
     constructor(props) {
@@ -18,7 +19,8 @@ class AnswerForm extends React.Component {
         this.state = {
             body: "",
             bold: false,
-            italic: false
+            italic: false,
+            insertOrderedList: false
         }
         this.update = this.update.bind(this);
     }
@@ -35,7 +37,7 @@ class AnswerForm extends React.Component {
                 variables: { id: this.props.questionId } 
             }).question;
         } catch (err) {
-            console.log(err);
+            return;
         }
         if (question) {
             console.log(question);
@@ -48,6 +50,20 @@ class AnswerForm extends React.Component {
         }
     }
 
+    updateFeedCache(cache, { data}) {
+        let questions;
+        try {
+            questions = cache.readQuery({
+                query: FETCH_QUESTIONS,
+            }).questions;
+        } catch (err) {
+            console.log(err);
+        }
+        if (questions) {
+            console.log(questions)
+        }
+    }
+
     handleSubmit(e, newAnswer) {
         e.preventDefault();
         const cleanBody = clean(this.state.body)
@@ -56,7 +72,7 @@ class AnswerForm extends React.Component {
                 body: cleanBody,
                 questionId: this.props.questionId
             }
-        })
+        }).then(({data}) => this.props.history.push(`/q/${data.newAnswer.question._id}`))
     }
 
     format(type) {
@@ -69,11 +85,18 @@ class AnswerForm extends React.Component {
     }
 
     render() {
-        const { bold, italic } = this.state;
+        const { bold, italic, insertOrderedList } = this.state;
         return (
             <Mutation 
                 mutation={NEW_ANSWER}
-                update={(cache, data) => this.updateCache(cache, data)}
+                update={(cache, data) => {
+                    // if (this.props.match.path === "/") {
+                    //     this.updateFeedCache(cache, data);
+                    //     return null;
+                    // };
+                    this.updateCache(cache, data);
+                
+                }}
                 onCompleted={data => {
                     this.props.toggleForm();
                 }}
@@ -92,6 +115,9 @@ class AnswerForm extends React.Component {
                                 </button>
                                 <button className="format" id={italic ? "btn-active" : null}onClick={this.format("italic")}>
                                     <i className="fas fa-italic"></i>
+                                </button>
+                                <button className="format" id={insertOrderedList ? "btn-active" : null} onClick={this.format("insertOrderedList")}>
+                                    <i className="fas fa-list-ol"></i>
                                 </button>
                             </div>
                             <div
@@ -119,4 +145,4 @@ class AnswerForm extends React.Component {
     }
 }
 
-export default AnswerForm;
+export default withRouter(AnswerForm);
