@@ -99,14 +99,15 @@ const mutation = new GraphQLObjectType({
             args: {
                 name: { type: GraphQLString },
                 description: { type: GraphQLString },
+                imageUrl: { type: GraphQLString },
             },
-            async resolve(_, { name, description }, ctx) {
+            async resolve(_, { name, description, imageUrl }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
-                    return new Topic({ name, description }).save()
+                    return new Topic({ name, description, imageUrl }).save()
                 } else {
                     // throw new Error("Must be logged in to create an answer")
-                    return new Topic({ name, description }).save()
+                    return new Topic({ name, description, imageUrl }).save()
                 }
             }
         },

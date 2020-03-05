@@ -61,13 +61,26 @@ export default {
         topics{
           _id
           name
+          imageUrl
           followers {
             _id
           }
         }
       }
     `,
-    RELATED_QUESTIONS: gql`
+  FETCH_TOPIC: gql`
+      query FetchTopic($id: ID!) {
+        question(_id: $id) {
+          _id
+          name
+          imageUrl
+          followers {
+            _id
+          }
+        }
+      }
+    `,
+  RELATED_QUESTIONS: gql`
       query RelatedQuestions($questionId: ID!) {
         relatedQuestions(questionId: $questionId) {
           _id
@@ -78,7 +91,7 @@ export default {
         } 
       }
     `,
-    SEARCH_TOPICS: gql`
+  SEARCH_TOPICS: gql`
       query SearchTopics($query: String) {
         searchTopics(query: $query) {
           _id
