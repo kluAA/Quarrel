@@ -28,7 +28,10 @@ const TopicSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "answer"
     }
-  ]
+  ],
+  imageUrl: {
+    type: String
+  }
 });
 
 

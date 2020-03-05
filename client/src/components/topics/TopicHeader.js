@@ -47,30 +47,11 @@ class TopicHeader extends React.Component {
     }
   }
 
-  renderImg(topicId) {
-    console.log(topicId)
-    switch (topicId) {
-      //science
-      case "5e5fe9021c9d44000044726d":
-        return "https://quarrel-images.s3.us-east-2.amazonaws.com/1583426339036"
-      // Technology
-      case "5e5fece11c9d4400006c46fc":
-        return "https://quarrel-images.s3.us-east-2.amazonaws.com/1583429486218"
-      // Movies
-      case "5e5fed3e1c9d4400006c46fe":
-        return "https://quarrel-images.s3.us-east-2.amazonaws.com/1583428284510"
-      // History
-      case "5e5fed2f1c9d4400006c46fd":
-        return "https://quarrel-images.s3.us-east-2.amazonaws.com/1583428364362"
-      // Cooking
-      case "5e5fed4a1c9d4400006c46ff":
-        return "https://quarrel-images.s3.us-east-2.amazonaws.com/1583428715540"
-      // Music
-      case "5e5fee2e1c9d4400006c4700":
-        return "https://quarrel-images.s3.us-east-2.amazonaws.com/1583429288811"
-      default:
-        return ""
-    }
+
+
+  renderImg() {
+    console.log(this.props.topic.imageUrl)
+    return this.props.topic.imageUrl
   }
 
   render() {
@@ -80,9 +61,8 @@ class TopicHeader extends React.Component {
           <div className="photo-container">
             <div className="TopicPhoto">
               <div className="topic_photo_img">
-                <Link to="/topic/Technology">
-                  <img className="icon" src={this.renderImg(this.props.topic._id)}>
-                  </img>
+                <Link to={`/topic/${this.props.topic.name}`} >
+                  <img className="icon" src={this.renderImg()}></img>
                 </Link>
               </div>
             </div>
@@ -149,4 +129,4 @@ class TopicHeader extends React.Component {
   }
 }
 
-export default withRouter(TopicHeader);
+export default TopicHeader;
