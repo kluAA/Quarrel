@@ -147,7 +147,6 @@ const mutation = new GraphQLObjectType({
                 }
             }
         },
-        },
         updateProfileUrl: {
             type: UserType,
             args: {
