@@ -8,14 +8,14 @@ const { CURRENT_USER } = Queries
 
 const { FOLLOW_TOPIC } = Mutations
 
-class TopicHeader extends React.Component {
+class TopicShow extends React.Component {
   constructor(props) {
     super(props)
     this.handleClick = this.handleClick.bind(this)
     this.state = {
-      name: this.props.topic.name,
       message: "",
-      follow: false
+      follow: false,
+      name: this.props.topic.name
     }
     this.renderFollowIcon = this.renderFollowIcon.bind(this)
     this.renderImg = this.renderImg.bind(this)
@@ -103,7 +103,7 @@ class TopicHeader extends React.Component {
           <div className="photo-container">
             <div className="TopicPhoto">
               <div className="topic_photo_img">
-                <Link to={`/topic/${this.state.name}`} >
+                <Link to={`/topic/${this.state.name}`} topic={this.props.topic} >
                   <img className="icon" src={this.renderImg()}></img>
                 </Link>
               </div>
@@ -111,7 +111,7 @@ class TopicHeader extends React.Component {
           </div>
           <div className="topic-content">
             <div className="TopicName">
-              <h1>{this.state.name}</h1>
+              <h1>{this.props.topic.name}</h1>
             </div>
             <div>
               <div className="icon_action_bar">
@@ -171,4 +171,4 @@ class TopicHeader extends React.Component {
   }
 }
 
-export default TopicHeader;
+export default TopicShow;
