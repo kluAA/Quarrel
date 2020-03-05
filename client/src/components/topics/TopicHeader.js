@@ -2,9 +2,8 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom"
 import { Mutation } from "react-apollo"
 import Mutations from "../../graphql/mutations"
-import Queries from "../../graphql/queries"
+
 const { FOLLOW_TOPIC } = Mutations
-const { FETCH_TOPICS } = Queries
 
 class TopicHeader extends React.Component {
   constructor(props) {
@@ -12,16 +11,12 @@ class TopicHeader extends React.Component {
     this.handleClick = this.handleClick.bind(this)
     this.state = {
       message: "",
-      follow: false
+      follow: this.props.topic.followers
     }
+    debugger
     this.renderFollowIcon = this.renderFollowIcon.bind(this)
-    this.countFollowers = this.countFollowers.bind(this)
   }
 
-  countFollowers() {
-    let followers = Array.from(this.props.topic.followers)
-    return followers.length
-  }
 
   handleClick(e, followTopic) {
     e.preventDefault()
@@ -81,7 +76,7 @@ class TopicHeader extends React.Component {
                         mutation={FOLLOW_TOPIC}
                         update={this.updateCache}
                         onError={err => this.setState({ message: err.message })}
-                        update={(cache, data) => this.updateCache(cache, data)}
+
                       >
                         {(followTopic) => (
                           <div className="ui_button-inner flex" onClick={(e) => this.handleClick(e, followTopic)}>
@@ -92,7 +87,7 @@ class TopicHeader extends React.Component {
                               <span className="ui_button_label">Follow</span>
                               <span className="ui_button_count">
                                 <span className="bullet">.</span>
-                                <span className="ui_button_count_inner">{this.countFollowers()}</span>
+                                <span className="ui_button_count_inner">{this.props.topic.followers.length}</span>
                               </span>
                             </div>
                           </div>
