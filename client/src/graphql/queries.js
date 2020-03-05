@@ -41,6 +41,7 @@ export default {
           fname
           lname
           email
+          profileUrl
         }
       }
     `,

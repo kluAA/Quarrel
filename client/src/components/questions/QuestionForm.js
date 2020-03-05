@@ -173,7 +173,10 @@ class QuestionForm extends React.Component {
                                                     if (error) return `Error! ${error.message}`
                                                     return (
                                                         <div className="add-question-modal-user">
-                                                            {`${this.capitalize(data.currentUser.fname)} ${this.capitalize(data.currentUser.lname)} asked`}
+                                                            <img className="question-modal-user-pic" src={data.currentUser.profileUrl} />
+                                                            <div className="question-modal-user-name">
+                                                                {`${this.capitalize(data.currentUser.fname)} ${this.capitalize(data.currentUser.lname)} asked`}
+                                                            </div>
                                                         </div>
                                                     )
                                                 }}
