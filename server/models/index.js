@@ -4,3 +4,4 @@ require("./Question");
 require("./Answer");
 require("./Topic");
 require("./Comment");
+require("./Upvote");

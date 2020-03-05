@@ -141,11 +141,11 @@ const mutation = new GraphQLObjectType({
         upvoteAnswer: {
             type: AnswerType,
             args: {
-                answerId: { type: GraphQLString },
+                answerId: { type: GraphQLID },
             },
             async resolve(parentValue, { answerId }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
-                return Upvote.new({ user: validUser._id, answer: answerId }).save()
+                return new Upvote({ user: validUser._id, answer: answerId }).save()
                     .then(upvote => {
                         return Answer.findByIdAndUpdate(answerId, { $push: { upvotes: upvote._id } }).exec();
                     })

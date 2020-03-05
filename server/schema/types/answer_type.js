@@ -3,6 +3,7 @@ const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLList } = graphql;
 
 const mongoose = require("mongoose");
 const Answer = mongoose.model("answer");
+const UpvoteType = require("./upvote_type");
 
 const AnswerType = new GraphQLObjectType({
   name: "AnswerType",
@@ -27,6 +28,14 @@ const AnswerType = new GraphQLObjectType({
           .then(answer=> {
             return answer.question
           });
+      }
+    },
+    upvotes: {
+      type: new GraphQLList(UpvoteType),
+      resolve(parentValue) {
+        return Answer.findById(parentValue.id)
+          .populate("upvotes")
+          .then(answer => answer.upvotes);
       }
     }
   })

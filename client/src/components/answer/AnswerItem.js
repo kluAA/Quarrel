@@ -1,4 +1,5 @@
 import React from 'react';
+import Upvote from "../upvote/Upvote";
 
 class AnswerItem extends React.Component {
     constructor(props) {
@@ -27,6 +28,7 @@ class AnswerItem extends React.Component {
                 </div>
                 {/* <br />
                 <p onClick={e => this.setState({edit: true})}>Toggle Edit</p> */}
+                <Upvote answer={answer} questionId={this.props.questionId} />
             </div>
         )
     }

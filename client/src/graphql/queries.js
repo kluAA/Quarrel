@@ -30,6 +30,11 @@ export default {
               lname
               profileUrl
             }
+            upvotes {
+              user {
+                _id
+              }
+            }
           }
         }
       }
