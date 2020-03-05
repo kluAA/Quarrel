@@ -57,6 +57,13 @@ const RootQueryType = new GraphQLObjectType({
                 return Question.findMatches(args.question);
             }
         },
+        relatedQuestions: {
+            type: new GraphQLList(QuestionType),
+            args: { questionId: { type: GraphQLID }},
+            resolve(_, args) {
+                return Question.findRelatedQuestions(args.questionId);
+            }
+        },
         answers: {
             type: new GraphQLList(AnswerType),
             resolve() {
