@@ -29,8 +29,7 @@ class Login extends React.Component {
 		// });
 	}
 
-	loginAndRedirectTo(url, data)
-	{
+	loginAndRedirectTo(url, data) {
 		SessionUtil.saveUserToLocalStorage(data.login);
 		this.props.history.push(url);
 	}
@@ -57,11 +56,11 @@ class Login extends React.Component {
 			variables: {
 				email: "demouser@gmail.com",
 				password: "password"
-			}})
+			}
+		})
 	}
 
-	renderErrors(errors)
-	{
+	renderErrors(errors) {
 		let errorArray = errors.map((error) => (
 			error.message
 		))
@@ -84,46 +83,46 @@ class Login extends React.Component {
 			>
 				{loginUser => (
 					<div>
-					<div className="errorMsg">
-						{this.state.errors[0]}
-					</div>
-					<div className="login-form-box">
-						<label className="session-label">Login</label>
-						<form
-							className="login-form"
+						<div className="errorMsg">
+							{this.state.errors[0]}
+						</div>
+						<div className="login-form-box">
+							<label className="session-label">Login</label>
+							<form
+								className="login-form"
 								onSubmit={this.handleSubmit(loginUser, {
 									email,
 									password
 								})}
-						>
-							<div className="form_column">
-								<input
-									className="text_box"
-									value={this.state.email}
-									onChange={this.update("email")}
-									placeholder="Email"
-								/>
-							</div>
-							<div className="form_column">
-							<input
-								className="text_box"
-								value={this.state.password}
-								onChange={this.update("password")}
-								type="password"
-								placeholder="Password"
-								/>
-								</div>
-							<button type="submit" className="form-button">
-								Login
-							</button>
-							<button
-								onClick={e => this.demoLogin(e, loginUser)}
-								className="demo-button"
 							>
-								Demo Login
+								<div className="form_column">
+									<input
+										className="text_box"
+										value={this.state.email}
+										onChange={this.update("email")}
+										placeholder="Email"
+									/>
+								</div>
+								<div className="form_column">
+									<input
+										className="text_box"
+										value={this.state.password}
+										onChange={this.update("password")}
+										type="password"
+										placeholder="Password"
+									/>
+								</div>
+								<button type="submit" className="form-button">
+									Login
 							</button>
-						</form>
-					</div>
+								<button
+									onClick={e => this.demoLogin(e, loginUser)}
+									className="demo-button"
+								>
+									Demo Login
+							</button>
+							</form>
+						</div>
 					</div>
 				)}
 			</Mutation>
