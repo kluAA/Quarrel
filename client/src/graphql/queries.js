@@ -57,6 +57,7 @@ export default {
           name
           followers {
             _id
+<<<<<<< HEAD
           }
         }
       }
@@ -68,10 +69,13 @@ export default {
           body
           user {
             email
+=======
+>>>>>>> b762e49057337ed7a709fb3940fc00b5627769b9
           }
         }
       }
     `,
+<<<<<<< HEAD
 	FETCH_ANSWER: gql`
       query FetchAnswer($id: ID!) {
         answer(_id: $id) {
@@ -118,6 +122,8 @@ export default {
         }
       }
     `,
+=======
+>>>>>>> b762e49057337ed7a709fb3940fc00b5627769b9
     RELATED_QUESTIONS: gql`
       query RelatedQuestions($questionId: ID!) {
         relatedQuestions(questionId: $questionId) {
