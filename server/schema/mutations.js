@@ -121,6 +121,20 @@ const mutation = new GraphQLObjectType({
                     User.addTopic(topicId, validUser._id)
                 )
             }
+        },
+        updateProfileUrl: {
+            type: UserType,
+            args: {
+                profileUrl: { type: GraphQLString }
+            },
+            async resolve(parentValue, { profileUrl }, ctx) {
+                const validUser = await AuthService.verifyUser({ token: ctx.token });
+                if (validUser.loggedIn) {
+                    return User.findByIdAndUpdate(validUser._id, { profileUrl }).exec();
+                } else {
+                    throw new Error("Must be logged in to upload!")
+                }
+            }
         }
     }
 });

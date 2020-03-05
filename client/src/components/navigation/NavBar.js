@@ -6,6 +6,7 @@ import SearchBar from "./SearchBar";
 import QuestionForm from "../questions/QuestionForm";
 import * as SessionUtil from "../../util/session_util";
 import SigninButton from "./SigninButton";
+import ProfileUpload from "./ProfileUpload";
 const { IS_LOGGED_IN } = Queries;
 
 class NavBar extends React.Component {
@@ -97,6 +98,7 @@ class NavBar extends React.Component {
                     />
                     <QuestionForm closeSearchModal={this.closeModal}/>
 					<SigninButton />
+                    <ProfileUpload />
                 </div>
                 {this.state.showModal && <div className="search-modal-background" onClick={this.closeModal}></div>}
             </div>

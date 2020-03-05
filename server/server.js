@@ -6,6 +6,7 @@ const expressGraphQL = require("express-graphql");
 const models = require("./models/index");
 const schema = require("./schema/schema");
 const cors = require("cors");
+const uploadRoutes = require("./upload_route");
 
 const app = express();
 
@@ -20,6 +21,7 @@ mongoose
 
 app.use(bodyParser.json());
 app.use(cors());
+app.use("/api/", uploadRoutes);
 
 app.use(
     "/graphql",

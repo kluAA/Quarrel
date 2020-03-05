@@ -71,5 +71,15 @@ export default {
                 }
             }
         }
+    `,
+    UPDATE_PROFILE_PIC: gql`
+        mutation UpdateProfilePic($profileUrl: String!) {
+            updateProfileUrl(profileUrl: $profileUrl) {
+                _id
+                fname
+                profileUrl
+            }
+        }
+
     `
 }

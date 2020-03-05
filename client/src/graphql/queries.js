@@ -25,6 +25,11 @@ export default {
           answers {
             _id
             body
+            user {
+              fname
+              lname
+              profileUrl
+            }
           }
         }
       }

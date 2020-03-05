@@ -22,6 +22,9 @@ const UserSchema = new Schema({
         min: 8,
         max: 32
     },
+    profileUrl: {
+        type: String
+    },
     topics: [
         {
             type: Schema.Types.ObjectId,
