@@ -123,7 +123,6 @@ const mutation = new GraphQLObjectType({
                     User.addTopic(topicId, validUser._id)
                 )
             }
-<<<<<<< HEAD
 				},
 				newComment: {
             type: CommentType,
@@ -148,7 +147,6 @@ const mutation = new GraphQLObjectType({
                 }
             }
         },
-=======
         },
         updateProfileUrl: {
             type: UserType,
@@ -164,7 +162,6 @@ const mutation = new GraphQLObjectType({
                 }
             }
         }
->>>>>>> 71ce32e639f1c1ca0f88ef14d81ce57003c8d774
     }
 });
 
