@@ -4,21 +4,16 @@ import Queries from "../../graphql/queries";
 import { Link } from "react-router-dom";
 const { FETCH_COMMENTS } = Queries;
 
-
-class CommentIndex extends React.Component
-{
-	constructor(props)
-	{
+class CommentIndex extends React.Component {
+	constructor(props) {
 		super(props);
 	}
 
-	render()
-	{
+	render() {
 		return (
 			<div className="question-index">
 				<Query query={FETCH_COMMENTS}>
-					{({ loading, error, data }) =>
-					{
+					{({ loading, error, data }) => {
 						if (loading) return "Loading...";
 						if (error) return `Error! ${error.message}`;
 
@@ -27,7 +22,7 @@ class CommentIndex extends React.Component
 								{data.comments.map(comment => (
 									<div key={comment._id} className="question-item">
 										<div>
-											<Link to={`/${comment._id}`}>
+											<Link to={`/comment/${comment._id}`}>
 												{comment.comment}
 											</Link>
 										</div>

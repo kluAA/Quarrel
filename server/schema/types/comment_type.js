@@ -11,36 +11,32 @@ const CommentType = new GraphQLObjectType({
 		comment: { type: GraphQLString },
 		user: {
 			type: require("./user_type"),
-			resolve(parentValue)
-			{
+			resolve(parentValue) {
 				return Comment.findById(parentValue._id)
 					.populate("user")
-					.then(comment =>
-					{
+					.then(comment => {
 						return comment.user
 					});
 			}
 		},
-		question: {
-			type: require("./question_type"),
-			resolve(parentValue)
-			{
-				return Comment.findById(parentValue._id)
-					.populate("question")
-					.then(comment =>
-					{
-						return comment.question
-					});
-			}
-		},
+		// question: {
+		// 	type: require("./question_type"),
+		// 	resolve(parentValue)
+		// 	{
+		// 		return Comment.findById(parentValue._id)
+		// 			.populate("question")
+		// 			.then(comment =>
+		// 			{
+		// 				return comment.question
+		// 			});
+		// 	}
+		// },
 		answer: {
 			type: require("./answer_type"),
-			resolve(parentValue)
-			{
-					return Answer.findById(parentValue._id)
+			resolve(parentValue) {
+					return Comment.findById(parentValue._id)
 						.populate("answer")
-						.then(comment =>
-						{
+						.then(comment => {
 							return comment.answer
 						});
 			}

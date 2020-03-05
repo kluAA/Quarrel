@@ -24,8 +24,12 @@ export default {
           question
           answers {
             _id
-            body
-          }
+						body
+						comments {
+							_id
+							comment
+						}
+					}
         }
       }
     `,
@@ -62,10 +66,10 @@ export default {
       }
 		`,
 	FETCH_ANSWERS: gql`
-      {
+      query FetchAnswers {
         answers {
           _id
-          answer
+          body
           user {
             email
           }
@@ -73,14 +77,48 @@ export default {
       }
     `,
 	FETCH_ANSWER: gql`
-      query FetchQuestion($id: ID!) {
+      query FetchAnswer($id: ID!) {
         answer(_id: $id) {
           _id
-          answer
+					body
+					question {
+						_id
+						question
+					}
           comments {
             _id
             comment
           }
+        }
+      }
+		`,
+		FETCH_COMMENTS: gql`
+      query FetchComments {
+        comments {
+          _id
+          comment
+          user {
+            email
+					}
+					answer {
+						_id
+						body
+					}
+        }
+      }
+    `,
+	FETCH_COMMENT: gql`
+      query FetchComment($id: ID!) {
+        comment(_id: $id) {
+          _id
+          comment
+          answer {
+            _id
+            body
+					}
+					user {
+						email
+					}
         }
       }
     `,

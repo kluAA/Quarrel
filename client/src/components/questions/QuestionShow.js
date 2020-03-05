@@ -45,7 +45,7 @@ class QuestionShow extends React.Component {
                         return (
                             <AnswerItem 
                                 key={answer._id}
-                                answer={answer}
+																answer={answer}
                             />
                         )
                     })

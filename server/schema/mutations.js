@@ -127,8 +127,8 @@ const mutation = new GraphQLObjectType({
 				newComment: {
             type: CommentType,
             args: {
-                body: { type: GraphQLString },
-                questionId: { type: GraphQLID },
+                comment: { type: GraphQLString },
+                answerId: { type: GraphQLID },
             },
             async resolve(_, { comment, answerId }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
@@ -139,7 +139,6 @@ const mutation = new GraphQLObjectType({
                         return comment;
                     })
                 } else {
-                    // throw new Error("Must be logged in to create an comment")
                     return new Comment({ comment, user: validUser._id, answer: answerId }).save()
                         .then(comment => {
                             Answer.findByIdAndUpdate(answerId, { $push: { comments: comment._id } }).exec();

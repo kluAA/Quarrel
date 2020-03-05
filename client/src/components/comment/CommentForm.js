@@ -10,7 +10,7 @@ const DOMPurify = createDOMPurify(window);
 const clean = DOMPurify.sanitize;
 
 const { NEW_COMMENT } = Mutations;
-const { FETCH_QUESTION } = Queries;
+const { FETCH_ANSWER } = Queries;
 
 class CommentForm extends React.Component
 {
@@ -18,7 +18,7 @@ class CommentForm extends React.Component
 	{
 		super(props);
 		this.state = {
-			body: "",
+			comment: "",
 			bold: false,
 			italic: false
 		}
@@ -32,9 +32,9 @@ class CommentForm extends React.Component
 
 	updateCache(cache, { data })
 	{
-		// let answers;
+		// let comments;
 		// try { 
-		//     answers = cache.readQuery({ FETCH_QUESTIONS })
+		//     comments = cache.readQuery({ FETCH_ANSWERS })
 		// }
 	}
 
@@ -61,8 +61,7 @@ class CommentForm extends React.Component
 		}
 	}
 
-	render()
-	{
+	render() {
 		const { bold, italic } = this.state;
 		return (
 			<Mutation
@@ -73,8 +72,7 @@ class CommentForm extends React.Component
 					this.props.toggleForm();
 				}}
 			>
-				{newComment =>
-				{
+				{newComment => {
 					return (
 						<div className="answer-form">
 							<div className="answer-header">
@@ -92,7 +90,7 @@ class CommentForm extends React.Component
 							</div>
 							<div
 								id="editable"
-								className="answer-content"
+								// className="answer-content"
 								contentEditable="true"
 								spellCheck="false"
 								onInput={this.update}
@@ -104,7 +102,7 @@ class CommentForm extends React.Component
 								<div className="answer-submit"
 									onClick={e => this.handleSubmit(e, newComment)}>
 									Submit
-                                </div>
+                </div>
 							</div>
 						</div>
 					)

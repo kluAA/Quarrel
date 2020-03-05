@@ -29,7 +29,15 @@ const TopicType = new GraphQLObjectType({
 
         return Topic.findData(parentValue.id, 'users');
       }
-    }
+		},
+		comments: {
+			type: new GraphQLList(require("./comment_type")),
+			resolve(parentValue)
+			{
+
+				return Topic.findData(parentValue.id, 'users');
+			}
+		},
   })
 });
 

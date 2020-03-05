@@ -8,6 +8,7 @@ import Feed from "./main/feed";
 // import QuestionForm from "./questions/QuestionForm";
 import TopicShow from "./topics/TopicShow"
 import QuestionShow from "./questions/QuestionShow";
+import CommentItem from "./comment/CommentItem";
 
 const Main = () => {
     return (
@@ -18,7 +19,7 @@ const Main = () => {
                 <Switch>
                     <Route exact path="/" component={Feed} />
                     <Route exact path="/topics" component={TopicShow} />
-
+										<Route path="/a" component={CommentItem} />
                 </Switch>
             </div>
         </div>
