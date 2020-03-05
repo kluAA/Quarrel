@@ -43,3 +43,8 @@
 .search-results-list li:hover .search-results-match {
     text-decoration: underline;
 }
+
+.search-results-match > span {
+    color: #636466;
+    font-weight: 500;
+}

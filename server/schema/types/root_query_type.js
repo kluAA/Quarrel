@@ -89,6 +89,13 @@ const RootQueryType = new GraphQLObjectType({
             resolve(parentValue, { _id }) {
                 return Topic.findById(_id);
             }
+        },
+        searchTopics: {
+            type: new GraphQLList(TopicType),
+            args: { query: { type: GraphQLString } },
+            resolve(_, args) {
+                return Topic.findMatches(args.query);
+            }
         }
     })
 });

@@ -32,7 +32,6 @@ QuestionSchema.statics.findRelatedQuestions = (questionId) => {
     return Question.findById(questionId)
         .then(foundQuestion => {
             const questionText = findLongestWord(foundQuestion.question)
-            console.log(questionText);
             return Question.find({ question: { $regex: new RegExp(questionText, 'i') } });
         });
 }
