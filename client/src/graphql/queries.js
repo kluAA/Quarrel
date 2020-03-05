@@ -60,5 +60,16 @@ export default {
           }
         }
       }
+    `,
+    RELATED_QUESTIONS: gql`
+      query RelatedQuestions($questionId: ID!) {
+        relatedQuestions(questionId: $questionId) {
+          _id
+          question
+          answers {
+            _id
+          }
+        } 
+      }
     `
 };
