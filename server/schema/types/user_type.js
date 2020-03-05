@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const graphql = require("graphql");
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLBoolean, GraphQLList } = graphql;
-const User = mongoose.model("user");
+const Topic = mongoose.model("topic");
 
 const UserType = new GraphQLObjectType({
     name: "UserType",
@@ -14,10 +14,10 @@ const UserType = new GraphQLObjectType({
         token: { type: GraphQLString },
         loggedIn: { type: GraphQLBoolean },
         errors: { type: new GraphQLList(GraphQLString) },
-        followers: {
-            type: new GraphQLList(require("./user_type")),
+        topics: {
+            type: new GraphQLList(require("./topic_type")),
             resolve(parentValue) {
-                return Topic.findData(parentValue.id, 'users');
+                return Topic.findData(parentValue.id, 'topics');
             }
         }
     })

@@ -6,7 +6,7 @@ import Feed from "./main/feed";
 // import Login from "./session/Login";
 // import Register from "./session/Register";
 // import QuestionForm from "./questions/QuestionForm";
-import TopicShow from "./topics/TopicShow"
+import TopicsShow from "./topics/TopicsShow"
 import QuestionShow from "./questions/QuestionShow";
 import SearchResults from "./search/SearchResults";
 
@@ -18,7 +18,7 @@ const Main = () => {
             <div className="main-body">
                 <Switch>
                     <Route exact path="/" component={Feed} />
-                    <Route exact path="/topics" component={TopicShow} />
+                    <Route exact path="/topics" component={TopicsShow} />
                     <Route exact path="/search/:query" component={SearchResults} />
                 </Switch>
             </div>
