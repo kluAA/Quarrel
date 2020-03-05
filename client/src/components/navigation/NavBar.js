@@ -6,6 +6,7 @@ import SearchBar from "./SearchBar";
 import QuestionForm from "../questions/QuestionForm";
 import * as SessionUtil from "../../util/session_util";
 import SigninButton from "./SigninButton";
+import ProfileUpload from "./ProfileUpload";
 const { IS_LOGGED_IN } = Queries;
 
 class NavBar extends React.Component {
@@ -56,16 +57,9 @@ class NavBar extends React.Component {
         this.setState({ showModal: false, searchFocus: "" });
     }
 
-<<<<<<< HEAD
- 
-		getLinks = (isLoggedIn) => {
-        return isLoggedIn ? (
-=======
     render() {
-        // let { data } = this.data;
         let { logout } = this.logout;
         return (
->>>>>>> b762e49057337ed7a709fb3940fc00b5627769b9
             <div className="nav-container">
                 <div className="nav-content">
                     <div className="nav-logo" onClick={this.closeModal}>
@@ -102,46 +96,11 @@ class NavBar extends React.Component {
                         searchFocus={this.state.searchFocus}
                     />
                     <QuestionForm closeSearchModal={this.closeModal}/>
-<<<<<<< HEAD
 										<SigninButton />
-=======
-					<SigninButton />
->>>>>>> b762e49057337ed7a709fb3940fc00b5627769b9
+                    <ProfileUpload />
                 </div>
                 {this.state.showModal && <div className="search-modal-background" onClick={this.closeModal}></div>}
             </div>
-				) : (
-				<div className="nav-container">
-					<div className="nav-content">
-						<div className="nav-logo">
-							<Link to="/">Quarrel</Link>
-						</div>
-						<ul className="nav-links">
-							
-						</ul>
-						<SearchBar />
-						<SigninButton />
-					</div>
-				</div>
-			);
-	}
-
-	render () {
-		const { currentUser } = this.props;
-
-		return (
-			<div>
-				<ApolloConsumer>
-					{client => (
-						<Query query={IS_LOGGED_IN}>
-							{({ data: { isLoggedIn } }) => this.getLinks(isLoggedIn)}
-						</Query>
-					)}
-				</ApolloConsumer>
-				{/* {this.getLinks()} */}
-			</div>
-		);
-	}
-}
+				)}};
 
 export default NavBar;

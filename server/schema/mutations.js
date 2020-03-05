@@ -123,6 +123,7 @@ const mutation = new GraphQLObjectType({
                     User.addTopic(topicId, validUser._id)
                 )
             }
+<<<<<<< HEAD
 				},
 				newComment: {
             type: CommentType,
@@ -147,6 +148,23 @@ const mutation = new GraphQLObjectType({
                 }
             }
         },
+=======
+        },
+        updateProfileUrl: {
+            type: UserType,
+            args: {
+                profileUrl: { type: GraphQLString }
+            },
+            async resolve(parentValue, { profileUrl }, ctx) {
+                const validUser = await AuthService.verifyUser({ token: ctx.token });
+                if (validUser.loggedIn) {
+                    return User.findByIdAndUpdate(validUser._id, { profileUrl }).exec();
+                } else {
+                    throw new Error("Must be logged in to upload!")
+                }
+            }
+        }
+>>>>>>> 71ce32e639f1c1ca0f88ef14d81ce57003c8d774
     }
 });
 

@@ -17,8 +17,9 @@ class AnswerItem extends React.Component
         return (
             <div className="qns-answer-item">
                 <div className="ai-user-header">
-                    <div className="ai-user-pic">
-                        
+                    <img className="ai-user-pic" src={answer.user.profileUrl} />
+                    <div className-="ai-user-details">
+                        <span className="ai-user-name">{answer.user.fname} {answer.user.lname}</span>
                     </div>
                 </div>
                 <div
