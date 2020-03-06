@@ -1,9 +1,10 @@
 import React from "react";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
-import { Mutation } from "react-apollo";
+import { Mutation, Query } from "react-apollo";
+import { FaArrowUp } from "react-icons/fa";
 const { UPVOTE_ANSWER, DELETE_UPVOTE } = Mutations;
-const { FETCH_QUESTION } = Queries;
+const { FETCH_QUESTION, CURRENT_USER } = Queries;
 
 
 class Upvote extends React.Component {
@@ -52,7 +53,24 @@ class Upvote extends React.Component {
         })
         if (userIds.includes(localStorage.getItem("currentUserId"))) {
             return (
-                <div>
+                <div className="upvote">
+                    <Query
+                        query={CURRENT_USER} variables={{ token: localStorage.getItem("auth-token") }}>
+                        {({ loading, error, data }) => {
+                            if (loading) return "Loading...";
+                            if (error) return `Error! ${error.message}`
+                            return (
+                                <div className="upvoted-message">
+                                    {
+                                        data.currentUser.profileUrl && 
+                                        <img className="upvoted-message-pic" src={data.currentUser.profileUrl} />
+                                    }       
+                                    <p className="upvoted-message-text">You upvoted this</p>
+                                </div>
+                            )
+                        }}
+                    </Query>
+
                     <Mutation
                         mutation={DELETE_UPVOTE}
                         onError={err => this.setState({ message: err.message })}
@@ -64,8 +82,11 @@ class Upvote extends React.Component {
                     >
                         {(deleteUpvote, { data }) => (
                             <form onSubmit={e => this.handleDelete(e, deleteUpvote)}>
-                                <button>You upvoted this answer</button>
-                                <div>{this.props.answer.upvotes.length}</div>
+                                <button className="upvote-container upvoted">
+                                    <FaArrowUp />
+                                    <div className="upvote-text">Upvote</div>
+                                    <div className="upvote-numbers">{this.props.answer.upvotes.length}</div>
+                                </button>
                             </form>
                         )}
                     </Mutation>
@@ -73,7 +94,7 @@ class Upvote extends React.Component {
             )
         } else {
             return (
-                <div>
+                <div className="upvote">
                     <Mutation
                         mutation={UPVOTE_ANSWER}
                         onError={err => this.setState({ message: err.message })}
@@ -85,8 +106,11 @@ class Upvote extends React.Component {
                     >
                         {(upvoteAnswer, { data }) => (
                             <form onSubmit={e => this.handleUpvote(e, upvoteAnswer)}>
-                                <button>Upvote</button>
-                                <div>{this.props.answer.upvotes.length}</div>
+                                <button className="upvote-container">
+                                    <FaArrowUp />
+                                    <div className="upvote-text">Upvote</div>
+                                    <div className="upvote-numbers">{this.props.answer.upvotes.length}</div>
+                                </button>
                             </form>
                         )
                         }
