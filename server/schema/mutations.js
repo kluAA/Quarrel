@@ -65,7 +65,7 @@ const mutation = new GraphQLObjectType({
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
                     console.log(validUser);
-                    return new Question({ question, user: validUser._id, link, date: new Date() }).save()
+                    return new Question({ question, user: validUser._id, link, date: new Date().toISOString() }).save()
                 } else {
                     throw new Error("Must be logged in to create a question")
                 }

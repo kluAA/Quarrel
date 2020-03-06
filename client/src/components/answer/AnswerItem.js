@@ -19,7 +19,7 @@ class AnswerItem extends React.Component {
                     <img className="ai-user-pic" src={answer.user.profileUrl} />
                     <div className="ai-user-details">
                         <span className="ai-user-name">{answer.user.fname} {answer.user.lname}</span>
-                        <span className="ai-date">{answer.date}</span>
+                        <span className="ai-date">Answered {moment(new Date(parseInt(answer.date)), "YYYY-MM-DD").fromNow()}</span>
                     </div>
                 </div>
                 <div
