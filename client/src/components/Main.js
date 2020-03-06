@@ -13,8 +13,8 @@ const Main = () => {
         <div className="main">
             <NavBar />
             {/* <SessionForm /> */}
-            <SideBar />
             <div className="main-body">
+                <SideBar />
                 <Switch>
                     <Route exact path="/" component={Feed} />
                     <Route exact path="/topics" component={TopicShow} />
