@@ -38,6 +38,7 @@ export default {
         mutation NewQuestion($question: String, $link: String) {
             newQuestion(question: $question, link: $link) {
                 _id
+                date
                 question
                 link
                 user {
@@ -52,6 +53,7 @@ export default {
             newAnswer(body: $body, questionId: $questionId) {
                 _id
                 body
+                date
                 user {
                     _id
                     fname

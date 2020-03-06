@@ -11,6 +11,7 @@ export default {
         questions {
           _id
           question
+          date
           user {
             email
           }
@@ -22,9 +23,11 @@ export default {
         question(_id: $id) {
           _id
           question
+          date
           answers {
             _id
             body
+            date
             user {
               _id
               fname
