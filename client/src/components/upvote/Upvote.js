@@ -2,7 +2,7 @@ import React from "react";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
 import { Mutation } from "react-apollo";
-const { UPVOTE_ANSWER } = Mutations;
+const { UPVOTE_ANSWER, DELETE_UPVOTE } = Mutations;
 const { FETCH_QUESTION } = Queries;
 
 
@@ -12,9 +12,16 @@ class Upvote extends React.Component {
         this.state = { message: ""};
     }
 
-    handleSubmit(e, upvoteAnswer) {
+    handleUpvote(e, upvoteAnswer) {
         e.preventDefault();
         upvoteAnswer({
+            variables: { answerId: this.props.answer._id }
+        })
+    }
+
+    handleDelete(e, deleteUpvote) {
+        e.preventDefault();
+        deleteUpvote({
             variables: { answerId: this.props.answer._id }
         })
     }
@@ -31,7 +38,7 @@ class Upvote extends React.Component {
         }
         if (question) {
             console.log(question);
-            let updatedAnswer = data.upvoteAnswer;
+            // let updatedAnswer = data.upvoteAnswer;
             cache.writeQuery({
                 query: FETCH_QUESTION,
                 data: { question: question }
@@ -44,7 +51,26 @@ class Upvote extends React.Component {
             return upvote.user._id;
         })
         if (userIds.includes(localStorage.getItem("currentUserId"))) {
-            return <h1>You upvoted this answer</h1>
+            return (
+                <div>
+                    <Mutation
+                        mutation={DELETE_UPVOTE}
+                        onError={err => this.setState({ message: err.message })}
+                        update={(cache, data) => this.updateCache(cache, data)}
+                        onCompleted={data => {
+                            const { answer } = data.deleteUpvote;
+                            this.setState({ message: "" });
+                        }}
+                    >
+                        {(deleteUpvote, { data }) => (
+                            <form onSubmit={e => this.handleDelete(e, deleteUpvote)}>
+                                <button>You upvoted this answer</button>
+                                <div>{this.props.answer.upvotes.length}</div>
+                            </form>
+                        )}
+                    </Mutation>
+                </div>
+            )
         } else {
             return (
                 <div>
@@ -58,7 +84,7 @@ class Upvote extends React.Component {
                         }}
                     >
                         {(upvoteAnswer, { data }) => (
-                            <form onSubmit={e => this.handleSubmit(e, upvoteAnswer)}>
+                            <form onSubmit={e => this.handleUpvote(e, upvoteAnswer)}>
                                 <button>Upvote</button>
                                 <div>{this.props.answer.upvotes.length}</div>
                             </form>

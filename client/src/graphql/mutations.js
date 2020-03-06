@@ -98,5 +98,23 @@ export default {
                 }
             }
         }
+    `,
+    DELETE_UPVOTE: gql`
+        mutation DeleteUpvote($answerId: ID) {
+            deleteUpvote(answerId: $answerId) {
+                _id
+                body
+                user {
+                    fname
+                    lname
+                    profileUrl
+                }
+                upvotes {
+                    user {
+                        _id
+                    }
+                }
+            }
+        }
     `
 }
