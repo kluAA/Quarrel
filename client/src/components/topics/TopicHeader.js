@@ -2,7 +2,9 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom"
 import { Mutation } from "react-apollo"
 import Mutations from "../../graphql/mutations"
-
+import Queries from "../../graphql/queries"
+import TopicNavBar from "./TopicNavBar.js"
+const { CURRENT_USER } = Queries
 const { FOLLOW_TOPIC } = Mutations
 
 class TopicHeader extends React.Component {
@@ -47,18 +49,61 @@ class TopicHeader extends React.Component {
     }
   }
 
+  renderImg() {
+    return this.props.topic.imageUrl
+  }
+
   render() {
     return (
       <div className="TopicPageHeader" >
+        <Query
+          query={CURRENT_USER} variables={{ token: localStorage.getItem("auth-token") }}>
+          {({ data }) => {
+            if (!data) {
+              return null
+            }
+            debugger
+
+            //need to refactor to make more effecient
+            if (this.props.topic.followers.find(object => object._id === data.currentUser._id)) {
+              if (!this.state.follow) {
+                this.setState({
+                  follow: true
+                })
+              }
+            } else {
+              if (this.state.follow) {
+                this.setState({
+                  follow: false
+                })
+              }
+            }
+            return null
+          }
+            // if (data.currentUser.topics.find(topic => topic._id === this.props.topic._id)) {
+            //   if (!this.state.follow) {
+            //     this.setState({
+            //       follow: true
+            //     })
+            //   }
+            // } else {
+            //   if (this.state.follow) {
+            //     this.setState({
+            //       follow: false
+            //     })
+            //   }
+            // }
+          }
+        </Query>
+
         <div className="TopicPageHeader-Top flex">
           <div className="photo-container">
             <div className="TopicPhoto">
               <div className="topic_photo_img">
-                <Link to="/topic/Technology">
-                  <div className="icon-background">
-                    <div className="icon">
-                    </div>
-                  </div>
+
+                <Link to={`/topic/${this.state.name}`} key={this.props.topic._id} >
+                  <img className="icon" src={this.renderImg()}></img>
+
                 </Link>
               </div>
             </div>

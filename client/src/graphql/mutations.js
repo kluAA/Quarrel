@@ -73,7 +73,12 @@ export default {
                 }
                 question {
                     _id
-								}
+                }
+                upvotes {
+                    user {
+                        _id
+                    }
+                }
             }
         }
     `,
@@ -96,6 +101,43 @@ export default {
                 profileUrl
             }
         }
-
+    `,
+    UPVOTE_ANSWER: gql`
+        mutation UpvoteAnswer($answerId: ID) {
+            upvoteAnswer(answerId: $answerId) {
+                _id
+                body
+                user {
+                    _id
+                    fname
+                    lname
+                    profileUrl
+                }
+                upvotes {
+                    user {
+                        _id
+                    }
+                }
+            }
+        }
+    `,
+    DELETE_UPVOTE: gql`
+        mutation DeleteUpvote($answerId: ID) {
+            deleteUpvote(answerId: $answerId) {
+                _id
+                body
+                user {
+                    _id
+                    fname
+                    lname
+                    profileUrl
+                }
+                upvotes {
+                    user {
+                        _id
+                    }
+                }
+            }
+        }
     `
 }

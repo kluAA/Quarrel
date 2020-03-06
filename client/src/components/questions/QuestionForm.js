@@ -35,9 +35,9 @@ class QuestionForm extends React.Component {
         }
     }
 
-    redirect (id) {
+    redirect(id) {
         return e => {
-                this.setState({
+            this.setState({
                 showModal: false,
                 redirectId: id
             });
@@ -47,18 +47,18 @@ class QuestionForm extends React.Component {
     handleModal(e) {
         e.preventDefault();
         this.props.closeSearchModal(e);
-        this.setState({ 
+        this.setState({
             showModal: !this.state.showModal,
             message: "",
             success: "",
             question: "",
             link: "",
             successfulQuestion: "",
-            successfulQId: "" 
+            successfulQId: ""
         });
     }
 
-    closeMessage (e) {
+    closeMessage(e) {
         this.setState({ message: "" })
     }
 
@@ -87,10 +87,12 @@ class QuestionForm extends React.Component {
         e.preventDefault();
         const question = this.state.question;
         const link = this.state.link;
-        if (question.split(" ").length < 3 ) {
-            this.setState({ message: "This question needs more detail. " + 
-                                "Add more information to ask a clear question, " +
-                                "written as a complete sentence."});
+        if (question.split(" ").length < 3) {
+            this.setState({
+                message: "This question needs more detail. " +
+                    "Add more information to ask a clear question, " +
+                    "written as a complete sentence."
+            });
             setTimeout(this.closeMessage, 5001)
         } else if (link.length === 0 || Validator.isURL(link)) {
             newQuestion({
@@ -101,16 +103,16 @@ class QuestionForm extends React.Component {
             });
             setTimeout(this.closeMessage, 5001)
         } else {
-            this.setState({ message: "The source should be a valid link."})
+            this.setState({ message: "The source should be a valid link." })
             setTimeout(this.closeMessage, 5001)
         }
     }
-    
-    capitalize (word) {
+
+    capitalize(word) {
         return word[0].toUpperCase() + word.slice(1);
     }
 
-    render () {
+    render() {
         let matchesList = "";
         let questionLength = this.state.question.length;
         if (questionLength > 1) {
@@ -168,15 +170,19 @@ class QuestionForm extends React.Component {
                                     <div className="add-question-modal-content">
                                         <Query
                                             query={CURRENT_USER} variables={{ token: localStorage.getItem("auth-token") }}>
-                                                {({ loading, error, data }) => {
-                                                    if (loading) return "Loading...";
-                                                    if (error) return `Error! ${error.message}`
-                                                    return (
-                                                        <div className="add-question-modal-user">
+
+                                            {({ loading, error, data }) => {
+                                                if (loading) return "Loading...";
+                                                if (error) return `Error! ${error.message}`
+                                                return (
+                                                    <div className="add-question-modal-user">
+                                                        <img className="question-modal-user-pic" src={data.currentUser.profileUrl} />
+                                                        <div className="question-modal-user-name">
                                                             {`${this.capitalize(data.currentUser.fname)} ${this.capitalize(data.currentUser.lname)} asked`}
                                                         </div>
-                                                    )
-                                                }}
+                                                    </div>
+                                                )
+                                            }}
                                         </Query>
                                         <div className="add-question-modal-question">
                                             <textarea
@@ -223,7 +229,7 @@ class QuestionForm extends React.Component {
                     <p className="add-question-item-prompt">What is your question or link?</p>
                 </div> */}
                 <button className="nav-ask-btn" onClick={this.handleModal}>Add Question</button>
-                    { this.state.showModal && button }
+                {this.state.showModal && button}
             </div>
         )
     }

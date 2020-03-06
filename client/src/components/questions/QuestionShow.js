@@ -44,9 +44,9 @@ class QuestionShow extends React.Component {
                     const answers = question.answers.map(answer => {
                         return (
                             <AnswerItem 
-																key={answer._id}
-																questionId={question._id}
-																answer={answer}
+                                key={answer._id}
+                                answer={answer}
+                                questionId={question._id}
                             />
                         )
                     })

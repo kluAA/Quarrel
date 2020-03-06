@@ -18,6 +18,20 @@ export default {
         }
       }
     `,
+  // FETCH_ANSWERS_BY_TOPIC: gql`
+  //       query FetchTopic($name: String!) {
+  //       topic_by_name(name: $name) {    
+  // {
+  //       questions {
+  //         _id
+  //         question
+  //         date
+  //         user {
+  //           email
+  //         }
+  //       }
+  //     }
+  //   `,
   FETCH_QUESTION: gql`
       query FetchQuestion($id: ID!) {
         question(_id: $id) {
@@ -43,6 +57,12 @@ export default {
 							profileUrl
 						}
 					}
+            }
+            upvotes {
+              user {
+                _id
+              }
+            }
           }
         }
       }
@@ -54,9 +74,14 @@ export default {
           fname
           lname
           email
+          profileUrl
+          topics {
+            _id
+          }
         }
       }
     `,
+  //removed name from topics
   SIMILAR_QUESTIONS: gql`
       query SimilarQuestions($question: String) {
         similarQuestions(question: $question) {

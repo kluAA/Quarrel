@@ -12,6 +12,8 @@ const AnswerType = require("./types/answer_type");
 const Answer = mongoose.model("answer");
 const CommentType = require("./types/comment_type");
 const Comment = mongoose.model("comment");
+const Upvote = mongoose.model("upvote");
+
 
 const mutation = new GraphQLObjectType({
     name: "Mutation",
@@ -66,7 +68,7 @@ const mutation = new GraphQLObjectType({
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
                     console.log(validUser);
-                    return new Question({ question, user: validUser._id, link }).save()
+                    return new Question({ question, user: validUser._id, link, date: new Date().toISOString() }).save()
                 } else {
                     throw new Error("Must be logged in to create a question")
                 }
@@ -159,6 +161,32 @@ const mutation = new GraphQLObjectType({
                 } else {
                     throw new Error("Must be logged in to upload!")
                 }
+            }
+        },
+        upvoteAnswer: {
+            type: AnswerType,
+            args: {
+                answerId: { type: GraphQLID }
+            },
+            async resolve(parentValue, { answerId }, ctx) {
+                const validUser = await AuthService.verifyUser({ token: ctx.token });
+                return new Upvote({ user: validUser._id, answer: answerId }).save()
+                    .then(upvote => {
+                        return Answer.findByIdAndUpdate(answerId, { $push: { upvotes: upvote._id } }).exec();
+                    })
+            }
+        },
+        deleteUpvote: {
+            type: AnswerType,
+            args: {
+                answerId: { type: GraphQLID }
+            },
+            async resolve(parentValue, { answerId }, ctx) {
+                const validUser = await AuthService.verifyUser({ token: ctx.token });
+                return Upvote.remove({ user: validUser._id, answer: answerId })
+                    .then(upvote => {
+                        return Answer.findByIdAndUpdate(answerId, { $pull: { upvotes: upvote._id } }).exec();
+                    })
             }
         }
     }

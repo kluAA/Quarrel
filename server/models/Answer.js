@@ -20,6 +20,16 @@ const AnswerSchema = new Schema({
 			ref: "comment"
 		}
 	],
+	upvotes: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "upvote"
+		}
+	],
+	date: {
+		type: Date,
+		required: true
+	}
 });
 
 // CommentSchema.statics.findComment = function (commentId, type)
