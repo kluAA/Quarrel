@@ -1,4 +1,6 @@
 import React from 'react';
+
+import Upvote from "../upvote/Upvote";
 import moment from "moment";
 
 class AnswerItem extends React.Component {
@@ -29,6 +31,7 @@ class AnswerItem extends React.Component {
                 </div>
                 {/* <br />
                 <p onClick={e => this.setState({edit: true})}>Toggle Edit</p> */}
+                <Upvote answer={answer} questionId={this.props.questionId} />
             </div>
         )
     }

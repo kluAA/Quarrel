@@ -14,6 +14,12 @@ const AnswerSchema = new Schema({
 		type: String,
 		required: true
 	},
+	upvotes: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "upvote"
+		}
+	],
 	date: {
 		type: Date,
 		required: true
