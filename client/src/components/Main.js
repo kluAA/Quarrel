@@ -8,6 +8,7 @@ import Feed from "./main/feed";
 // import QuestionForm from "./questions/QuestionForm";
 import TopicsShow from "./topics/TopicsShow"
 import TopicShow from "./topics/TopicShow"
+import SideBar from "./navigation/SideBar"
 import QuestionShow from "./questions/QuestionShow";
 import SearchResults from "./search/SearchResults";
 
@@ -17,6 +18,7 @@ const Main = () => {
             <NavBar />
             {/* <SessionForm /> */}
             <div className="main-body">
+                <Route exact path="/" component={SideBar} />
                 <Switch>
                     <Route exact path="/" component={Feed} />
                     <Route exact path="/topics" component={TopicsShow} />
