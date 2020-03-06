@@ -86,9 +86,13 @@
 
 .ai-user-details {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 5px;
 }
 
 .ai-user-name {
     text-transform: capitalize;
+    font-size: 15px;
+    color: #333333;
 }

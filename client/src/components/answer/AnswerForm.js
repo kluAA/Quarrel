@@ -3,6 +3,7 @@ import { Mutation } from "react-apollo";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
 import { withRouter } from "react-router-dom";
+import axios from 'axios';
 
 const createDOMPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
@@ -11,7 +12,7 @@ const DOMPurify = createDOMPurify(window);
 const clean = DOMPurify.sanitize;
 
 const { NEW_ANSWER } = Mutations;
-const { FETCH_QUESTION, FETCH_QUESTIONS } = Queries;
+const { FETCH_QUESTION } = Queries;
 
 class AnswerForm extends React.Component {
     constructor(props) {
@@ -24,10 +25,16 @@ class AnswerForm extends React.Component {
             insertorderedlist: false,
             insertunorderedlist: false,
             linkMenu: false,
-            url: ""
+            imageMenu: false,
+            url: "",
+            imageUrl: "",
+            imageFile: null,
         }
         this.update = this.update.bind(this);
         this.handleLink = this.handleLink.bind(this);
+        this.handleImage = this.handleImage.bind(this);
+        this.addImage = this.addImage.bind(this);
+        this.uploadImageFile = this.uploadImageFile.bind(this);
     }
 
     update(e) {
@@ -83,8 +90,69 @@ class AnswerForm extends React.Component {
         this.setState({ linkMenu: true })
     }
 
+    handleImage(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.setState({imageMenu: true})
+    }
+
+    uploadImageFile(e) {
+        e.preventDefault();
+        const imageFile = e.target.files[0]
+        const fd = new FormData();
+        fd.append('image', imageFile, imageFile.name)
+        axios.post('/api/upload', fd)
+            .then(res => {
+                console.log(res);
+                this.setState({
+                    imageUrl: res.data.imageUrl,
+                })
+            })
+
+    }
+
+    addImage(e) {
+        e.preventDefault();
+        const div = document.getElementById("editable");
+        const text = div.innerHTML;
+        div.innerHTML = "";
+        div.focus();
+        document.execCommand("insertImage", false, this.state.imageUrl)
+        div.innerHTML = text + div.innerHTML;
+        this.setState({imageMenu: false, imageUrl: ""})
+    }
+
     render() {
-        const { bold, italic, underline, insertorderedlist, insertunorderedlist, linkMenu } = this.state;
+        const { bold, italic, underline, insertorderedlist, insertunorderedlist, linkMenu, imageUrl } = this.state;
+
+        const modal = (
+            <div className="form-modal">
+                <div className="form-modal-content">
+                    <div className="form-modal-header">
+                        <span onClick={e => this.setState({ imageMenu: false })}>
+                            <i className="fas fa-times"></i>
+                        </span>
+                    </div>
+                    <div className="form-image">
+                        <label htmlFor="form-image-url">Image Link:</label>
+                        <input type="text"
+                            id="form-image-url"
+                            placeholder="Image Url"
+                            value={imageUrl}
+                            onChange={e => this.setState({imageUrl: e.target.value})}
+                        />
+                    </div>
+                    <div className="form-actions">
+                        <label id="upload-image" htmlFor="format-file">Upload</label>
+                        <button id="add-image" disabled={imageUrl === "" ? true : false} onClick={this.addImage}>Add Image</button>
+                        <input type="file"
+                            id="format-file"
+                            onChange={this.uploadImageFile}
+                        />
+                    </div>
+                </div>
+            </div>
+        )
         const formatButtons = (
             <Fragment>
                 <button className="format" id={bold ? "btn-active" : null} onClick={this.format("bold")}>
@@ -105,6 +173,11 @@ class AnswerForm extends React.Component {
                 <button className="format" onClick={this.handleLink}>
                     <i className="fas fa-link"></i>
                 </button>
+                <button className="format" onClick={this.handleImage}>
+                    <i className="far fa-images"></i>
+                </button>
+           
+                {this.state.imageMenu ? modal : null}
             </Fragment>
         )
 
@@ -132,9 +205,6 @@ class AnswerForm extends React.Component {
                             div.focus();
                             document.execCommand("CreateLink", false, this.state.url)
                             div.innerHTML = text + div.innerHTML;
-                            console.log(div.innerHTML);
-                            // document.execCommand("CreateLink", false, "http://stackoverflow.com/");
-
                         }
                     }}
                 >
