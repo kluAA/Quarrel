@@ -2,6 +2,7 @@ import React from "react";
 import { Query } from "react-apollo";
 import Queries from "../../graphql/queries";
 import { Link } from "react-router-dom";
+import CommentForm from "./CommentForm";
 const { FETCH_COMMENTS } = Queries;
 const { FETCH_ANSWER } = Queries;
 
@@ -16,7 +17,7 @@ class CommentIndex extends React.Component {
 			<div className="comment-index">
 			{this.props.comments.map(comment => (
 				<div key={comment._id} className="comment-item-container">
-
+					
 					<div className="comment-item-header">
 						<div className="comment-item-user-icon"></div>
 						<div className="comment-item-user-info">First name, Last name</div>
@@ -26,6 +27,14 @@ class CommentIndex extends React.Component {
 						<Link to={`/comment/${comment._id}`} className="">{comment.comment}</Link>
 					</div>
 
+					<div className="comment-item-footer">
+						<div className="comment-item-icon">
+							<i class="fas fa-reply"></i>
+						</div>
+						<div className="comment-item-text">Reply Begrudgingly</div>
+						<div className="comment-item-icon"><i class="fas fa-hand-middle-finger"></i></div>
+						<div className="comment-item-text">Dislike</div>
+					</div>
 				</div>
 				))}
 			</div>

@@ -16,7 +16,7 @@ const CommentSchema = new Schema({
 	},
 	comment: {
 		type: String,
-		required: true
+		required: false
 	}
 });
 

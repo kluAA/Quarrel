@@ -123,12 +123,12 @@ class CommentForm extends React.Component
 									<input
 										onChange={this.update("comment")}
 										value={this.state.comment}
-										placeholder="Your comment"
+										placeholder="Add a comment..."
 										className="comment-form-input-box"
 									/>
 								</div>
 								<div className="comment-form-button">
-									<button type="submit" className="comment-form-button">Add Comment</button>
+									<input type="submit" className="comment-form-button" value=""/>
 								</div>
 
 							</form>
