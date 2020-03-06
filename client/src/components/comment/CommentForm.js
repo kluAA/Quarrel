@@ -114,21 +114,6 @@ class CommentForm extends React.Component
 			>
 				{(newComment, {comment}) => {
 					return (
-						// <div className="comment-form">
-						// 	<div className="comment-header">
-						// 		<div className="user-icon">
-
-						// 		</div>
-						// 	</div>
-						// 	<div className="comment-format">
-						// 		<button className="format" id={bold ? "btn-active" : null} onClick={this.format("bold")}>
-						// 			<i className="fas fa-bold"></i>
-						// 		</button>
-						// 		<button className="format" id={italic ? "btn-active" : null} onClick={this.format("italic")}>
-						// 			<i className="fas fa-italic"></i>
-						// 		</button>
-						// 	</div>
-
 						<div className="comment-form-container">
 								<form onSubmit={e => this.handleSubmit(e, newComment)} className="comment-form">
 									<div className="comment-form-user-icon">

@@ -30,15 +30,15 @@ const QuestionType = new GraphQLObjectType({
                     .then(question => question.answers);
             }
 				},
-				// comments: {
-				// 	type: new GraphQLList(AnswerType),
-				// 	resolve(parentValue)
-				// 	{
-				// 		return Answer.findById(parentValue._id)
-				// 			.populate("comments")
-				// 			.then(answer => answer.comments)
-				// 	}
-				// }
+				comment: {
+					type: new GraphQLList(AnswerType),
+					resolve(parentValue)
+					{
+						return Answer.findById(parentValue._id)
+							.populate("comments")
+							.then(answer => answer.comments)
+					}
+				}
     })
 });
 
