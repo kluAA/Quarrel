@@ -124,12 +124,12 @@ div .comment-index-container {
 	padding: 0 16px;
 }
 .comment-item-user-icon {
-	height: 30px;
-	width: 30px;
+	height: 40px;
+	width: 40px;
 	border-radius: 50%;
 	background: pink;
 	display: inline-block;
-	padding: 5px;
+	/* padding: 5px; */
 	justify-content: center;
 	align-items: center;
 

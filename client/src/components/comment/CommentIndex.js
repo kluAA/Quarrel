@@ -19,8 +19,10 @@ class CommentIndex extends React.Component {
 				<div key={comment._id} className="comment-item-container">
 					
 					<div className="comment-item-header">
-						<div className="comment-item-user-icon"></div>
-						<div className="comment-item-user-info">First name, Last name</div>
+						{/* <div className="comment-item-user-icon"> */}
+							<img className="comment-item-user-icon" src={comment.user.profileUrl} />
+						{/* </div> */}
+						<div className="comment-item-user-info">{comment.user.fname} {comment.user.lname}</div>
 					</div>
 
 					<div className="comment-item-content">

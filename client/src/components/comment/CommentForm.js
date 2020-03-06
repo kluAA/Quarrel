@@ -113,11 +113,12 @@ class CommentForm extends React.Component
 				}}
 			>
 				{(newComment, {comment}) => {
+					// const { user } = this.props;
 					return (
 						<div className="comment-form-container">
 								<form onSubmit={e => this.handleSubmit(e, newComment)} className="comment-form">
 									<div className="comment-form-user-icon">
-
+									{/* <img className="comment-item-user-icon" src={user.profileUrl} /> */}
 									</div>
 								<div className="comment-form-input-box">
 									<input
