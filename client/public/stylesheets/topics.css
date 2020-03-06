@@ -107,11 +107,13 @@
   border-bottom: 0;
   font-size: 13px;
 }
+
 .linked_list_item {
-  padding: 12px 16px;
+  padding: 11px 16px;
   display: inline-flex;
   color: #949494;
   font-weight: 500;
+  border: 2px solid rgba(0, 0, 0, 0);
 }
 
 .linked_list_item:hover {

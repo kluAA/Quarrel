@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import NavBar from "./navigation/NavBar";
 import Feed from "./main/feed";
 import TopicShow from "./topics/TopicShow"
+import SideBar from "./navigation/SideBar"
 import QuestionShow from "./questions/QuestionShow";
 import CommentItem from "./comment/CommentItem";
 import SearchResults from "./search/SearchResults";
@@ -12,6 +13,7 @@ const Main = () => {
         <div className="main">
             <NavBar />
             {/* <SessionForm /> */}
+            <SideBar />
             <div className="main-body">
                 <Switch>
                     <Route exact path="/" component={Feed} />
