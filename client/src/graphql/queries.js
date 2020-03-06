@@ -53,6 +53,16 @@ export default {
                 _id
               }
             }
+            comments {
+              _id
+              comment
+              user {
+                _id
+                fname
+                lname
+                profileUrl
+              }
+            }
           }
         }
       }
