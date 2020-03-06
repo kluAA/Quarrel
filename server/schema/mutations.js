@@ -119,6 +119,18 @@ const mutation = new GraphQLObjectType({
                 )
             }
         },
+        addTopicToQuestion: {
+            type: TopicType,
+            args: {
+                topicId: { type: GraphQLID },
+                questionId: { type: GraphQLID }
+            },
+            async resolve(parentValue, { topicId, questionId }, ctx) {
+                return Question.addTopic(questionId, topicId).then(
+                    Topic.addQuestion(questionId, topicId)
+                )
+            }
+        },
         updateProfileUrl: {
             type: UserType,
             args: {

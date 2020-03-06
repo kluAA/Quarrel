@@ -4,10 +4,9 @@ import Queries from "../../graphql/queries";
 import Mutations from "../../graphql/mutations";
 import { FaLink } from "react-icons/fa";
 import { Link, withRouter } from "react-router-dom";
-
 const Validator = require("validator");
-const { FETCH_QUESTIONS, CURRENT_USER, SIMILAR_QUESTIONS } = Queries;
-const { NEW_QUESTION } = Mutations;
+const { FETCH_QUESTIONS, CURRENT_USER, SIMILAR_QUESTIONS, FETCH_TOPICS } = Queries;
+const { NEW_QUESTION, ADD_TOPIC_TO_QUESTION } = Mutations;
 
 
 class QuestionForm extends React.Component {
@@ -21,11 +20,15 @@ class QuestionForm extends React.Component {
             link: "",
             successfulQuestion: "",
             successfulQId: "",
-            redirectId: ""
+            redirectId: "",
+            showTopicModal: false,
+            topics: []
         };
         this.handleModal = this.handleModal.bind(this);
         this.closeMessage = this.closeMessage.bind(this);
         this.redirect = this.redirect.bind(this);
+        this.handleTopicSubmit = this.handleTopicSubmit.bind(this);
+        this.updateTopic = this.updateTopic.bind(this);
     }
 
 
@@ -108,11 +111,62 @@ class QuestionForm extends React.Component {
         }
     }
 
+    handleTopicSubmit(e, addTopicToQuestion) {
+        e.preventDefault()
+        let topics = this.state.topics;
+        topics.forEach(topicId => {
+            addTopicToQuestion({ variables: { topicId: topicId, questionId: this.state.successfulQId } })
+        })
+    }
+
+    updateTopic(e) {
+        e.preventDefault()
+        console.log(e.currentTarget.value)
+        this.setState({ topics: this.state.topics.concat(e.currentTarget.value) })
+    }
+
     capitalize(word) {
         return word[0].toUpperCase() + word.slice(1);
     }
 
     render() {
+        const topicModal = (
+            <div className="modal-background">
+                <div className="modal-child">
+                    <div className="add-question-modal">
+                        <Mutation
+                            mutation={ADD_TOPIC_TO_QUESTION}
+                            onError={err => this.setState({ message: err.message })}
+                        >
+                            {(addTopicToQuestion) => (
+                                <form onSubmit={e => this.handleTopicSubmit(e, addTopicToQuestion)}>
+                                    <Query query={FETCH_TOPICS} >
+                                        {({ loading, error, data }) => {
+                                            if (loading) return "loading...";
+                                            if (error) return `Error! ${error.message}`;
+                                            return data.topics.map(topic => {
+                                                return (
+                                                    <div>
+                                                        <input type="checkbox"
+                                                            name={topic.name}
+                                                            value={topic._id}
+                                                            onChange={this.updateTopic}
+                                                            checked={this.state.topics.includes(topic._id)} />
+                                                        <img className="sidebar-icon" src={topic.imageUrl} />
+                                                        <label for={topic.name}>{topic.name}</label>
+                                                    </div>
+                                                )
+                                            })
+                                        }}
+                                    </Query>
+                                    <input type="submit" value="Submit" />
+                                </form>
+                            )}
+                        </Mutation>
+                    </div>
+                </div>
+            </div>
+        )
         let matchesList = "";
         let questionLength = this.state.question.length;
         if (questionLength > 1) {
@@ -143,6 +197,7 @@ class QuestionForm extends React.Component {
                         onError={err => this.setState({ message: err.message })}
                         update={(cache, data) => this.updateCache(cache, data)}
                         onCompleted={data => {
+
                             const { question } = data.newQuestion;
                             this.setState({
                                 message: `You asked: `,
@@ -151,7 +206,8 @@ class QuestionForm extends React.Component {
                                 question: "",
                                 link: "",
                                 successfulQuestion: `${question}`,
-                                successfulQId: data.newQuestion._id
+                                successfulQId: data.newQuestion._id,
+                                showTopicModal: true
                             });
                         }}
                     >
@@ -229,9 +285,9 @@ class QuestionForm extends React.Component {
                 </div> */}
                 <button className="nav-ask-btn" onClick={this.handleModal}>Add Question</button>
                 {this.state.showModal && button}
+                {this.state.showTopicModal && topicModal}
             </div>
         )
     }
 }
-
 export default withRouter(QuestionForm);

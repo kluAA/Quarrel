@@ -63,8 +63,6 @@ class TopicHeader extends React.Component {
             if (!data) {
               return null
             }
-            debugger
-
             //need to refactor to make more effecient
             if (this.props.topic.followers.find(object => object._id === data.currentUser._id)) {
               if (!this.state.follow) {
@@ -122,7 +120,6 @@ class TopicHeader extends React.Component {
                         {(followTopic) => (
                           <div className="ui_button-inner flex" onClick={(e) => this.handleClick(e, followTopic)}>
                             <div className="ui_button_icon_wrapper" >
-
                               {this.renderFollowIcon()}
                             </div>
                             <div className="ui_button_count_wrapper">
