@@ -14,7 +14,7 @@ const Main = () => {
             <NavBar />
             {/* <SessionForm /> */}
             <div className="main-body">
-                <SideBar />
+                <Route exact path="/" component={SideBar} />
                 <Switch>
                     <Route exact path="/" component={Feed} />
                     <Route exact path="/topics" component={TopicShow} />
