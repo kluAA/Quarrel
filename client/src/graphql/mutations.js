@@ -92,6 +92,7 @@ export default {
                 _id
                 body
                 user {
+                    _id
                     fname
                     lname
                     profileUrl
@@ -110,6 +111,7 @@ export default {
                 _id
                 body
                 user {
+                    _id
                     fname
                     lname
                     profileUrl

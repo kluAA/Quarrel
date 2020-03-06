@@ -38,8 +38,6 @@ export default {
               user {
                 _id
               }
-            question {
-              _id
             }
           }
         }
