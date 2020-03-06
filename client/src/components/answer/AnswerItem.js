@@ -1,10 +1,7 @@
 import React from 'react';
-<<<<<<< HEAD
 import CommentForm from '../comment//CommentForm';
 import CommentIndex from '../comment//CommentIndex';
-=======
 import moment from "moment";
->>>>>>> Improve formatting in show
 
 class AnswerItem extends React.Component {
 	constructor(props) {
