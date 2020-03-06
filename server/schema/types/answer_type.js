@@ -10,7 +10,6 @@ const AnswerType = new GraphQLObjectType({
   fields: () => ({
     _id: { type: GraphQLID },
     body: { type: GraphQLString },
-    date: { type: GraphQLString },
     user: {
             type: require("./user_type"),
             resolve(parentValue) {

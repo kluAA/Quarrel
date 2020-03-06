@@ -66,7 +66,7 @@ const mutation = new GraphQLObjectType({
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
                     console.log(validUser);
-                    return new Question({ question, user: validUser._id, link, date: new Date() }).save()
+                    return new Question({ question, user: validUser._id, link }).save()
                 } else {
                     throw new Error("Must be logged in to create a question")
                 }
@@ -81,13 +81,18 @@ const mutation = new GraphQLObjectType({
             async resolve(_, { body, questionId }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
-                    return new Answer({ body, user: validUser._id, question: questionId, date: new Date() }).save()
+                    return new Answer({ body, user: validUser._id, question: questionId }).save()
                         .then(answer => {
                             Question.findByIdAndUpdate(questionId, { $push: { answers: answer._id } }).exec();
                             return answer;
                         })
                 } else {
-                    throw new Error("Must be logged in to create an answer")
+                    // throw new Error("Must be logged in to create an answer")
+                    return new Answer({ body, user: validUser._id, question: questionId }).save()
+                        .then(answer => {
+                            Question.findByIdAndUpdate(questionId, { $push: { answers: answer._id } }).exec();
+                            return answer;
+                        })
                 }
             }
         },
@@ -96,15 +101,14 @@ const mutation = new GraphQLObjectType({
             args: {
                 name: { type: GraphQLString },
                 description: { type: GraphQLString },
-                imageUrl: { type: GraphQLString },
             },
-            async resolve(_, { name, description, imageUrl }, ctx) {
+            async resolve(_, { name, description }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
-                    return new Topic({ name, description, imageUrl }).save()
+                    return new Topic({ name, description }).save()
                 } else {
                     // throw new Error("Must be logged in to create an answer")
-                    return new Topic({ name, description, imageUrl }).save()
+                    return new Topic({ name, description }).save()
                 }
             }
         },

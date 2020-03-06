@@ -20,10 +20,6 @@ const AnswerSchema = new Schema({
 			ref: "comment"
 		}
 	],
-	date: {
-		type: Date,
-		required: true
-	}
 });
 
 // CommentSchema.statics.findComment = function (commentId, type)

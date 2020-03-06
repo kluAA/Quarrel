@@ -9,7 +9,6 @@ const TopicType = new GraphQLObjectType({
     _id: { type: GraphQLID },
     name: { type: GraphQLString },
     description: { type: GraphQLString },
-    imageUrl: { type: GraphQLString },
     followers: {
       type: new GraphQLList(require("./user_type")),
       resolve(parentValue) {
