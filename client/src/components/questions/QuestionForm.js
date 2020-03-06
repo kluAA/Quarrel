@@ -120,9 +120,14 @@ class QuestionForm extends React.Component {
     }
 
     updateTopic(e) {
-        e.preventDefault()
-        console.log(e.currentTarget.value)
-        this.setState({ topics: this.state.topics.concat(e.currentTarget.value) })
+        e.preventDefault();
+        let topicId = e.currentTarget.value;
+
+        if (this.state.topics.includes(topicId)) {
+            this.setState({ topics: this.state.topics.filter(topic => topic !== topicId) })
+        } else {
+            this.setState({ topics: this.state.topics.concat(e.currentTarget.value) })
+        }
     }
 
     capitalize(word) {
