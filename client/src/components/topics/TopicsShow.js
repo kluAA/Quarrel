@@ -18,7 +18,7 @@ class TopicsShow extends React.Component {
             if (error) return `Error! ${error.message}`;
             return (
               data.topics.map(topic => {
-                return <TopicHeader key={topic._id} topic={topic} />
+                return <TopicHeader key={topic._id} topic={topic} name={topic.name} />
               })
             )
           }}

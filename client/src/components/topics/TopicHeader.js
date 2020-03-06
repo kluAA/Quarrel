@@ -13,7 +13,7 @@ class TopicHeader extends React.Component {
     super(props)
     this.handleClick = this.handleClick.bind(this)
     this.state = {
-      name: this.props.topic.name,
+      name: this.props.name,
       message: "",
       follow: false
     }
@@ -103,7 +103,7 @@ class TopicHeader extends React.Component {
           <div className="photo-container">
             <div className="TopicPhoto">
               <div className="topic_photo_img">
-                <Link to={`/topic/${this.state.name}`} >
+                <Link to={`/topic/${this.state.name}`} data-topicid={this.props.topic._id} >
                   <img className="icon" src={this.renderImg()}></img>
                 </Link>
               </div>
