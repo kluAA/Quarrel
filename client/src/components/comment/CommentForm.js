@@ -44,7 +44,6 @@ class CommentForm extends React.Component
 		if (question) {
 			console.log(question);
 			console.log("newComment", newComment);
-			// debugger
 			question.answers.map((answer) => { 
 				if (answer._id === newComment.answer._id) { 
 					answer.comments = answer.comments.concat(newComment) 
@@ -131,8 +130,6 @@ class CommentForm extends React.Component
 						// 	</div>
 
 						<div className="comment-form-container">
-							<div className="comment-form-box">
-							<div className="comment-form-header">
 								<form onSubmit={e => this.handleSubmit(e, newComment)} className="comment-form">
 									<div className="comment-form-user-icon">
 
@@ -151,8 +148,6 @@ class CommentForm extends React.Component
 
 							</form>
 							</div>
-							</div>
-						</div>
 					)
 				}}
 

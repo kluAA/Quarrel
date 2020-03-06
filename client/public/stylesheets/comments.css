@@ -1,4 +1,4 @@
-div .comment-form-container {
+.comment-form-container {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
@@ -7,24 +7,20 @@ div .comment-form-container {
 	padding: 15px;
 	flex-direction: row;
 	position: relative;
+	height: 34px;
+	padding: 16px;
+	border: 1px solid rgb(222, 224, 225);
+	margin-top: 20px;
 }
-/* div .comment-form-box {
- 
-}
-div .comment-form-header {
-
-} */
-div .comment-form {
-border: 1px solid rgb(222, 224, 225);
+.comment-form {
 border-top: none;
 font-size: 15px;
 padding: 1px 5px;
-border-radius: 10%;
 width: fit-content;
 display: inline-block;
 
 }
-div .comment-form-user-icon {
+.comment-form-user-icon {
 	height: 40px;
 	width: 40px;
 	border-radius: 50%;
