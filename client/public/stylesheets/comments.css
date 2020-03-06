@@ -91,3 +91,42 @@ div .comment-index-container {
   font-size: 13px;
   width: 556px;
 }
+
+
+
+.comment-index {
+	width: 100%;
+	margin: 16px 0 0;
+	padding: 16px;
+	display: block;
+}
+.comment-item-container {
+	display: block;
+	width: 100%;
+	padding: 8px 0 0; 
+}
+.comment-item-header {
+	height: 41px;
+	width: 100%;
+	display: flex;
+}
+.comment-item-user-icon {
+	height: 32px;
+	width: 32px;
+	border-radius: 50%;
+	background: pink;
+	display: inline-block;
+	padding: 5px;
+	justify-content: center;
+	align-items: center;
+
+}
+.comment-item-user-info {
+
+}
+.comment-item-content {
+
+}
+.comment-item-footer {
+
+}

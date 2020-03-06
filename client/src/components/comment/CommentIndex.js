@@ -11,26 +11,23 @@ class CommentIndex extends React.Component {
 	}
 
 	render() {
+		const { answer, comment, user } = this.props;
 		return (
-			<div className="question-index">
-				<div className="comment-index-container">
-					<div className="comment-index-header">
-						{/* <div className="comment-form-user-icon">
+			<div className="comment-index">
+			{this.props.comments.map(comment => (
+				<div key={comment._id} className="comment-item-container">
 
-						</div> */}
-						<ul className="comment-index-content">
-						{this.props.comments.map(comment => (
-							<div key={comment._id} className="comment-item">
-								<div>
-									<Link to={`/comment/${comment._id}`} className="">
-										{comment.comment}
-									</Link>
-								</div>
-							</div>
-						))}
-					</ul>
+					<div className="comment-item-header">
+						<div className="comment-item-user-icon"></div>
+						<div className="comment-item-user-info">First name, Last name</div>
 					</div>
+
+					<div className="comment-item-content">
+						<Link to={`/comment/${comment._id}`} className="">{comment.comment}</Link>
+					</div>
+
 				</div>
+				))}
 			</div>
 		)
 	}
