@@ -68,6 +68,9 @@ export default {
                         _id
                     }
                 }
+                comments {
+                    _id
+                }
             }
         }
     `,
@@ -128,5 +131,19 @@ export default {
                 }
             }
         }
-    `
+    `,
+    NEW_COMMENT: gql`
+        mutation NewComment($comment: String, $answerId: ID!) {
+            newComment(comment: $comment, answerId: $answerId) {
+                _id
+                comment
+                user {
+                    _id
+                }
+                answer {
+                    _id
+                }
+            }
+        }
+    `,
 }

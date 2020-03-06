@@ -48,7 +48,6 @@ class Upvote extends React.Component {
     }
 
     render () {
-        debugger
         const userIds = this.props.answer.upvotes.map(upvote => {
             return upvote.user._id;
         })

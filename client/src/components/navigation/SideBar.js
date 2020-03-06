@@ -19,7 +19,6 @@ class SideBar extends React.Component {
                             {({ loading, error, data }) => {
                                 if (loading) return "Loading...";
                                 if (error) return `Error! ${error.message}`;
-                                debugger
                                 return (
                                     data.topics.map(topic => {
                                         return (
