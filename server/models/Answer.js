@@ -14,6 +14,10 @@ const AnswerSchema = new Schema({
 		type: String,
 		required: true
 	},
+	date: {
+		type: Date,
+		required: true
+	}
 });
 
 module.exports = mongoose.model("answer", AnswerSchema);
