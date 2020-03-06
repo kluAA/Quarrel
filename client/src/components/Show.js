@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import AuthRoute from "../util/route_util";
 import NavBar from "./navigation/NavBar";
+import SideBar from "./navigation/SideBar"
 import QuestionShow from "./questions/QuestionShow";
 import RelatedQuestions from "./questions/relatedQuestions";
 
@@ -15,6 +16,7 @@ const Show = () => {
                 </Switch>
                 <Route path="/q/:id" component={RelatedQuestions} />
             </div>
+            <SideBar />
         </div>
     );
 };
