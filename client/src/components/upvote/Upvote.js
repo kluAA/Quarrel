@@ -40,26 +40,34 @@ class Upvote extends React.Component {
     }
 
     render () {
-        return (
-            <div>
-                <Mutation
-                    mutation={UPVOTE_ANSWER}
-                    onError={err => this.setState({ message: err.message })}
-                    update={(cache, data) => this.updateCache(cache, data)}
-                    onCompleted={data => {
-                        const { answer } = data.upvoteAnswer;
-                        this.setState({ message: "You upvoted this question" });
-                    }}
-                >
-                    {(upvoteAnswer, { data }) => (
-                        <form onSubmit={e => this.handleSubmit(e, upvoteAnswer)}>
-                            <button>Upvote</button>
-                            <div>{this.props.answer.upvotes.length}</div>
-                        </form>
-                    )}
-                </Mutation>
-            </div>
-        )
+        const userIds = this.props.answer.upvotes.map(upvote => {
+            return upvote.user._id;
+        })
+        if (userIds.includes(localStorage.getItem("currentUserId"))) {
+            return <h1>You upvoted this answer</h1>
+        } else {
+            return (
+                <div>
+                    <Mutation
+                        mutation={UPVOTE_ANSWER}
+                        onError={err => this.setState({ message: err.message })}
+                        update={(cache, data) => this.updateCache(cache, data)}
+                        onCompleted={data => {
+                            const { answer } = data.upvoteAnswer;
+                            this.setState({ message: "You upvoted this question" });
+                        }}
+                    >
+                        {(upvoteAnswer, { data }) => (
+                            <form onSubmit={e => this.handleSubmit(e, upvoteAnswer)}>
+                                <button>Upvote</button>
+                                <div>{this.props.answer.upvotes.length}</div>
+                            </form>
+                        )
+                        }
+                    </Mutation>
+                </div>
+            )
+        }
     }
 }
 
