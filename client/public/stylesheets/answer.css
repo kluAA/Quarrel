@@ -26,7 +26,7 @@
     align-items: center;
 }
 
-.answer-format button {
+.format {
     margin-right: 8px;
     padding: 4px 8px;
     border: 1px solid rgba(0, 0, 0, 0);
@@ -34,7 +34,7 @@
     color: #5d5d5f;
 }
 
-.answer-format button:hover {
+.format:hover {
     border: 1px solid blue;
 }
 
@@ -83,4 +83,45 @@
 
 .format {
     cursor: pointer;
+}
+
+.edit-style ol, .edit-style ul {
+  margin: 1em 0;
+  padding: 0 0 0 40px;
+}
+
+.edit-style ol > li {
+    list-style: decimal;
+}
+
+.edit-style ul > li {
+    list-style: disc;
+}
+
+.edit-style a {
+    color: blue;
+    text-decoration: underline;
+}
+#fa-link-blue {
+    color: #2e69ff;
+    padding: 4px 8px;
+}
+
+#link-field {
+    width: 470px;
+}
+
+#link-add {
+    cursor: pointer;
+    margin-left: 30px;
+    border-radius: 3px;
+    font-size: 13px;
+    padding: 6px 10px;
+    background: #f6f6f9;
+    color: #949494;
+    font-weight: bold;
+}
+
+#link-add:hover {
+    color: #696868;
 }

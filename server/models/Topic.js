@@ -28,7 +28,10 @@ const TopicSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "answer"
     }
-  ]
+  ],
+  imageUrl: {
+    type: String
+  }
 });
 
 
@@ -52,4 +55,23 @@ TopicSchema.statics.addUser = (topicId, userId) => {
     }
   });
 };
+
+TopicSchema.statics.findMatches = (query) => {
+  const Topic = mongoose.model("topic");
+  const longestWord = findLongestWord(query);
+  console.log(longestWord);
+  return Topic.find({ name: { $regex: new RegExp(longestWord, 'i') } });
+}
+
+const findLongestWord = (sentence) => {
+  let words = sentence.split(" ");
+  let longestWord = words[0];
+  for (i = 0; i < words.length; i++) {
+    let currentWord = words[i];
+    if (currentWord.length > longestWord.length) {
+      longestWord = currentWord;
+    }
+  }
+  return longestWord;
+}
 module.exports = mongoose.model("topic", TopicSchema);

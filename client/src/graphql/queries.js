@@ -26,10 +26,15 @@ export default {
             _id
             body
             user {
+              _id
               fname
               lname
               profileUrl
-						}
+            }
+            question {
+              _id
+            }
+					}
 					comments {
 						_id
 						comment
@@ -40,7 +45,6 @@ export default {
 							profileUrl
 						}
 					}
-          }
         }
       }
     `,
@@ -51,6 +55,11 @@ export default {
           fname
           lname
           email
+          profileUrl
+          topics {
+            _id
+            name
+          }
         }
       }
     `,
@@ -70,6 +79,32 @@ export default {
         topics{
           _id
           name
+          imageUrl
+          followers {
+            _id
+          }
+        }
+      }
+    `,
+  FETCH_TOPIC_BY_NAME: gql`
+      query FetchTopic($name: String!) {
+        topic_by_name(name: $name) {
+          _id
+          name
+          imageUrl
+          followers {
+            _id
+          }
+        }
+      }
+    `,
+  //A query to fetch topic by ID instead of name
+  FETCH_TOPIC: gql`
+      query FetchTopic($id: ID!) {
+        topic(_id: $ID) {
+          _id
+          name
+          imageUrl
           followers {
             _id
           }
@@ -133,7 +168,7 @@ export default {
         }
       }
     `,
-    RELATED_QUESTIONS: gql`
+  RELATED_QUESTIONS: gql`
       query RelatedQuestions($questionId: ID!) {
         relatedQuestions(questionId: $questionId) {
           _id
@@ -142,6 +177,15 @@ export default {
             _id
           }
         } 
+      }
+    `,
+  SEARCH_TOPICS: gql`
+      query SearchTopics($query: String) {
+        searchTopics(query: $query) {
+          _id
+          name
+          imageUrl
+        }
       }
     `
 };

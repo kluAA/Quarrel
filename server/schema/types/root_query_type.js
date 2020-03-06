@@ -61,7 +61,7 @@ const RootQueryType = new GraphQLObjectType({
         },
         relatedQuestions: {
             type: new GraphQLList(QuestionType),
-            args: { questionId: { type: GraphQLID }},
+            args: { questionId: { type: GraphQLID } },
             resolve(_, args) {
                 return Question.findRelatedQuestions(args.questionId);
             }
@@ -109,6 +109,21 @@ const RootQueryType = new GraphQLObjectType({
 					return Comment.findById(args._id);
 				}
 			}
+        },
+        topic_by_name: {
+            type: TopicType,
+            args: { name: { type: new GraphQLNonNull(GraphQLString) } },
+            resolve(parentValue, { name }) {
+                return Topic.findOne({ name });
+            }
+        },
+        searchTopics: {
+            type: new GraphQLList(TopicType),
+            args: { query: { type: GraphQLString } },
+            resolve(_, args) {
+                return Topic.findMatches(args.query);
+            }
+        }
     })
 });
 

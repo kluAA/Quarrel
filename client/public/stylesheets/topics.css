@@ -20,13 +20,14 @@
   border-radius: 3px;
 }
 .icon-background {
-  background-image: url(https://qph.fs.quoracdn.net/main-answer_header_background_1393740_639.svg);
+  background-image: url(https://quarrel-images.s3.us-east-2.amazonaws.com/1583426339036);
   width: 100%;
   height: 100%;
 }
 
 .icon {
-  background-image: url(https://qph.fs.quoracdn.net/main-answer_header_icon_2177.svg);
+  background-image: url(https://quarrel-images.s3.us-east-2.amazonaws.com/1583426339036);
+  object-fit: cover;
   width: 100%;
   height: 100%;
 }

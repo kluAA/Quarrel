@@ -2,6 +2,8 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import NavBar from "./navigation/NavBar";
 import Feed from "./main/feed";
+// import QuestionForm from "./questions/QuestionForm";
+import TopicsShow from "./topics/TopicsShow"
 import TopicShow from "./topics/TopicShow"
 import QuestionShow from "./questions/QuestionShow";
 import CommentItem from "./comment/CommentItem";
@@ -15,9 +17,10 @@ const Main = () => {
             <div className="main-body">
                 <Switch>
                     <Route exact path="/" component={Feed} />
-                    <Route exact path="/topics" component={TopicShow} />
-										<Route path="/a" component={CommentItem} />
+                    <Route exact path="/topics" component={TopicsShow} />
+                    <Route exact path="/topic/:name" component={TopicShow} />
                     <Route exact path="/search/:query" component={SearchResults} />
+										<Route path="/a" component={CommentItem} />
                 </Switch>
             </div>
         </div>
