@@ -1,7 +1,10 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom"
-import { Mutation } from "react-apollo"
+import { Mutation, Query } from "react-apollo"
 import Mutations from "../../graphql/mutations"
+import Queries from "../../graphql/queries"
+import TopicNavBar from "./TopicNavBar.js"
+const { CURRENT_USER } = Queries
 
 const { FOLLOW_TOPIC } = Mutations
 
@@ -10,8 +13,9 @@ class TopicHeader extends React.Component {
     super(props)
     this.handleClick = this.handleClick.bind(this)
     this.state = {
+      name: this.props.name,
       message: "",
-      follow: this.props.topic.followers
+      follow: false
     }
     this.renderFollowIcon = this.renderFollowIcon.bind(this)
     this.renderImg = this.renderImg.bind(this)
@@ -50,18 +54,56 @@ class TopicHeader extends React.Component {
 
 
   renderImg() {
-    console.log(this.props.topic.imageUrl)
     return this.props.topic.imageUrl
   }
 
   render() {
     return (
       <div className="TopicPageHeader" >
+        <Query
+          query={CURRENT_USER} variables={{ token: localStorage.getItem("auth-token") }}>
+          {({ data }) => {
+            if (!data) {
+              return null
+            }
+
+            // if (data.currentUser.topics.find(topic => topic._id === this.props.topic._id)) {
+            //   if (!this.state.follow) {
+            //     this.setState({
+            //       follow: true
+            //     })
+            //   }
+            // } else {
+            //   if (this.state.follow) {
+            //     this.setState({
+            //       follow: false
+            //     })
+            //   }
+            // }
+
+            //need to refactor to make more effecient
+            if (this.props.topic.followers.find(object => object._id === data.currentUser._id)) {
+              if (!this.state.follow) {
+                this.setState({
+                  follow: true
+                })
+              }
+            } else {
+              if (this.state.follow) {
+                this.setState({
+                  follow: false
+                })
+              }
+            }
+            return null
+          }
+          }
+        </Query>
         <div className="TopicPageHeader-Top flex">
           <div className="photo-container">
             <div className="TopicPhoto">
               <div className="topic_photo_img">
-                <Link to={`/topic/${this.props.topic.name}`} >
+                <Link to={`/topic/${this.state.name}`} data-topicid={this.props.topic._id} >
                   <img className="icon" src={this.renderImg()}></img>
                 </Link>
               </div>
@@ -69,7 +111,7 @@ class TopicHeader extends React.Component {
           </div>
           <div className="topic-content">
             <div className="TopicName">
-              <h1>{this.props.topic.name}</h1>
+              <h1>{this.state.name}</h1>
             </div>
             <div>
               <div className="icon_action_bar">
@@ -78,13 +120,12 @@ class TopicHeader extends React.Component {
                     <span>
                       <Mutation
                         mutation={FOLLOW_TOPIC}
-                        update={this.updateCache}
                         onError={err => this.setState({ message: err.message })}
-
                       >
                         {(followTopic) => (
                           <div className="ui_button-inner flex" onClick={(e) => this.handleClick(e, followTopic)}>
                             <div className="ui_button_icon_wrapper" >
+
                               {this.renderFollowIcon()}
                             </div>
                             <div className="ui_button_count_wrapper">
@@ -124,6 +165,7 @@ class TopicHeader extends React.Component {
             </div>
           </div>
         </div>
+        <TopicNavBar topic={this.props.topic} />
       </div >
     );
   }

@@ -19,7 +19,11 @@ const AnswerSchema = new Schema({
 			type: Schema.Types.ObjectId,
 			ref: "upvote"
 		}
-	]
+	],
+	date: {
+		type: Date,
+		required: true
+	}
 });
 
 module.exports = mongoose.model("answer", AnswerSchema);

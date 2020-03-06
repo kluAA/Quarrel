@@ -11,6 +11,7 @@ export default {
         questions {
           _id
           question
+          date
           user {
             email
           }
@@ -22,10 +23,13 @@ export default {
         question(_id: $id) {
           _id
           question
+          date
           answers {
             _id
             body
+            date
             user {
+              _id
               fname
               lname
               profileUrl
@@ -34,6 +38,8 @@ export default {
               user {
                 _id
               }
+            question {
+              _id
             }
           }
         }
@@ -47,6 +53,10 @@ export default {
           lname
           email
           profileUrl
+          topics {
+            _id
+            name
+          }
         }
       }
     `,
@@ -73,9 +83,22 @@ export default {
         }
       }
     `,
+  FETCH_TOPIC_BY_NAME: gql`
+      query FetchTopic($name: String!) {
+        topic_by_name(name: $name) {
+          _id
+          name
+          imageUrl
+          followers {
+            _id
+          }
+        }
+      }
+    `,
+  //A query to fetch topic by ID instead of name
   FETCH_TOPIC: gql`
       query FetchTopic($id: ID!) {
-        question(_id: $id) {
+        topic(_id: $ID) {
           _id
           name
           imageUrl
