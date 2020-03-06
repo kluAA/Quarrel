@@ -63,6 +63,11 @@ export default {
                 question {
                     _id
                 }
+                upvotes {
+                    user {
+                        _id
+                    }
+                }
             }
         }
     `,
