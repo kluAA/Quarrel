@@ -21,7 +21,7 @@ class AnswerItem extends React.Component {
                 <div
                     id="test"
                     contentEditable={this.state.edit}
-                    className="ai-content"
+                    className="ai-content edit-style"
                     dangerouslySetInnerHTML={{ __html: answer.body }}
                 >
                 </div>

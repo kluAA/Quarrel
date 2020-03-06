@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Mutation } from "react-apollo";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
@@ -20,9 +20,14 @@ class AnswerForm extends React.Component {
             body: "",
             bold: false,
             italic: false,
-            insertOrderedList: false
+            underline: false,
+            insertorderedlist: false,
+            insertunorderedlist: false,
+            linkMenu: false,
+            url: ""
         }
         this.update = this.update.bind(this);
+        this.handleLink = this.handleLink.bind(this);
     }
 
     update(e) {
@@ -50,23 +55,11 @@ class AnswerForm extends React.Component {
         }
     }
 
-    updateFeedCache(cache, { data}) {
-        let questions;
-        try {
-            questions = cache.readQuery({
-                query: FETCH_QUESTIONS,
-            }).questions;
-        } catch (err) {
-            console.log(err);
-        }
-        if (questions) {
-            console.log(questions)
-        }
-    }
-
     handleSubmit(e, newAnswer) {
         e.preventDefault();
-        const cleanBody = clean(this.state.body)
+        const div = document.getElementById("editable");
+        const cleanBody = clean(div.innerHTML)
+        console.log(cleanBody);
         newAnswer({
             variables: {
                 body: cleanBody,
@@ -84,18 +77,77 @@ class AnswerForm extends React.Component {
         }
     }
 
+    handleLink(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.setState({ linkMenu: true })
+    }
+
     render() {
-        const { bold, italic, insertOrderedList } = this.state;
+        const { bold, italic, underline, insertorderedlist, insertunorderedlist, linkMenu } = this.state;
+        const formatButtons = (
+            <Fragment>
+                <button className="format" id={bold ? "btn-active" : null} onClick={this.format("bold")}>
+                    <i className="fas fa-bold"></i>
+                </button>
+                <button className="format" id={italic ? "btn-active" : null} onClick={this.format("italic")}>
+                    <i className="fas fa-italic"></i>
+                </button>
+                <button className="format" id={underline ? "btn-active" : null} onClick={this.format("underline")}>
+                    <i className="fas fa-underline"></i>
+                </button>
+                <button className="format" id={insertorderedlist ? "btn-active" : null} onClick={this.format("insertorderedlist")}>
+                    <i className="fas fa-list-ol"></i>
+                </button>
+                <button className="format" id={insertunorderedlist ? "btn-active" : null} onClick={this.format("insertunorderedlist")}>
+                    <i className="fas fa-list-ul"></i>
+                </button>
+                <button className="format" onClick={this.handleLink}>
+                    <i className="fas fa-link"></i>
+                </button>
+            </Fragment>
+        )
+
+        const linkForm = (
+            <Fragment>
+                <i id="fa-link-blue" className="fas fa-link"></i>
+                <input type="text"
+                    id="link-field"
+                    placeholder="Enter URL"
+                    autoFocus
+                    value={this.state.url}
+                    onChange={e => {
+                        this.setState({url: e.target.value})
+                    }}
+                />
+                <button id="link-add"
+                    onClick={e => {
+                        e.preventDefault();
+                        if (this.state.url === "") {
+                            this.setState({linkMenu: "false"})
+                        } else {
+                            const div = document.getElementById("editable");
+                            const text = div.innerHTML;
+                            div.innerHTML = "";
+                            div.focus();
+                            document.execCommand("CreateLink", false, this.state.url)
+                            div.innerHTML = text + div.innerHTML;
+                            console.log(div.innerHTML);
+                            // document.execCommand("CreateLink", false, "http://stackoverflow.com/");
+
+                        }
+                    }}
+                >
+                    Add
+                </button>
+            </Fragment>
+        )
+        
         return (
             <Mutation 
                 mutation={NEW_ANSWER}
                 update={(cache, data) => {
-                    // if (this.props.match.path === "/") {
-                    //     this.updateFeedCache(cache, data);
-                    //     return null;
-                    // };
                     this.updateCache(cache, data);
-                
                 }}
                 onCompleted={data => {
                     this.props.toggleForm();
@@ -110,22 +162,15 @@ class AnswerForm extends React.Component {
                                 </div>
                             </div>
                             <div className="answer-format">
-                                <button className="format" id={bold ? "btn-active" : null}onClick={this.format("bold")}>
-                                    <i className="fas fa-bold"></i>
-                                </button>
-                                <button className="format" id={italic ? "btn-active" : null}onClick={this.format("italic")}>
-                                    <i className="fas fa-italic"></i>
-                                </button>
-                                <button className="format" id={insertOrderedList ? "btn-active" : null} onClick={this.format("insertOrderedList")}>
-                                    <i className="fas fa-list-ol"></i>
-                                </button>
+                                {linkMenu ? linkForm : formatButtons}
                             </div>
                             <div
                                 id="editable"
-                                className="answer-content"
+                                className="answer-content edit-style"
                                 contentEditable="true"
                                 spellCheck="false"
                                 onInput={this.update}
+                                onFocus={e => this.setState({linkMenu: false})}
                             >
                             </div>
 
