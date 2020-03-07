@@ -6,13 +6,15 @@ class ProfileIcon extends React.Component {
     }
 
     //fields are: profileUrl, size, fsize, and fname
+    //option: cn is className
 
 
     render() {
         const { size, profileUrl, fname, fsize } = this.props;
+        const cn = this.props.cn || null;
         const letter = fname[0].toUpperCase();
         const defaultIcon = (
-            <div style={{
+            <div className={cn} style={{
                 background: `${"red"}`,
                 height: `${size}px`,
                 width: `${size}px`,
@@ -30,7 +32,7 @@ class ProfileIcon extends React.Component {
             </div>
         )
         const imgIcon = (
-            <img src={profileUrl}
+            <img className={cn} src={profileUrl}
                 style={{
                     height: `${size}px`,
                     width: `${size}px`,

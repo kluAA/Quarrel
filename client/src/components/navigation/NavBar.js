@@ -109,7 +109,8 @@ class NavBar extends React.Component {
                                  profileUrl={data.currentUser.profileUrl}
                                  fname={data.currentUser.fname}
                                  size={24}
-                                 fsize={12}   //
+                                 fsize={12}
+                                 cn="nav-usericon"
                                />
                            }
                        }}

@@ -40,8 +40,8 @@ class AnswerItem extends React.Component {
                 {/* <br />
                 <p onClick={e => this.setState({edit: true})}>Toggle Edit</p> */}
                 <Upvote answer={answer} questionId={this.props.questionId} />
-                <CommentForm answerId={this.props.answer._id} questionId={this.props.questionId} />
-                <CommentIndex answerId={this.props.answer._id} comments={answer.comments} />
+                {/* <CommentForm answerId={this.props.answer._id} questionId={this.props.questionId} />
+                <CommentIndex answerId={this.props.answer._id} comments={answer.comments} /> */}
             </div>
         )
     }

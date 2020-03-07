@@ -78,7 +78,7 @@ class Login extends React.Component {
 				onCompleted={ async data => {
 					const { token } = data.login;
 					localStorage.setItem("auth-token", token);
-					// this.loginAndRedirectTo("/", data)
+					localStorage.setItem("currentUserId", data.login._id)
 					this.props.history.push("/")
 				}}
 				onError={err => this.renderErrors(err.graphQLErrors)}
