@@ -7,7 +7,8 @@ import QuestionForm from "../questions/QuestionForm";
 import * as SessionUtil from "../../util/session_util";
 import SigninButton from "./SigninButton";
 import ProfileUpload from "./ProfileUpload";
-const { IS_LOGGED_IN } = Queries;
+import ProfileIcon from "../customization/ProfileIcon";
+const { IS_LOGGED_IN, CURRENT_USER } = Queries;
 
 class NavBar extends React.Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class NavBar extends React.Component {
         this.handleModal = this.handleModal.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-	}
+    }
 		
     logout(client) {
         return (
@@ -58,8 +59,7 @@ class NavBar extends React.Component {
     }
 
     render() {
-        // let { data } = this.data;
-        let { logout } = this.logout;
+        const token = localStorage.getItem("auth-token")
         return (
             <div className="nav-container">
                 <div className="nav-content">
@@ -96,9 +96,30 @@ class NavBar extends React.Component {
                         showModal={this.state.showModal} 
                         searchFocus={this.state.searchFocus}
                     />
+                    {/* <ProfileIcon /> */}
+                    <Query 
+                        query={CURRENT_USER}
+                        variables={{ token: token }}
+                    >
+                       {({loading, error, data}) => {
+                           if (loading) return null;
+                           if (error) return null;
+                           if (data.currentUser.profileUrl) {
+                               return <ProfileIcon
+                                 profileUrl={data.currentUser.profileUrl}
+                                 fname={data.currentUser.fname}
+                                 size={24}
+                                 fsize={12}
+                                 cn="nav-usericon"
+                               />
+                           }
+                       }}
+                    </Query>
+
+    
                     <QuestionForm closeSearchModal={this.closeModal}/>
-					<SigninButton />
-                    <ProfileUpload />
+					{/* <SigninButton /> */}
+                    {/* <ProfileUpload /> */}
                 </div>
                 {this.state.showModal && <div className="search-modal-background" onClick={this.closeModal}></div>}
             </div>

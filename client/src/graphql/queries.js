@@ -68,7 +68,7 @@ export default {
       }
     `,
   CURRENT_USER: gql`
-      query CurrentUser($token: String!) {
+      query CurrentUser($token: String) {
         currentUser(token: $token) {
           _id
           fname
