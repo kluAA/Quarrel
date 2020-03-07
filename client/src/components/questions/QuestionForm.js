@@ -22,13 +22,16 @@ class QuestionForm extends React.Component {
             successfulQId: "",
             redirectId: "",
             showTopicModal: false,
-            topics: []
+            topics: [],
+            checked: {
+            }
         };
         this.handleModal = this.handleModal.bind(this);
         this.closeMessage = this.closeMessage.bind(this);
         this.redirect = this.redirect.bind(this);
         this.handleTopicSubmit = this.handleTopicSubmit.bind(this);
         this.updateTopic = this.updateTopic.bind(this);
+        this.setDefaultCheck = this.setDefaultCheck
     }
 
 
@@ -116,18 +119,26 @@ class QuestionForm extends React.Component {
         let topics = this.state.topics;
         topics.forEach(topicId => {
             addTopicToQuestion({ variables: { topicId: topicId, questionId: this.state.successfulQId } })
-        })
+        });
+        setTimeout(this.closeMessage, 5001);
     }
 
     updateTopic(e) {
-        e.preventDefault();
         let topicId = e.currentTarget.value;
+        let dup = [...this.state.topics]
+        dup.push(topicId)
 
+        let trueState = Object.assign({}, this.state.checked, { [topicId]: true })
+        let falseState = Object.assign({}, this.state.checked, { [topicId]: false })
         if (this.state.topics.includes(topicId)) {
-            this.setState({ topics: this.state.topics.filter(topic => topic !== topicId) })
+            this.setState({ topics: this.state.topics.filter(topic => topic !== topicId), checked: falseState })
         } else {
-            this.setState({ topics: this.state.topics.concat(e.currentTarget.value) })
+            this.setState({ topics: dup, checked: trueState })
         }
+    }
+
+    setDefaultCheck(topic) {
+        return this.state.topics.includes(topic._id)
     }
 
     capitalize(word) {
@@ -142,6 +153,9 @@ class QuestionForm extends React.Component {
                         <Mutation
                             mutation={ADD_TOPIC_TO_QUESTION}
                             onError={err => this.setState({ message: err.message })}
+                            onCompleted={data => {
+                                this.setState({ showTopicModal: false, message: "You successfully set topics for " });
+                            }}
                         >
                             {(addTopicToQuestion) => (
                                 <form onSubmit={e => this.handleTopicSubmit(e, addTopicToQuestion)}>
@@ -150,13 +164,15 @@ class QuestionForm extends React.Component {
                                             if (loading) return "loading...";
                                             if (error) return `Error! ${error.message}`;
                                             return data.topics.map(topic => {
+                                                console.log(this.state.topics)
                                                 return (
                                                     <div>
                                                         <input type="checkbox"
                                                             name={topic.name}
                                                             value={topic._id}
                                                             onChange={this.updateTopic}
-                                                            checked={this.state.topics.includes(topic._id)} />
+                                                            checked={this.state.checked[topic._id]}
+                                                        />
                                                         <img className="sidebar-icon" src={topic.imageUrl} />
                                                         <label for={topic.name}>{topic.name}</label>
                                                     </div>
