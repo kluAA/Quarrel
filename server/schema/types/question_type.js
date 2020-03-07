@@ -4,6 +4,7 @@ const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql;
 
 const Question = mongoose.model("question");
 const AnswerType = require("./answer_type");
+const TopicType = require("./topic_type");
 
 const QuestionType = new GraphQLObjectType({
     name: "QuestionType",
@@ -28,6 +29,14 @@ const QuestionType = new GraphQLObjectType({
                 return Question.findById(parentValue._id)
                     .populate("answers")
                     .then(question => question.answers);
+            }
+        },
+        topics: {
+            type: new GraphQLList(TopicType),
+            resolve(parentValue) {
+                return Question.findById(parentValue._id)
+                    .populate("topics")
+                    .then(question => question.topics);
             }
         }
     })

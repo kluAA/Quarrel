@@ -23,6 +23,12 @@ const QuestionSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "answer"
         }
+    ],
+    topics: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "question"
+        }
     ]
 });
 
@@ -40,10 +46,19 @@ QuestionSchema.statics.findRelatedQuestions = (questionId) => {
         });
 }
 
+QuestionSchema.statics.addTopic = (questionId, topicId) => {
+    const Question = mongoose.model("question");
+
+    return Question.findById(questionId).then(question => {
+        question.topics.push(topicId);
+        return question.save()
+    });
+};
+
 const findLongestWord = (sentence) => {
     let words = sentence.slice(0, -1).split(" ");
     let longestWord = words[0];
-    for(i = 0; i < words.length; i++) {
+    for (i = 0; i < words.length; i++) {
         let currentWord = words[i];
         if (currentWord.length > longestWord.length) {
             longestWord = currentWord;

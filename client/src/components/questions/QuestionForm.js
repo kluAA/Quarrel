@@ -4,10 +4,9 @@ import Queries from "../../graphql/queries";
 import Mutations from "../../graphql/mutations";
 import { FaLink } from "react-icons/fa";
 import { Link, withRouter } from "react-router-dom";
-
 const Validator = require("validator");
-const { FETCH_QUESTIONS, CURRENT_USER, SIMILAR_QUESTIONS } = Queries;
-const { NEW_QUESTION } = Mutations;
+const { FETCH_QUESTIONS, CURRENT_USER, SIMILAR_QUESTIONS, FETCH_TOPICS } = Queries;
+const { NEW_QUESTION, ADD_TOPIC_TO_QUESTION } = Mutations;
 
 
 class QuestionForm extends React.Component {
@@ -21,11 +20,18 @@ class QuestionForm extends React.Component {
             link: "",
             successfulQuestion: "",
             successfulQId: "",
-            redirectId: ""
+            redirectId: "",
+            showTopicModal: false,
+            topics: [],
+            checked: {
+            }
         };
         this.handleModal = this.handleModal.bind(this);
         this.closeMessage = this.closeMessage.bind(this);
         this.redirect = this.redirect.bind(this);
+        this.handleTopicSubmit = this.handleTopicSubmit.bind(this);
+        this.updateTopic = this.updateTopic.bind(this);
+        this.setDefaultCheck = this.setDefaultCheck
     }
 
 
@@ -108,11 +114,80 @@ class QuestionForm extends React.Component {
         }
     }
 
+    handleTopicSubmit(e, addTopicToQuestion) {
+        e.preventDefault()
+        let topics = this.state.topics;
+        topics.forEach(topicId => {
+            addTopicToQuestion({ variables: { topicId: topicId, questionId: this.state.successfulQId } })
+        });
+        setTimeout(this.closeMessage, 5001);
+    }
+
+    updateTopic(e) {
+        let topicId = e.currentTarget.value;
+        let dup = [...this.state.topics]
+        dup.push(topicId)
+
+        let trueState = Object.assign({}, this.state.checked, { [topicId]: true })
+        let falseState = Object.assign({}, this.state.checked, { [topicId]: false })
+        if (this.state.topics.includes(topicId)) {
+            this.setState({ topics: this.state.topics.filter(topic => topic !== topicId), checked: falseState })
+        } else {
+            this.setState({ topics: dup, checked: trueState })
+        }
+    }
+
+    setDefaultCheck(topic) {
+        return this.state.topics.includes(topic._id)
+    }
+
     capitalize(word) {
         return word[0].toUpperCase() + word.slice(1);
     }
 
     render() {
+        const topicModal = (
+            <div className="modal-background">
+                <div className="modal-child">
+                    <div className="add-question-modal">
+                        <Mutation
+                            mutation={ADD_TOPIC_TO_QUESTION}
+                            onError={err => this.setState({ message: err.message })}
+                            onCompleted={data => {
+                                this.setState({ showTopicModal: false, message: "You successfully set topics for " });
+                            }}
+                        >
+                            {(addTopicToQuestion) => (
+                                <form onSubmit={e => this.handleTopicSubmit(e, addTopicToQuestion)}>
+                                    <Query query={FETCH_TOPICS} >
+                                        {({ loading, error, data }) => {
+                                            if (loading) return "loading...";
+                                            if (error) return `Error! ${error.message}`;
+                                            return data.topics.map(topic => {
+                                                console.log(this.state.topics)
+                                                return (
+                                                    <div>
+                                                        <input type="checkbox"
+                                                            name={topic.name}
+                                                            value={topic._id}
+                                                            onChange={this.updateTopic}
+                                                            checked={this.state.checked[topic._id]}
+                                                        />
+                                                        <img className="sidebar-icon" src={topic.imageUrl} />
+                                                        <label for={topic.name}>{topic.name}</label>
+                                                    </div>
+                                                )
+                                            })
+                                        }}
+                                    </Query>
+                                    <input type="submit" value="Submit" />
+                                </form>
+                            )}
+                        </Mutation>
+                    </div>
+                </div>
+            </div>
+        )
         let matchesList = "";
         let questionLength = this.state.question.length;
         if (questionLength > 1) {
@@ -143,6 +218,7 @@ class QuestionForm extends React.Component {
                         onError={err => this.setState({ message: err.message })}
                         update={(cache, data) => this.updateCache(cache, data)}
                         onCompleted={data => {
+
                             const { question } = data.newQuestion;
                             this.setState({
                                 message: `You asked: `,
@@ -151,7 +227,8 @@ class QuestionForm extends React.Component {
                                 question: "",
                                 link: "",
                                 successfulQuestion: `${question}`,
-                                successfulQId: data.newQuestion._id
+                                successfulQId: data.newQuestion._id,
+                                showTopicModal: true
                             });
                         }}
                     >
@@ -229,9 +306,9 @@ class QuestionForm extends React.Component {
                 </div> */}
                 <button className="nav-ask-btn" onClick={this.handleModal}>Add Question</button>
                 {this.state.showModal && button}
+                {this.state.showTopicModal && topicModal}
             </div>
         )
     }
 }
-
 export default withRouter(QuestionForm);
