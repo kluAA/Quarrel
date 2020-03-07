@@ -31,7 +31,8 @@ class QuestionForm extends React.Component {
         this.redirect = this.redirect.bind(this);
         this.handleTopicSubmit = this.handleTopicSubmit.bind(this);
         this.updateTopic = this.updateTopic.bind(this);
-        this.setDefaultCheck = this.setDefaultCheck
+        this.setDefaultCheck = this.setDefaultCheck.bind(this);
+        this.handleTopicModal = this.handleTopicModal.bind(this);
     }
 
 
@@ -123,6 +124,11 @@ class QuestionForm extends React.Component {
         setTimeout(this.closeMessage, 5001);
     }
 
+    handleTopicModal(e) {
+        e.preventDefault();
+        this.setState({ showTopicModal: !this.state.showTopicModal, topics: [], checked: {} });
+    }
+
     updateTopic(e) {
         let topicId = e.currentTarget.value;
         let dup = [...this.state.topics]
@@ -147,8 +153,8 @@ class QuestionForm extends React.Component {
 
     render() {
         const topicModal = (
-            <div className="modal-background">
-                <div className="modal-child">
+            <div className="modal-background" onClick={this.handleTopicModal}>
+                <div className="modal-child" onClick={e => e.stopPropagation()}>
                     <div className="add-question-modal">
                         <Mutation
                             mutation={ADD_TOPIC_TO_QUESTION}
@@ -158,30 +164,42 @@ class QuestionForm extends React.Component {
                             }}
                         >
                             {(addTopicToQuestion) => (
-                                <form onSubmit={e => this.handleTopicSubmit(e, addTopicToQuestion)}>
-                                    <Query query={FETCH_TOPICS} >
-                                        {({ loading, error, data }) => {
-                                            if (loading) return "loading...";
-                                            if (error) return `Error! ${error.message}`;
-                                            return data.topics.map(topic => {
-                                                console.log(this.state.topics)
-                                                return (
-                                                    <div>
-                                                        <input type="checkbox"
-                                                            name={topic.name}
-                                                            value={topic._id}
-                                                            onChange={this.updateTopic}
-                                                            checked={this.state.checked[topic._id]}
-                                                        />
-                                                        <img className="sidebar-icon" src={topic.imageUrl} />
-                                                        <label for={topic.name}>{topic.name}</label>
-                                                    </div>
-                                                )
-                                            })
-                                        }}
-                                    </Query>
-                                    <input type="submit" value="Submit" />
-                                </form>
+                                <div className="topics-modal">
+                                    <div className="topics-modal-header">
+                                        {this.state.successfulQuestion}
+                                    </div>
+                                    <div className="topics-modal-instructions">
+                                        Add topics that best describe your question
+                                    </div>
+                                    <form onSubmit={e => this.handleTopicSubmit(e, addTopicToQuestion)}>
+                                        <div className="topics-modal-body">
+                                            <Query query={FETCH_TOPICS} >
+                                                {({ loading, error, data }) => {
+                                                    if (loading) return "loading...";
+                                                    if (error) return `Error! ${error.message}`;
+                                                    return data.topics.map(topic => {
+                                                        return (
+                                                            <div className="topics-modal-topic-container">
+                                                                <input type="checkbox"
+                                                                    name={topic.name}
+                                                                    value={topic._id}
+                                                                    onChange={this.updateTopic}
+                                                                    checked={this.state.checked[topic._id]}
+                                                                />
+                                                                <img className="topic-modal-icon" src={topic.imageUrl} />
+                                                                <label for={topic.name}>{topic.name}</label>
+                                                            </div>
+                                                        )
+                                                    })
+                                                }}
+                                            </Query>
+                                        </div>
+                                        <div className="topics-modal-footer">
+                                            <div className="topics-modal-footer-cancel" onClick={this.handleTopicModal}>Cancel</div>
+                                            <input type="submit" value="Submit" />
+                                        </div>
+                                    </form>
+                                </div>
                             )}
                         </Mutation>
                     </div>
@@ -306,7 +324,9 @@ class QuestionForm extends React.Component {
                 </div> */}
                 <button className="nav-ask-btn" onClick={this.handleModal}>Add Question</button>
                 {this.state.showModal && button}
-                {this.state.showTopicModal && topicModal}
+                {
+                    this.state.showTopicModal && topicModal
+                }
             </div>
         )
     }
