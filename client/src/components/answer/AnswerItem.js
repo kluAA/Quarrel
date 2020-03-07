@@ -1,7 +1,8 @@
 import React from 'react';
-
 import Upvote from "../upvote/Upvote";
 import moment from "moment";
+import CommentForm from '../comment//CommentForm';
+import CommentIndex from '../comment//CommentIndex';
 
 class AnswerItem extends React.Component {
     constructor(props) {
@@ -32,6 +33,8 @@ class AnswerItem extends React.Component {
                 {/* <br />
                 <p onClick={e => this.setState({edit: true})}>Toggle Edit</p> */}
                 <Upvote answer={answer} questionId={this.props.questionId} />
+                <CommentForm answerId={this.props.answer._id} questionId={this.props.questionId} />
+                <CommentIndex answerId={this.props.answer._id} comments={answer.comments} />
             </div>
         )
     }

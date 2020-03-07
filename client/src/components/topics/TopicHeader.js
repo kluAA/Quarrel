@@ -63,6 +63,7 @@ class TopicHeader extends React.Component {
             if (!data) {
               return null
             }
+
             //need to refactor to make more effecient
             if (this.props.topic.followers.find(object => object._id === data.currentUser._id)) {
               if (!this.state.follow) {

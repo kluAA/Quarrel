@@ -11,6 +11,8 @@ const Question = mongoose.model("question");
 const AnswerType = require("./types/answer_type");
 const Answer = mongoose.model("answer");
 const Upvote = mongoose.model("upvote");
+const CommentType = require("./types/comment_type");
+const Comment = mongoose.model("comment");
 
 const mutation = new GraphQLObjectType({
     name: "Mutation",
@@ -65,7 +67,7 @@ const mutation = new GraphQLObjectType({
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
                     console.log(validUser);
-                    return new Question({ question, user: validUser._id, link, date: new Date().toISOString() }).save()
+                    return new Question({ question, user: validUser._id, link, date: new Date() }).save()
                 } else {
                     throw new Error("Must be logged in to create a question")
                 }
@@ -169,6 +171,29 @@ const mutation = new GraphQLObjectType({
                     .then(upvote => {
                         return Answer.findByIdAndUpdate(answerId, { $pull: { upvotes: upvote._id } }).exec();
                     })
+            }
+        },
+        newComment: {
+            type: CommentType,
+            args: {
+                comment: { type: GraphQLString },
+                answerId: { type: new GraphQLNonNull(GraphQLID) }
+            },
+            async resolve(_, { comment, answerId }, ctx) {
+                const validUser = await AuthService.verifyUser({ token: ctx.token });
+                if (validUser.loggedIn) {
+                    return new Comment({ comment, user: validUser._id, answer: answerId }).save()
+                        .then(comment => {
+                            Answer.findByIdAndUpdate(answerId, { $push: { comments: comment._id } }).exec();
+                            return comment;
+                        })
+                } else {
+                    return new Comment({ comment, user: validUser._id, answer: answerId }).save()
+                        .then(comment => {
+                            Answer.findByIdAndUpdate(answerId, { $push: { comments: comment._id } }).exec();
+                            return comment;
+                        })
+                }
             }
         }
     }

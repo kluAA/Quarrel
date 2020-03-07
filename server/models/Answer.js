@@ -23,7 +23,13 @@ const AnswerSchema = new Schema({
 	date: {
 		type: Date,
 		required: true
-	}
+	},
+	comments: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "comment"
+		}
+	]
 });
 
 module.exports = mongoose.model("answer", AnswerSchema);
