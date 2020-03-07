@@ -4,6 +4,7 @@ import Queries from "../../graphql/queries";
 import Mutations from "../../graphql/mutations";
 import { FaLink } from "react-icons/fa";
 import { Link, withRouter } from "react-router-dom";
+import ProfileIcon from "../customization/ProfileIcon";
 const Validator = require("validator");
 const { FETCH_QUESTIONS, CURRENT_USER, SIMILAR_QUESTIONS, FETCH_TOPICS } = Queries;
 const { NEW_QUESTION, ADD_TOPIC_TO_QUESTION } = Mutations;
@@ -81,11 +82,13 @@ class QuestionForm extends React.Component {
             return;
         }
         if (questions) {
+            debugger
             let questionArray = questions.questions;
             let newQuestion = data.newQuestion;
+            questionArray.push(newQuestion);
             cache.writeQuery({
                 query: FETCH_QUESTIONS,
-                data: { questions: questionArray.concat(newQuestion) }
+                data: { questions: questionArray }
             });
         }
     }
@@ -270,7 +273,13 @@ class QuestionForm extends React.Component {
                                                 if (error) return `Error! ${error.message}`
                                                 return (
                                                     <div className="add-question-modal-user">
-                                                        <img className="question-modal-user-pic" src={data.currentUser.profileUrl} />
+
+                                                        <ProfileIcon 
+                                                            size={30}
+                                                            profileUrl={data.currentUser.profileUrl}
+                                                            fsize={15}
+                                                            fname={data.currentUser.fname}
+                                                        />
                                                         <div className="question-modal-user-name">
                                                             {`${this.capitalize(data.currentUser.fname)} ${this.capitalize(data.currentUser.lname)} asked`}
                                                         </div>
