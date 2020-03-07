@@ -5,6 +5,7 @@ const User = mongoose.model("user");
 const keys = require("../../config2/keys");
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
+const randomColor = require("../services/profilecolor");
 
 const register = async data => {
     try {
@@ -29,7 +30,8 @@ const register = async data => {
                 fname,
                 lname,
                 email,
-                password: hashedPassword
+                password: hashedPassword,
+                profileUrl: randomColor()
             },
             err => {
                 if (err) throw err;
