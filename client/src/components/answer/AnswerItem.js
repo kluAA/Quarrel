@@ -8,9 +8,26 @@ class AnswerItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            edit: false
-        }
-    }
+						edit: false,
+						showForm: false
+				}
+				this.numComments = this.numComments.bind(this);
+				this.toggleForm = this.toggleForm.bind(this);
+		}
+		
+		toggleForm() {
+			this.setState({ showForm: !this.state.showForm })
+		}
+
+		numComments(answer) {
+			const num = answer.comments.length;
+			const user = answer.comments.user;
+			if (num === 1) {
+				return "1 Answer";
+			} else {
+				return `${num} Comments from ${user}`;
+			}
+		}
 
 		commentSection() {
 			const { answer } = this.props;
@@ -23,7 +40,10 @@ class AnswerItem extends React.Component {
 			} else {
 				return (
 					<div>
-					<CommentIndex questionId={this.props.questionId} answerId={this.props.answer._id} comments={answer.comments} />
+						<div className="comments-link-container" onClick={this.toggleForm}>
+							<span className="comments-link-text">{this.numComments(answer)}</span>
+						</div>
+						{this.state.showForm ? <CommentIndex questionId={this.props.questionId} answerId={this.props.answer._id} comments={answer.comments} /> : null }
 					</div>
 				);
 			}
