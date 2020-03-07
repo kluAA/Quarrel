@@ -2,6 +2,7 @@ import React from 'react';
 import { Mutation } from "react-apollo";
 import Mutations from "../../graphql/mutations";
 import * as SessionUtil from "../../util/session_util";
+import { withRouter } from "react-router-dom";
 
 const { LOGIN_USER } = Mutations;
 
@@ -74,10 +75,11 @@ class Login extends React.Component {
 		return (
 			<Mutation
 				mutation={LOGIN_USER}
-				onCompleted={data => {
+				onCompleted={ async data => {
 					const { token } = data.login;
 					localStorage.setItem("auth-token", token);
-					this.loginAndRedirectTo("/", data)
+					// this.loginAndRedirectTo("/", data)
+					this.props.history.push("/")
 				}}
 				onError={err => this.renderErrors(err.graphQLErrors)}
 				update={(client, data) => this.updateCache(client, data)}
@@ -131,4 +133,4 @@ class Login extends React.Component {
 	}
 }
 
-export default Login;
+export default withRouter(Login);

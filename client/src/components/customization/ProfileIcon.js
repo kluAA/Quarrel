@@ -21,12 +21,12 @@ class ProfileIcon extends React.Component {
                 justifyContent: "center",
                 alignItems: "center"
             }}>
-                <span style={{
+                <div style={{
                     color: "white",
                     fontSize: `${fsize}px`
                 }}>
                     {letter}
-                </span>
+                </div>
             </div>
         )
         const imgIcon = (

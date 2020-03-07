@@ -40,8 +40,8 @@ const register = async data => {
 
         user.save();
 
-				const token = jwt.sign({ _id: user._id }, keys.secretOrKey);
-    		const id = user._doc._id;
+		const token = jwt.sign({ _id: user._id }, keys.secretOrKey);
+    	const id = user._doc._id;
         return { token, loggedIn: true, ...user._doc, id, password: null };
 
     } catch (err) {
@@ -72,7 +72,7 @@ const login = async data =>
 			throw new Error("Invalid Credentials");
 		}
 	} catch (err) {
-		throw new Error(err);
+		throw err;
 	}
 };
 
