@@ -12,8 +12,28 @@ class AnswerItem extends React.Component {
         }
     }
 
+		commentSection() {
+			const { answer, comments } = this.props;
+			if (this.props.answer.comments.length === 0) {
+				return (
+					<div>
+					<CommentForm answerId={this.props.answer._id} questionId={this.props.questionId} />
+					{/* <CommentIndex questionId={this.props.questionId} answerId={this.props.answer._id} comments={answer.comments} /> */}
+					</div>
+				);
+			} else {
+				return (
+					<div>
+					< CommentForm answerId = { this.props.answer._id } questionId = { this.props.questionId } />
+						{/* {this.props.answer.comments} */}
+					<CommentIndex questionId={this.props.questionId} answerId={this.props.answer._id} comments={answer.comments} />
+					</div>
+				);
+			}
+		}
+
     render() {
-        const { answer } = this.props;
+        const { answer, comments, comment } = this.props;
         return (
             <div className="qns-answer-item">
                 <div className="ai-user-header">
@@ -33,8 +53,9 @@ class AnswerItem extends React.Component {
                 {/* <br />
                 <p onClick={e => this.setState({edit: true})}>Toggle Edit</p> */}
                 <Upvote answer={answer} questionId={this.props.questionId} />
-                <CommentForm answerId={this.props.answer._id} questionId={this.props.questionId} />
-                <CommentIndex answerId={this.props.answer._id} comments={answer.comments} />
+                {/* <CommentForm answerId={this.props.answer._id} questionId={this.props.questionId} />
+                <CommentIndex answerId={this.props.answer._id} comments={answer.comments} /> */}
+								{this.commentSection()}
             </div>
         )
     }

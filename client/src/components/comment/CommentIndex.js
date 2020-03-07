@@ -15,6 +15,9 @@ class CommentIndex extends React.Component {
         const { answer, comment, user } = this.props;
         return (
             <div className="comment-index">
+							{/* <div className=""> */}
+								{/* <CommentForm answerId={this.props.answer._id} questionId={this.props.questionId} /> */}
+							{/* </div> */}
                 {this.props.comments.map(comment => (
                     <div key={comment._id} className="comment-item-container">
 
