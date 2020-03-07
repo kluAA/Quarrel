@@ -2,6 +2,7 @@ import React from "react";
 import { Query } from "react-apollo";
 import Queries from "../../graphql/queries";
 import { Link } from "react-router-dom";
+import moment from "moment";
 import CommentForm from "./CommentForm";
 const { FETCH_COMMENTS } = Queries;
 const { FETCH_ANSWER } = Queries;
@@ -14,10 +15,10 @@ class CommentIndex extends React.Component {
     render() {
         const { answer, comment, user } = this.props;
         return (
-            <div className="comment-index">
-							{/* <div className=""> */}
-								{/* <CommentForm answerId={this.props.answer._id} questionId={this.props.questionId} /> */}
-							{/* </div> */}
+            <div className="">
+							<div className="">
+								<CommentForm answerId={this.props.answerId} questionId={this.props.questionId} />
+							</div>
                 {this.props.comments.map(comment => (
                     <div key={comment._id} className="comment-item-container">
 
@@ -25,7 +26,10 @@ class CommentIndex extends React.Component {
                             {/* <div className="comment-item-user-icon"> */}
                             <img className="comment-item-user-icon" src={comment.user.profileUrl} />
                             {/* </div> */}
-                            <div className="comment-item-user-info">{comment.user.fname} {comment.user.lname}</div>
+                            <div className="comment-item-user-info">{comment.user.fname} {comment.user.lname}
+														<br/>
+															Commented {moment(new Date(parseInt(comment.date)), "YYYY-MM-DD").fromNow()}
+														</div>
                         </div>
 
                         <div className="comment-item-content">

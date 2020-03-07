@@ -2,7 +2,7 @@
   width: 100%;
   display: flex;
   box-sizing: content-box;
-  padding: 15px;
+  padding: 0 15px;
   height: 66px;
   border: 1px solid #efefef;
   margin-top: 16px;
@@ -41,7 +41,7 @@ div.comment-form-input-box {
   height: 32px;
   justify-self: center;
 }
-div .comment-form-button {
+.comment-form-button {
   cursor: pointer;
   padding: 0;
   background: white;
@@ -53,7 +53,7 @@ div .comment-form-button {
   color: blue;
 }
 
-div .comment-index-container {
+.comment-index-container {
   width: 100%;
   border-radius: 10px;
   padding-top: 8px 0 0;
@@ -65,7 +65,7 @@ div .comment-index-container {
 }
 /* ul .comment-index-content {
 } */
-*/ div .comment-item {
+.comment-item {
   border: 1px solid rgb(222, 224, 225);
   border-radius: 3px;
   padding: 10px;
@@ -103,13 +103,22 @@ div .comment-index-container {
 	width: 100%;
 	padding: 8px 16px; 
 	border-radius: 3px;
+	/* margin: 16px 0 0; */
+	padding: 16px;
+	display: block;
+	min-height: 12px;
+	border: 1px solid #e2e2e2;
+	border-radius: 3px;
+	border-color: #efefef;
+	font-size: 13px;
+	z-index: 0;
 }
 .comment-item-header {
 	height: 41px;
 	width: 100%;
 	display: flex;
 	justify-content: space-evenly;
-	padding: 0 16px;
+	/* padding: 0 16px; */
 }
 .comment-item-user-icon {
 	height: 40px;
@@ -127,13 +136,13 @@ div .comment-index-container {
 	font-weight: bold;
 }
 .comment-item-content {
-	padding: 0 30px 10px;
+	padding: 0 30px 10px 10px;
 	color: #333333;
 	margin-bottom: 0;
 }
 .comment-item-footer {
 	width: 100%;
-	padding: 1px 0;
+	/* padding: 1px 0; */
 	height: 32px;
 	padding: 0 30px;
 	justify-content: start;

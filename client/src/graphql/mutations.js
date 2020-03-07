@@ -136,7 +136,8 @@ export default {
         mutation NewComment($comment: String, $answerId: ID!) {
             newComment(comment: $comment, answerId: $answerId) {
                 _id
-                comment
+								comment
+								date
                 user {
                     _id
                 }

@@ -55,7 +55,8 @@ export default {
             }
             comments {
               _id
-              comment
+							comment
+							date
               user {
                 _id
                 fname
