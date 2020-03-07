@@ -163,7 +163,12 @@ class QuestionForm extends React.Component {
                             mutation={ADD_TOPIC_TO_QUESTION}
                             onError={err => this.setState({ message: err.message })}
                             onCompleted={data => {
-                                this.setState({ showTopicModal: false, message: "You successfully set topics for " });
+                                this.setState({ 
+                                    showTopicModal: false, 
+                                    message: "You successfully set topics for ",
+                                    topics: [],
+                                    checked: {} 
+                                });
                             }}
                         >
                             {(addTopicToQuestion) => (
