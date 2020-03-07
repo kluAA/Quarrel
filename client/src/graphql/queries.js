@@ -15,6 +15,9 @@ export default {
           user {
             email
           }
+          topics {
+            _id
+          }
         }
       }
     `,

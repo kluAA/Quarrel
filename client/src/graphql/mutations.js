@@ -44,6 +44,9 @@ export default {
                 user {
                     _id
                 }
+                topics {
+                    _id
+                }
             }
         }
     `,
