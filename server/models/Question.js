@@ -65,6 +65,6 @@ const findLongestWord = (sentence) => {
         }
     }
     return longestWord;
-}
+};
 
 module.exports = mongoose.model("question", QuestionSchema);

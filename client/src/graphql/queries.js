@@ -168,5 +168,28 @@ export default {
           imageUrl
         }
       }
+    `,
+  UNANSWERED_QUESTIONS: gql`
+      query UnansweredQuestions {
+        unansweredQuestions {
+          _id
+          question
+        }
+      }
+    `,
+    ANSWERS_BY_USER: gql`
+      query AnswersByUser($userId: ID) {
+        answersByUser(userId: $userId) {
+          _id
+          body
+          question {
+            _id
+            question
+          }
+          user {
+            _id
+          }
+        }
+      }
     `
 };

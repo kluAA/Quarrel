@@ -118,7 +118,23 @@ const RootQueryType = new GraphQLObjectType({
             resolve(_, args) {
                 return Comment.findById(args._id);
             }
-        }
+        },
+        unansweredQuestions: {
+            type: new GraphQLList(QuestionType),
+            resolve() {
+                return Question.find({})
+                    .then(questions => {
+                        return questions.filter(question => question.answers.length === 0)
+                    });
+            }
+        },
+        answersByUser: {
+            type: new GraphQLList(AnswerType),
+            args: { userId: { type: GraphQLID } },
+            resolve(_, args) {
+                return Answer.find({ user: args.userId });
+            }
+        },
     })
 });
 
