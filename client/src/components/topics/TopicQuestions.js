@@ -17,7 +17,15 @@ class TopicQuestions extends React.Component {
           {({ loading, error, data }) => {
             if (loading) return "Loading...";
             if (error) return `Error! ${error.message}`;
-            return <TopicHeader key={data.topic_by_name._id} topic={data.topic_by_name} name={data.topic_by_name.name} />
+            return <div>
+              <TopicHeader key={data.topic_by_name._id} topic={data.topic_by_name} name={data.topic_by_name.name} />
+              <div>
+                {data.topic_by_name.questions.map(question => {
+                  return <QuestionShow key={question._id} id={question._id} question={question} name={question.name} />
+                }
+                )}
+              </div>
+            </div>
           }}
         </Query>
       </div >
