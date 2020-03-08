@@ -36,6 +36,14 @@ export default {
         }
       }
     `,
+  FETCH_QUESTIONS_BY_TOPIC: gql`
+      query FetchQuestionsByTopic($name: String!) {
+        questions_by_topic(name: $name) {
+          name
+          questions
+        }
+      }
+    `,
   // FETCH_ANSWERS_BY_TOPIC: gql`
   //       query FetchTopic($name: String!) {
   //       topic_by_name(name: $name) {    
@@ -132,6 +140,10 @@ export default {
           imageUrl
           followers {
             _id
+          }
+          questions {
+            _id
+            question
           }
         }
       }

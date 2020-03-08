@@ -52,6 +52,13 @@ const RootQueryType = new GraphQLObjectType({
                 return Question.findById(args._id);
             }
         },
+        questions_by_topic: {
+            type: TopicType,
+            args: { name: { type: new GraphQLNonNull(GraphQLString) } },
+            resolve(parentValue, { name }) {
+                return Topic.findOne({ name })
+            }
+        },
         similarQuestions: {
             type: new GraphQLList(QuestionType),
             args: { question: { type: GraphQLString } },
@@ -69,7 +76,7 @@ const RootQueryType = new GraphQLObjectType({
         answers: {
             type: new GraphQLList(AnswerType),
             resolve() {
-                return Answer.find({}).sort({upvotes: -1});
+                return Answer.find({}).sort({ upvotes: -1 });
             }
         },
         answer: {

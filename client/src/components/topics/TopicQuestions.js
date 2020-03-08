@@ -17,21 +17,9 @@ class TopicQuestions extends React.Component {
           {({ loading, error, data }) => {
             if (loading) return "Loading...";
             if (error) return `Error! ${error.message}`;
-            debugger
             return <TopicHeader key={data.topic_by_name._id} topic={data.topic_by_name} name={data.topic_by_name.name} />
           }}
         </Query>
-        {/* <Query
-          query={FETCH_ANSWERS_BY_TOPIC}
-          variables={{ topicId=data.topic_by_name._id }}
-        >
-          {({ loading, error, data }) => {
-            if (loading) return "Loading...";
-            if (error) return `Error! ${error.message}`;
-            return null
-            // return <QuestionShow key={data.topic_by_name._id} topic={data.topic_by_name} name={data.topic_by_name.name} />
-          }}
-        </Query> */}
       </div >
 
     );
