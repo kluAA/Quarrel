@@ -12,8 +12,15 @@ class QuestionsForYou extends React.Component {
     render() {
         return (
             <div className="search-results">
+                <div className="answers-tab-header">
+                    <div className="answer-tab selected left-tab">
+                        <Link to="/answer">Questions for you</Link>
+                    </div>
+                    <div className="answer-tab unselected right-tab">
+                        <Link to="/answered">Questions you answered</Link>
+                    </div>
+                </div>
                 <ul className="search-results-list">
-                    <div className="results-for">Questions For You </div>
                     <Query query={UNANSWERED_QUESTIONS} >
                         {({ loading, error, data }) => {
                             if (loading) return "loading...";
