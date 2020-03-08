@@ -4,10 +4,10 @@ import Queries from "../../graphql/queries";
 import Mutations from "../../graphql/mutations";
 import { FaLink } from "react-icons/fa";
 import { Link, withRouter } from "react-router-dom";
-
+import ProfileIcon from "../customization/ProfileIcon";
 const Validator = require("validator");
-const { FETCH_QUESTIONS, CURRENT_USER, SIMILAR_QUESTIONS } = Queries;
-const { NEW_QUESTION } = Mutations;
+const { FETCH_QUESTIONS, CURRENT_USER, SIMILAR_QUESTIONS, FETCH_TOPICS } = Queries;
+const { NEW_QUESTION, ADD_TOPIC_TO_QUESTION } = Mutations;
 
 
 class QuestionForm extends React.Component {
@@ -21,11 +21,19 @@ class QuestionForm extends React.Component {
             link: "",
             successfulQuestion: "",
             successfulQId: "",
-            redirectId: ""
+            redirectId: "",
+            showTopicModal: false,
+            topics: [],
+            checked: {
+            }
         };
         this.handleModal = this.handleModal.bind(this);
         this.closeMessage = this.closeMessage.bind(this);
         this.redirect = this.redirect.bind(this);
+        this.handleTopicSubmit = this.handleTopicSubmit.bind(this);
+        this.updateTopic = this.updateTopic.bind(this);
+        this.setDefaultCheck = this.setDefaultCheck.bind(this);
+        this.handleTopicModal = this.handleTopicModal.bind(this);
     }
 
 
@@ -74,11 +82,13 @@ class QuestionForm extends React.Component {
             return;
         }
         if (questions) {
+            debugger
             let questionArray = questions.questions;
             let newQuestion = data.newQuestion;
+            questionArray.push(newQuestion);
             cache.writeQuery({
                 query: FETCH_QUESTIONS,
-                data: { questions: questionArray.concat(newQuestion) }
+                data: { questions: questionArray }
             });
         }
     }
@@ -108,11 +118,102 @@ class QuestionForm extends React.Component {
         }
     }
 
+    handleTopicSubmit(e, addTopicToQuestion) {
+        e.preventDefault()
+        let topics = this.state.topics;
+        topics.forEach(topicId => {
+            addTopicToQuestion({ variables: { topicId: topicId, questionId: this.state.successfulQId } })
+        });
+        setTimeout(this.closeMessage, 5001);
+    }
+
+    handleTopicModal(e) {
+        e.preventDefault();
+        this.setState({ showTopicModal: !this.state.showTopicModal, topics: [], checked: {} });
+    }
+
+    updateTopic(e) {
+        let topicId = e.currentTarget.value;
+        let dup = [...this.state.topics]
+        dup.push(topicId)
+
+        let trueState = Object.assign({}, this.state.checked, { [topicId]: true })
+        let falseState = Object.assign({}, this.state.checked, { [topicId]: false })
+        if (this.state.topics.includes(topicId)) {
+            this.setState({ topics: this.state.topics.filter(topic => topic !== topicId), checked: falseState })
+        } else {
+            this.setState({ topics: dup, checked: trueState })
+        }
+    }
+
+    setDefaultCheck(topic) {
+        return this.state.topics.includes(topic._id)
+    }
+
     capitalize(word) {
         return word[0].toUpperCase() + word.slice(1);
     }
 
     render() {
+        const topicModal = (
+            <div className="modal-background" onClick={this.handleTopicModal}>
+                <div className="modal-child" onClick={e => e.stopPropagation()}>
+                    <div className="add-question-modal">
+                        <Mutation
+                            mutation={ADD_TOPIC_TO_QUESTION}
+                            onError={err => this.setState({ message: err.message })}
+                            onCompleted={data => {
+                                this.setState({ 
+                                    showTopicModal: false, 
+                                    message: "You successfully set topics for ",
+                                    topics: [],
+                                    checked: {} 
+                                });
+                            }}
+                        >
+                            {(addTopicToQuestion) => (
+                                <div className="topics-modal">
+                                    <div className="topics-modal-header">
+                                        {this.state.successfulQuestion}
+                                    </div>
+                                    <div className="topics-modal-instructions">
+                                        Add topics that best describe your question
+                                    </div>
+                                    <form onSubmit={e => this.handleTopicSubmit(e, addTopicToQuestion)}>
+                                        <div className="topics-modal-body">
+                                            <Query query={FETCH_TOPICS} >
+                                                {({ loading, error, data }) => {
+                                                    if (loading) return "loading...";
+                                                    if (error) return `Error! ${error.message}`;
+                                                    return data.topics.map(topic => {
+                                                        return (
+                                                            <div className="topics-modal-topic-container">
+                                                                <input type="checkbox"
+                                                                    name={topic.name}
+                                                                    value={topic._id}
+                                                                    onChange={this.updateTopic}
+                                                                    checked={this.state.checked[topic._id]}
+                                                                />
+                                                                <img className="topic-modal-icon" src={topic.imageUrl} />
+                                                                <label for={topic.name}>{topic.name}</label>
+                                                            </div>
+                                                        )
+                                                    })
+                                                }}
+                                            </Query>
+                                        </div>
+                                        <div className="topics-modal-footer">
+                                            <div className="topics-modal-footer-cancel" onClick={this.handleTopicModal}>Cancel</div>
+                                            <input type="submit" value="Submit" />
+                                        </div>
+                                    </form>
+                                </div>
+                            )}
+                        </Mutation>
+                    </div>
+                </div>
+            </div>
+        )
         let matchesList = "";
         let questionLength = this.state.question.length;
         if (questionLength > 1) {
@@ -143,6 +244,7 @@ class QuestionForm extends React.Component {
                         onError={err => this.setState({ message: err.message })}
                         update={(cache, data) => this.updateCache(cache, data)}
                         onCompleted={data => {
+
                             const { question } = data.newQuestion;
                             this.setState({
                                 message: `You asked: `,
@@ -151,7 +253,8 @@ class QuestionForm extends React.Component {
                                 question: "",
                                 link: "",
                                 successfulQuestion: `${question}`,
-                                successfulQId: data.newQuestion._id
+                                successfulQId: data.newQuestion._id,
+                                showTopicModal: true
                             });
                         }}
                     >
@@ -175,7 +278,13 @@ class QuestionForm extends React.Component {
                                                 if (error) return `Error! ${error.message}`
                                                 return (
                                                     <div className="add-question-modal-user">
-                                                        <img className="question-modal-user-pic" src={data.currentUser.profileUrl} />
+
+                                                        <ProfileIcon 
+                                                            size={30}
+                                                            profileUrl={data.currentUser.profileUrl}
+                                                            fsize={15}
+                                                            fname={data.currentUser.fname}
+                                                        />
                                                         <div className="question-modal-user-name">
                                                             {`${this.capitalize(data.currentUser.fname)} ${this.capitalize(data.currentUser.lname)} asked`}
                                                         </div>
@@ -229,9 +338,11 @@ class QuestionForm extends React.Component {
                 </div> */}
                 <button className="nav-ask-btn" onClick={this.handleModal}>Add Question</button>
                 {this.state.showModal && button}
+                {
+                    this.state.showTopicModal && topicModal
+                }
             </div>
         )
     }
 }
-
 export default withRouter(QuestionForm);

@@ -74,6 +74,10 @@
     font-weight: 500;
 }
 
+.nav-usericon {
+    margin-left: 5px;
+}
+
 .nav-ask-btn:hover {
     background: #a82624;
 }

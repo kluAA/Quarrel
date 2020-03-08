@@ -11,13 +11,6 @@
     border-bottom: none;
 }
 
-.user-icon {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    background: #01887a;
-}
-
 .answer-format {
     height: 42px;
     padding: 0 4px;

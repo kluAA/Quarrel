@@ -44,9 +44,18 @@ cache.writeData({
 //     }
 // });
 
+let uri;
+
+if (process.env.NODE_ENV === "production") {
+    uri = `/graphql`;
+} else {
+    uri = "http://localhost:5000/graphql";
+}
+
+
 const client = new ApolloClient({
     cache,
-    uri: "http://localhost:5000/graphql",
+    uri: uri,
     onError: ({ networkError, graphQLErrors }) => {
         console.log("graphQLErrors", graphQLErrors);
         console.log("networkError", networkError);

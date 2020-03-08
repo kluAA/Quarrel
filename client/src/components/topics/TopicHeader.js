@@ -121,7 +121,6 @@ class TopicHeader extends React.Component {
                         {(followTopic) => (
                           <div className="ui_button-inner flex" onClick={(e) => this.handleClick(e, followTopic)}>
                             <div className="ui_button_icon_wrapper" >
-
                               {this.renderFollowIcon()}
                             </div>
                             <div className="ui_button_count_wrapper">

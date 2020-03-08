@@ -3,6 +3,7 @@ import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
 import { Mutation, Query } from "react-apollo";
 import { FaArrowUp } from "react-icons/fa";
+import ProfileIcon from "../customization/ProfileIcon";
 const { UPVOTE_ANSWER, DELETE_UPVOTE } = Mutations;
 const { FETCH_QUESTION, CURRENT_USER } = Queries;
 
@@ -63,7 +64,12 @@ class Upvote extends React.Component {
                                 <div className="upvoted-message">
                                     {
                                         data.currentUser.profileUrl && 
-                                        <img className="upvoted-message-pic" src={data.currentUser.profileUrl} />
+                                        <ProfileIcon
+                                            size={25}
+                                            profileUrl={data.currentUser.profileUrl}
+                                            fsize={12}
+                                            fname={data.currentUser.fname}
+                                        />
                                     }       
                                     <p className="upvoted-message-text">You upvoted this</p>
                                 </div>

@@ -56,6 +56,15 @@ TopicSchema.statics.addUser = (topicId, userId) => {
   });
 };
 
+TopicSchema.statics.addQuestion = (questionId, topicId) => {
+  const Topic = mongoose.model("topic");
+
+  return Topic.findById(topicId).then(topic => {
+    topic.questions.push(questionId);
+    return topic.save()
+  });
+};
+
 TopicSchema.statics.findMatches = (query) => {
   const Topic = mongoose.model("topic");
   const longestWord = findLongestWord(query);
