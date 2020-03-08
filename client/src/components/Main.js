@@ -12,6 +12,8 @@ import TopicQuestions from "./topics/TopicQuestions"
 import SideBar from "./navigation/SideBar"
 import QuestionShow from "./questions/QuestionShow";
 import SearchResults from "./search/SearchResults";
+import QuestionsForYou from "./answers_tab/questionsForYou";
+import QuestionsYouAnswered from "./answers_tab/questionsYouAnswered";
 
 const Main = () => {
     return (
@@ -26,6 +28,8 @@ const Main = () => {
                     <Route exact path="/topic/:name" component={TopicShow} />
                     <Route exact path="/topic/:name/top_questions" component={TopicQuestions} />
                     <Route exact path="/search/:query" component={SearchResults} />
+                    <Route exact path="/answer" component={QuestionsForYou} />
+                    <Route exact path="/answered" component={QuestionsYouAnswered} />
                 </Switch>
             </div>
         </div>

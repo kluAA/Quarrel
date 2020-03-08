@@ -180,5 +180,59 @@ export default {
           imageUrl
         }
       }
-    `
+    `,
+  UNANSWERED_QUESTIONS: gql`
+      query UnansweredQuestions {
+        unansweredQuestions {
+          _id
+          question
+        }
+      }
+    `,
+    // ANSWERS_BY_USER: gql`
+    //   query AnswersByUser($userId: ID) {
+    //     answersByUser(userId: $userId) {
+    //       _id
+    //       body
+    //       question {
+    //         _id
+    //         question
+    //       }
+    //       user {
+    //         _id
+    //       }
+    //       upvotes {
+    //         _id
+    //       }
+    //     }
+    //   }
+    // `
+    ANSWERS_BY_USER: gql`
+        query AnswersByUser($userId: ID) {
+          answersByUser(userId: $userId) {
+            _id
+            body
+            date
+            user {
+                _id
+                fname
+                lname
+                profileUrl
+            }
+            question {
+                _id
+                question
+            }
+            upvotesTotal
+            upvotes {
+                user {
+                    _id
+                }
+            }
+            comments {
+                _id
+            }
+          }
+        }
+      `
 };
