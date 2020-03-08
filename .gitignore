@@ -1,4 +1,6 @@
 node_modules
+/config
+/config2
 keys_dev.js
 Dockerfile
 docker-compose.yml
