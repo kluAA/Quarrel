@@ -1,13 +1,14 @@
 .comment-form-container {
-  width: 100%;
+  width: 568px;
   display: flex;
   box-sizing: content-box;
-  padding: 0 16px;
+  padding: 0 16px 16px 8px;
   height: auto;
   border: 1px solid #efefef;
   margin-top: 16px;
-  border-radius: 3px;
-  border-color: #efefef;
+  /* border-radius: 3px;
+	border-color: #efefef; */
+ 	border-top: 1px solid rgb(222, 224, 225);
   background-color: #fafafa;
 	font-size: 13px;
 	align-items: center;
@@ -15,7 +16,7 @@
 .comment-form {
   border-top: none;
   font-size: 15px;
-  padding: 8px;
+  padding: 16px 8px 0;
   /* width: fit-content; */
   width: 100%;
   height: 32px;
@@ -34,13 +35,13 @@
 	align-items: center;
 	margin-right: 16px;
 }
-div.comment-form-input-box {
+.comment-form-input-box {
   border: 1px solid rgb(222, 224, 225);
   font-size: 15px;
   padding: 4px 16px;
   border-radius: 20px;
   display: inline-block;
-  width: 500px;
+  width: 468px;
   height: 32px;
 	justify-self: center;
 	/* margin-left: 16px; */
@@ -152,4 +153,11 @@ commments-link-text {
 
 .comment-dislike {
 	display: flex;
+
+}
+
+.comment-disliked {
+	display: flex;
+	font-weight: bold;
+	border
 }

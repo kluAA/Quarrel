@@ -187,7 +187,7 @@ const mutation = new GraphQLObjectType({
 						_id: { type: new GraphQLNonNull(GraphQLID) },
 						// answerId: { type: new GraphQLNonNull(GraphQLID) }
 					},
-					async resolve(_, { _id}, ctx)
+					async resolve(parentValue, { _id}, ctx)
 					{
 						const validUser = await AuthService.verifyUser({ token: ctx.token });
 						// if (validUser.loggedIn) {

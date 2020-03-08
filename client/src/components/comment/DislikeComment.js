@@ -54,10 +54,9 @@ class DislikeComment extends React.Component {
 							if (loading) return "Loading...";
 							if (error) return `Error! ${error.message}`
 							return (
-								<div className="">
+								<div className="comment-disliked">
 									<div className="comment-item-icon"><i class="fas fa-hand-middle-finger"></i></div>
-									<div className="comment-item-text">Dislikes
-									{this.props.comment.dislikes.length} </div> 
+									<div className="comment-item-text">Disliked {this.props.comment.dislikes.length} </div> 
 
 								</div>
 							)
@@ -78,7 +77,7 @@ class DislikeComment extends React.Component {
 						}}
 					>
 						{(dislikeComment, { data }) => (
-							<div className="" onClick={e => this.handleDislike(e, dislikeComment)}>
+							<div className="comment-dislike" onClick={e => this.handleDislike(e, dislikeComment)}>
 								<div className="comment-item-icon"><i class="fas fa-hand-middle-finger"></i></div>
 								<div className="comment-item-text">Dislike {this.props.comment.dislikes.length}</div>
 								
