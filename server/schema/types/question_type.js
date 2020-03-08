@@ -27,7 +27,10 @@ const QuestionType = new GraphQLObjectType({
             type: new GraphQLList(AnswerType),
             resolve(parentValue) {
                 return Question.findById(parentValue._id)
-                    .populate("answers")
+                    .populate({
+                        path: 'answers',
+                        options: { sort: { 'upvotesTotal': -1 } }
+                    })
                     .then(question => question.answers);
             }
         },

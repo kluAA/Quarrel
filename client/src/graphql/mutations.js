@@ -76,6 +76,7 @@ export default {
                 question {
                     _id
                 }
+                upvotesTotal
                 upvotes {
                     user {
                         _id
@@ -118,6 +119,7 @@ export default {
                     lname
                     profileUrl
                 }
+                upvotesTotal
                 upvotes {
                     user {
                         _id
@@ -137,6 +139,7 @@ export default {
                     lname
                     profileUrl
                 }
+                upvotesTotal
                 upvotes {
                     user {
                         _id

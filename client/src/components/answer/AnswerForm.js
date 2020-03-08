@@ -240,7 +240,7 @@ class AnswerForm extends React.Component {
                                                 profileUrl={data.currentUser.profileUrl}
                                                 fname={data.currentUser.fname}
                                                 size={40}
-                                                fsize={12}
+                                                fsize={18}
                                             />
                                         }
                                     }}

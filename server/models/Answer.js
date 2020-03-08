@@ -20,6 +20,9 @@ const AnswerSchema = new Schema({
 			ref: "upvote"
 		}
 	],
+	upvotesTotal: {
+		type: Number
+	},
 	date: {
 		type: Date,
 		required: true

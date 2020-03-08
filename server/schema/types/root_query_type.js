@@ -69,7 +69,7 @@ const RootQueryType = new GraphQLObjectType({
         answers: {
             type: new GraphQLList(AnswerType),
             resolve() {
-                return Answer.find({});
+                return Answer.find({}).sort({upvotes: -1});
             }
         },
         answer: {
