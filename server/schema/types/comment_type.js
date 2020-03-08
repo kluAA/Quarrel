@@ -3,6 +3,7 @@ const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLList } = graphql;
 
 const mongoose = require("mongoose");
 const Comment = mongoose.model("comment");
+const DislikeType = require("./dislike_type");
 
 const CommentType = new GraphQLObjectType({
     name: "CommentType",
@@ -29,7 +30,15 @@ const CommentType = new GraphQLObjectType({
                         return comment.answer
                     });
             }
-        }
+				},
+				dislikes: {
+						type: new GraphQLList(DislikeType),
+						resolve(parentValue) {
+							return Comment.findById(parentValue.id)
+								.populate("dislikes")
+								.then(comment => comment.dislikes);
+						}
+				},
     })
 });
 

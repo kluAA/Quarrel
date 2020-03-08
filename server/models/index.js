@@ -5,3 +5,4 @@ require("./Answer");
 require("./Topic");
 require("./Comment");
 require("./Upvote");
+require("./Dislike");

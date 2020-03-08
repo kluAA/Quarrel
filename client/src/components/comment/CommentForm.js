@@ -38,8 +38,8 @@ class CommentForm extends React.Component {
 			console.log(err);
 		}
 		if (question) {
-			console.log(question);
-			console.log("newComment", newComment);
+			// console.log(question);
+			// console.log("newComment", newComment);
 			question.answers.map((answer) => {
 				if (answer._id === newComment.answer._id) {
 					answer.comments = answer.comments.concat(newComment)

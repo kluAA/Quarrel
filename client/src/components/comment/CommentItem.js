@@ -1,8 +1,9 @@
 import React from 'react';
 import gql from "graphql-tag";
-import { Query } from "react-apollo";
+import { Query, Mutation } from "react-apollo";
 import Queries from "../../graphql/queries";
-const { FETCH_COMMENT } = Queries;
+const { FETCH_COMMENT, FETCH_QUESTION } = Queries;
+// const { DELETE_COMMENT } = Mutations;
 
 class CommentItem extends React.Component {
     constructor(props) {
@@ -11,7 +12,41 @@ class CommentItem extends React.Component {
             edit: false,
             comment: ""
         }
-    }
+		}
+		
+		handleDelete(e, deleteComment) {
+			e.preventDefault();
+			deleteComment({
+				variables: { 
+					commentId: this.state.commentId,
+					// answerId: this.state.answerId
+				}
+			})
+		}
+
+		updateCache(cache, { data }) {
+			let question;
+			try {
+				question = cache.readQuery({
+						query: FETCH_QUESTION,
+						variables: { id: this.props.questionId }
+				}).question;
+			} catch (err) {
+				console.log(err);
+			}
+			if (question) {
+				console.log(question);
+				// question.answer.comments.map((comment) => {
+				// 	if (comment._id === deleteComment.comment._id) {
+				// 		answer.comments = answer.comments.concat(deleteComment)
+				// 	}
+				// });
+				cache.writeQuery({
+					query: FETCH_QUESTION,
+					data: { quesstion: question }
+				})
+			}
+		}
 
     render() {
         const { comment } = this.props;

@@ -62,7 +62,12 @@ export default {
                 fname
                 lname
                 profileUrl
-              }
+							}
+							dislikes {
+								user {
+									_id
+								}
+							}
             }
           }
         }

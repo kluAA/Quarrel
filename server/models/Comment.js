@@ -21,7 +21,13 @@ const CommentSchema = new Schema({
 		date: {
 			type: Date,
 			required: true
-		}
+		},
+		dislikes: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "dislike"
+			}
+		],
 });
 
 module.exports = mongoose.model("comment", CommentSchema);

@@ -23,7 +23,7 @@ class AnswerItem extends React.Component {
 			const num = answer.comments.length;
 			const user = answer.comments.user;
 			if (num === 1) {
-				return "1 Answer";
+				return `1 Comment from ${ user }`;
 			} else {
 				return `${num} Comments from ${user}`;
 			}

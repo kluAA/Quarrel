@@ -13,6 +13,7 @@ const Answer = mongoose.model("answer");
 const Upvote = mongoose.model("upvote");
 const CommentType = require("./types/comment_type");
 const Comment = mongoose.model("comment");
+const Dislike = mongoose.model("dislike");
 
 const mutation = new GraphQLObjectType({
     name: "Mutation",
@@ -170,20 +171,49 @@ const mutation = new GraphQLObjectType({
             async resolve(_, { comment, answerId }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
-                    return new Comment({ comment, user: validUser._id, answer: answerId }).save()
+                    return new Comment({ comment, user: validUser._id, answer: answerId, date: new Date() }).save()
                         .then(comment => {
                             Answer.findByIdAndUpdate(answerId, { $push: { comments: comment._id } }).exec();
                             return comment;
                         })
                 } else {
-                    return new Comment({ comment, user: validUser._id, answer: answerId }).save()
-                        .then(comment => {
-                            Answer.findByIdAndUpdate(answerId, { $push: { comments: comment._id } }).exec();
-                            return comment;
-                        })
+									throw new Error("Must be logged in to comment")
                 }
             }
-        }
+				},
+				deleteComment: {
+					type: CommentType,
+					args: {
+						_id: { type: new GraphQLNonNull(GraphQLID) },
+						// answerId: { type: new GraphQLNonNull(GraphQLID) }
+					},
+					async resolve(_, { _id}, ctx)
+					{
+						const validUser = await AuthService.verifyUser({ token: ctx.token });
+						if (validUser.loggedIn) {
+							return Comment.remove({ _id:_id, user: validUser._id })
+								.then(comment =>
+								{
+									return Answer.findByIdAndUpdate(_id, { $pull: { comments: comment._id } }).exec();
+								})
+						} else {
+							throw new Error("You can only delete your own comments.")
+						}
+					}
+				},	
+			dislikeComment: {
+				type: CommentType,
+				args: {
+					commentId: { type: GraphQLID }
+				},
+				async resolve(parentValue, { commentId }, ctx) {
+					const validUser = await AuthService.verifyUser({ token: ctx.token });
+					return new Dislike({ user: validUser._id, comment: commentId }).save()
+						.then(dislike => {
+							return Comment.findByIdAndUpdate(commentId, { $push: { dislikes: dislike._id } }).exec();
+						})
+				}
+			}
     }
 });
 
