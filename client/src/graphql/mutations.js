@@ -47,6 +47,16 @@ export default {
                 topics {
                     _id
                 }
+                answers {
+                    _id
+                    body
+                    upvotesTotal
+                    user {
+                        profileUrl
+                        fname
+                        lname
+                    }
+                }
             }
         }
     `,

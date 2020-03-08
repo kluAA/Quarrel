@@ -21,10 +21,16 @@ export default {
             _id
           }
           answers {
+            date
             body
             upvotesTotal
             upvotes {
               _id
+            }
+            user {
+              fname
+              lname
+              profileUrl
             }
           }
         }
