@@ -113,12 +113,12 @@ class CommentForm extends React.Component {
 									{/* <img className="comment-item-user-icon" src={user.profileUrl} /> */}
 								</div>
 								{/* <div className="comment-form-input-box"> */}
-								<div className="">
+								<div className="comment-form-input-box">
 									<input
 										onChange={this.update("comment")}
 										value={this.state.comment}
 										placeholder="Add a comment..."
-										className="comment-form-input-box"
+										className="comment-form-input"
 									/>
 								</div>
 								<div className="comment-form-button">

@@ -2,7 +2,7 @@ import React from "react";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
 import { Mutation, Query } from "react-apollo";
-const { DISLIKE_COMMENT } = Mutations;
+const { DISLIKE_COMMENT, DELETE_DISLIKE } = Mutations;
 const { FETCH_QUESTION, CURRENT_USER } = Queries;
 
 class DislikeComment extends React.Component {
@@ -14,7 +14,14 @@ class DislikeComment extends React.Component {
 	handleDislike(e, dislikeComment) {
 		e.preventDefault();
 		dislikeComment({
-			variables: {commentId: this.props.comment._id }
+			variables: {commentId: this.props.comment._id}
+		})
+	}
+
+	handleUndislike(e, deleteDislike) {
+		e.preventDefault();
+		deleteDislike({
+			variables: {commentId: this.props.comment._id}
 		})
 	}
 
@@ -55,13 +62,19 @@ class DislikeComment extends React.Component {
 							if (error) return `Error! ${error.message}`
 							return (
 								<div className="comment-disliked">
-									<div className="comment-item-icon"><i class="fas fa-hand-middle-finger"></i></div>
-									<div className="comment-item-text">Disliked {this.props.comment.dislikes.length} </div> 
+									<div className="comment-item-icon"><i class="fas fa-poo"></i></div>
+									<div className="comment-disliked-text">Poo'ed {this.props.comment.dislikes.length} </div> 
 
 								</div>
 							)
 						}}
 					</Query>
+
+					<Mutation
+						mutation={DELETE_DISLIKE}
+					>
+
+					</Mutation>
 				</div>
 			)
 		} else {
@@ -78,8 +91,8 @@ class DislikeComment extends React.Component {
 					>
 						{(dislikeComment, { data }) => (
 							<div className="comment-dislike" onClick={e => this.handleDislike(e, dislikeComment)}>
-								<div className="comment-item-icon"><i class="fas fa-hand-middle-finger"></i></div>
-								<div className="comment-item-text">Dislike {this.props.comment.dislikes.length}</div>
+								<div className="comment-item-icon"><i class="fas fa-poo"></i></div>
+								<div className="comment-item-text">Poos {this.props.comment.dislikes.length}</div>
 								
 							</div>
 						)}
