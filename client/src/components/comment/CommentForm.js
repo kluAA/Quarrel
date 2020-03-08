@@ -2,7 +2,6 @@ import React from 'react';
 import { Mutation, Query } from "react-apollo";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
-import CommentIndex from "./CommentItem";
 const { NEW_COMMENT } = Mutations;
 const { FETCH_COMMENTS, CURRENT_USER, FETCH_QUESTION } = Queries;
 

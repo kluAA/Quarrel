@@ -190,30 +190,43 @@ const mutation = new GraphQLObjectType({
 					async resolve(_, { _id}, ctx)
 					{
 						const validUser = await AuthService.verifyUser({ token: ctx.token });
-						if (validUser.loggedIn) {
+						// if (validUser.loggedIn) {
 							return Comment.remove({ _id:_id, user: validUser._id })
 								.then(comment =>
 								{
 									return Answer.findByIdAndUpdate(_id, { $pull: { comments: comment._id } }).exec();
 								})
-						} else {
-							throw new Error("You can only delete your own comments.")
-						}
+						// } else {
+							// throw new Error("You can only delete your own comments.")
+						// }
 					}
 				},	
-			dislikeComment: {
-				type: CommentType,
-				args: {
-					commentId: { type: GraphQLID }
+				dislikeComment: {
+					type: CommentType,
+					args: {
+						commentId: { type: GraphQLID }
+					},
+					async resolve(parentValue, { commentId }, ctx) {
+						const validUser = await AuthService.verifyUser({ token: ctx.token });
+						return new Dislike({ user: validUser._id, comment: commentId }).save()
+							.then(dislike => {
+								return Comment.findByIdAndUpdate(commentId, { $push: { dislikes: dislike._id } }).exec();
+							})
+					}
 				},
-				async resolve(parentValue, { commentId }, ctx) {
-					const validUser = await AuthService.verifyUser({ token: ctx.token });
-					return new Dislike({ user: validUser._id, comment: commentId }).save()
-						.then(dislike => {
-							return Comment.findByIdAndUpdate(commentId, { $push: { dislikes: dislike._id } }).exec();
+				deleteDislike: {
+					type: CommentType,
+					args: {
+						commentId: { type: GraphQLID }
+					},
+					async resolve(parentValue, { commentId }, ctx) {
+						const validUser = await AuthService.verifyUser({ token: ctx.token });
+						return Dislike.remove({ user: validUser._id, comment: commentId })
+							.then(dislike => {
+								return Comment.findByIdAndUpdate(commentId, { $pull: { dislikes: dislike._id } }).exec();
 						})
+					}
 				}
-			}
     }
 });
 

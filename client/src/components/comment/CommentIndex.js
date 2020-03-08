@@ -10,7 +10,18 @@ const { FETCH_COMMENTS, FETCH_ANSWER } = Queries;
 class CommentIndex extends React.Component {
     constructor(props) {
         super(props);
-    }
+		}
+		
+		handleDelete(e, deleteComment)
+		{
+			e.preventDefault();
+			deleteComment({
+				variables: {
+					commentId: this.state.commentId,
+					// answerId: this.state.answerId
+				}
+			})
+		}
 
     render() {
         const { answer, comment, user } = this.props;
@@ -42,8 +53,7 @@ class CommentIndex extends React.Component {
                                 <i class="fas fa-reply"></i>
                             </div>
                             <div className="comment-item-text">Reply Begrudgingly</div>
-                            {/* <div className="comment-item-icon"><i class="fas fa-hand-middle-finger"></i></div>
-                            <div className="comment-item-text">Dislike</div> */}
+                            
 														<DislikeComment comment={comment} questionId={this.props.questionId} />
                         </div>
                     </div>

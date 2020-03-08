@@ -146,3 +146,10 @@ commments-link-text {
 	/* padding: 0 2px; */
 	color: #666666;
 }
+
+
+
+
+.comment-dislike {
+	display: flex;
+}

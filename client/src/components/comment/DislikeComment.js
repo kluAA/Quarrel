@@ -41,6 +41,7 @@ class DislikeComment extends React.Component {
 		const userIds = this.props.comment.dislikes.map(dislike => {
 			return dislike.user._id;
 		})
+		const { comment } = this.props;
 
 		if (userIds.includes(localStorage.getItem("currentUserId"))) {
 			return (
@@ -54,7 +55,10 @@ class DislikeComment extends React.Component {
 							if (error) return `Error! ${error.message}`
 							return (
 								<div className="">
-									You disliked this
+									<div className="comment-item-icon"><i class="fas fa-hand-middle-finger"></i></div>
+									<div className="comment-item-text">Dislikes
+									{this.props.comment.dislikes.length} </div> 
+
 								</div>
 							)
 						}}
@@ -63,7 +67,7 @@ class DislikeComment extends React.Component {
 			)
 		} else {
 			return (
-				<div className="">
+				<div className="comment-dislike">
 					<Mutation
 						mutation={DISLIKE_COMMENT}
 						onError={err => this.setState({ message: err.message })}
@@ -75,9 +79,9 @@ class DislikeComment extends React.Component {
 					>
 						{(dislikeComment, { data }) => (
 							<div className="" onClick={e => this.handleDislike(e, dislikeComment)}>
-								<i class="fas fa-hand-middle-finger"></i>
-								Dislike
-								{this.props.comment.dislikes.length}
+								<div className="comment-item-icon"><i class="fas fa-hand-middle-finger"></i></div>
+								<div className="comment-item-text">Dislike {this.props.comment.dislikes.length}</div>
+								
 							</div>
 						)}
 					</Mutation>

@@ -180,5 +180,24 @@ export default {
 								}
 						}
 				}	
+		`,
+		DELETE_DISLIKE: gql`
+				mutation DeleteDislike($commentId: ID) {
+					deleteDislike(commentId: $commentId) {
+						_id
+						comment
+						user {
+							_id
+							fname
+							lname
+							profileUrl
+						}
+						dislikes {
+							user {
+								_id
+							}
+						}
+					}
+				}
 		`
 }
