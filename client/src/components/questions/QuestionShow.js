@@ -32,18 +32,20 @@ class QuestionShow extends React.Component {
     }
 
     render() {
+        debugger
         return (
             <Query
                 query={FETCH_QUESTION}
-                variables={{id: this.props.match.params.id}}
+                variables={{ id: this.props.match.params.id || this.props.id }}
             >
-                {({ loading, error, data}) => {
+                {({ loading, error, data }) => {
+                    debugger
                     if (loading) return "Loading...";
                     if (error) return `Error! ${error.message}`;
                     const { question } = data;
                     const answers = question.answers.map(answer => {
                         return (
-                            <AnswerItem 
+                            <AnswerItem
                                 key={answer._id}
                                 answer={answer}
                                 questionId={question._id}
@@ -84,7 +86,7 @@ class QuestionShow extends React.Component {
                                     <span>Track</span>
                                 </div>
                             </div>
-                            {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={question._id} /> : null }
+                            {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={question._id} /> : null}
                             <h2>{this.numAnswers(question)}</h2>
                             {answers}
                         </div>

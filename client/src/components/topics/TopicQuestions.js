@@ -5,7 +5,7 @@ import { Query } from "react-apollo";
 import Queries from "../../graphql/queries";
 const { FETCH_TOPIC_BY_NAME } = Queries;
 
-class TopicShow extends React.Component {
+class TopicQuestions extends React.Component {
 
   render() {
     return (
@@ -19,7 +19,12 @@ class TopicShow extends React.Component {
             if (error) return `Error! ${error.message}`;
             return <div>
               <TopicHeader key={data.topic_by_name._id} topic={data.topic_by_name} name={data.topic_by_name.name} />
-
+              <div>
+                {data.topic_by_name.questions.map(question => {
+                  return <QuestionShow key={question._id} id={question._id} question={question} name={question.name} />
+                }
+                )}
+              </div>
             </div>
           }}
         </Query>
@@ -29,4 +34,4 @@ class TopicShow extends React.Component {
   }
 }
 
-export default TopicShow;
+export default TopicQuestions;
