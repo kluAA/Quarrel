@@ -82,7 +82,7 @@ const mutation = new GraphQLObjectType({
             async resolve(_, { body, questionId }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
-                    return new Answer({ body, user: validUser._id, question: questionId, date: new Date() }).save()
+                    return new Answer({ body, user: validUser._id, question: questionId, date: new Date(), upvotesTotal: 0 }).save()
                         .then(answer => {
                             Question.findByIdAndUpdate(questionId, { $push: { answers: answer._id } }).exec();
                             return answer;
@@ -156,7 +156,8 @@ const mutation = new GraphQLObjectType({
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 return new Upvote({ user: validUser._id, answer: answerId }).save()
                     .then(upvote => {
-                        return Answer.findByIdAndUpdate(answerId, { $push: { upvotes: upvote._id } }).exec();
+                        
+                        return Answer.findByIdAndUpdate(answerId, { $inc: { upvotesTotal: 1 }, $push: { upvotes: upvote._id } }).exec();
                     })
             }
         },
@@ -169,7 +170,7 @@ const mutation = new GraphQLObjectType({
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 return Upvote.remove({ user: validUser._id, answer: answerId })
                     .then(upvote => {
-                        return Answer.findByIdAndUpdate(answerId, { $pull: { upvotes: upvote._id } }).exec();
+                        return Answer.findByIdAndUpdate(answerId, { $inc: { upvotesTotal: -1 }, $pull: { upvotes: upvote._id } }).exec();
                     })
             }
         },

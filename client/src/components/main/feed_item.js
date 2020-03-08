@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from "react-router-dom";
 import AnswerForm from "../answer/AnswerForm";
+import ProfileIcon from "../customization/ProfileIcon";
+import moment from "moment";
 
 class FeedItem extends React.Component {
     constructor(props) {
@@ -16,14 +18,41 @@ class FeedItem extends React.Component {
     }
 
     render() {
-       const { question, _id } = this.props.question;
+       const { question, _id } = this.props;
+       let popularAnswer;
+       if (question.answers.length > 0) {
+            const answer = question.answers[0];
+            popularAnswer = (
+                <Fragment>
+                 <div className="ai-user-header">
+                     <ProfileIcon
+                         profileUrl={answer.user.profileUrl}
+                         fname={answer.user.fname}
+                         size={36}
+                         fsize={18}
+                     />
+                     <div className="ai-user-details">
+                         <span className="ai-user-name">{answer.user.fname} {answer.user.lname}</span>
+                         <span className="ai-date">Answered {moment(new Date(parseInt(answer.date)), "YYYY-MM-DD").fromNow()}</span>
+                     </div>
+                 </div>
+                 <div
+                     className="ai-content edit-style"
+                     dangerouslySetInnerHTML={
+                         { __html: answer.body }}
+                 >
+                 </div>
+                </Fragment>
+            )
+       } 
         return(
             <li className="feed-item">
                 <h1>
-                    <Link to={`/q/${_id}`}>
-                        {question}
+                    <Link to={`/q/${question._id}`}>
+                        {question.question}
                     </Link>
                 </h1>
+                { question.answers.length > 0 ? popularAnswer : null }
                 <div className="feed-item-options">
                     <div onClick={e => this.toggleForm()} className="feed-item-answer">
                         <i className="far fa-angry"></i>

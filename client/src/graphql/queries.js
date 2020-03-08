@@ -12,11 +12,26 @@ export default {
           _id
           question
           date
+          link
           user {
+            _id
             email
           }
           topics {
             _id
+          }
+          answers {
+            date
+            body
+            upvotesTotal
+            upvotes {
+              _id
+            }
+            user {
+              fname
+              lname
+              profileUrl
+            }
           }
         }
       }
@@ -45,6 +60,7 @@ export default {
             _id
             body
             date
+            upvotesTotal
             user {
               _id
               fname

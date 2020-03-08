@@ -1,5 +1,5 @@
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLList } = graphql;
+const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLList, GraphQLInt } = graphql;
 
 const mongoose = require("mongoose");
 const Answer = mongoose.model("answer");
@@ -12,6 +12,7 @@ const AnswerType = new GraphQLObjectType({
     _id: { type: GraphQLID },
     body: { type: GraphQLString },
     date: { type: GraphQLString },
+    upvotesTotal: { type: GraphQLInt },
     user: {
             type: require("./user_type"),
             resolve(parentValue) {

@@ -15,7 +15,7 @@ class ProfileIcon extends React.Component {
         const letter = fname[0].toUpperCase();
         const defaultIcon = (
             <div className={cn} style={{
-                background: `${"red"}`,
+                background: `${profileUrl}`,
                 height: `${size}px`,
                 width: `${size}px`,
                 borderRadius: "50%",
