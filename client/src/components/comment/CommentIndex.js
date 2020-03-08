@@ -4,8 +4,8 @@ import Queries from "../../graphql/queries";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import CommentForm from "./CommentForm";
-const { FETCH_COMMENTS } = Queries;
-const { FETCH_ANSWER } = Queries;
+import DislikeComment from "./DislikeComment";
+const { FETCH_COMMENTS, FETCH_ANSWER } = Queries;
 
 class CommentIndex extends React.Component {
     constructor(props) {
@@ -33,7 +33,8 @@ class CommentIndex extends React.Component {
                         </div>
 
                         <div className="comment-item-content">
-                            <Link to={`/comment/${comment._id}`} className="">{comment.comment}</Link>
+                            {/* <Link to={`/comment/${comment._id}`} className="">{comment.comment}</Link> */}
+														{comment.comment}
                         </div>
 
                         <div className="comment-item-footer">
@@ -41,8 +42,9 @@ class CommentIndex extends React.Component {
                                 <i class="fas fa-reply"></i>
                             </div>
                             <div className="comment-item-text">Reply Begrudgingly</div>
-                            <div className="comment-item-icon"><i class="fas fa-hand-middle-finger"></i></div>
-                            <div className="comment-item-text">Dislike</div>
+                            {/* <div className="comment-item-icon"><i class="fas fa-hand-middle-finger"></i></div>
+                            <div className="comment-item-text">Dislike</div> */}
+														<DislikeComment comment={comment} questionId={this.props.questionId} />
                         </div>
                     </div>
                 ))}

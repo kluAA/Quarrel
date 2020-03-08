@@ -2,8 +2,9 @@ import React from 'react';
 import gql from "graphql-tag";
 import { Query, Mutation } from "react-apollo";
 import Queries from "../../graphql/queries";
+import Mutations from "../../graphql/mutations";
 const { FETCH_COMMENT, FETCH_QUESTION } = Queries;
-// const { DELETE_COMMENT } = Mutations;
+const { DELETE_COMMENT } = Mutations;
 
 class CommentItem extends React.Component {
     constructor(props) {
