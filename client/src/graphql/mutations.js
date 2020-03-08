@@ -44,6 +44,19 @@ export default {
                 user {
                     _id
                 }
+                topics {
+                    _id
+                }
+                answers {
+                    _id
+                    body
+                    upvotesTotal
+                    user {
+                        profileUrl
+                        fname
+                        lname
+                    }
+                }
             }
         }
     `,
@@ -73,6 +86,7 @@ export default {
                 question {
                     _id
                 }
+                upvotesTotal
                 upvotes {
                     user {
                         _id
@@ -115,6 +129,7 @@ export default {
                     lname
                     profileUrl
                 }
+                upvotesTotal
                 upvotes {
                     user {
                         _id
@@ -134,6 +149,7 @@ export default {
                     lname
                     profileUrl
                 }
+                upvotesTotal
                 upvotes {
                     user {
                         _id

@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react';
-import { Mutation } from "react-apollo";
+import { Mutation, Query } from "react-apollo";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
 import { withRouter } from "react-router-dom";
 import axios from 'axios';
+import ProfileIcon from "../customization/ProfileIcon";
 
 const createDOMPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
@@ -12,7 +13,7 @@ const DOMPurify = createDOMPurify(window);
 const clean = DOMPurify.sanitize;
 
 const { NEW_ANSWER } = Mutations;
-const { FETCH_QUESTION } = Queries;
+const { FETCH_QUESTION, CURRENT_USER } = Queries;
 
 class AnswerForm extends React.Component {
     constructor(props) {
@@ -227,9 +228,24 @@ class AnswerForm extends React.Component {
                     return (
                         <div className="answer-form">
                             <div className="answer-header">
-                                <div className="user-icon">
+                                <Query 
+                                    query={CURRENT_USER}
+                                    variables={{token : localStorage.getItem("auth-token") }}
+                                >
+                                    {({loading, error, data}) => {
+                                        if (loading) return null;
+                                        if (error) return null;
+                                        if (data.currentUser.profileUrl) {
+                                            return <ProfileIcon
+                                                profileUrl={data.currentUser.profileUrl}
+                                                fname={data.currentUser.fname}
+                                                size={40}
+                                                fsize={18}
+                                            />
+                                        }
+                                    }}
+                                </Query>
 
-                                </div>
                             </div>
                             <div className="answer-format">
                                 {linkMenu ? linkForm : formatButtons}

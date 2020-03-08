@@ -6,3 +6,5 @@ Dockerfile
 docker-compose.yml
 Dockerfile.web
 .env
+config2
+config

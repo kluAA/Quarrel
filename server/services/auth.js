@@ -5,6 +5,7 @@ const User = mongoose.model("user");
 const keys = require("../../config2/keys");
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
+const randomColor = require("../services/profilecolor");
 
 const register = async data => {
     try {
@@ -29,7 +30,8 @@ const register = async data => {
                 fname,
                 lname,
                 email,
-                password: hashedPassword
+                password: hashedPassword,
+                profileUrl: randomColor()
             },
             err => {
                 if (err) throw err;
@@ -38,8 +40,8 @@ const register = async data => {
 
         user.save();
 
-				const token = jwt.sign({ _id: user._id }, keys.secretOrKey);
-    		const id = user._doc._id;
+		const token = jwt.sign({ _id: user._id }, keys.secretOrKey);
+    	const id = user._doc._id;
         return { token, loggedIn: true, ...user._doc, id, password: null };
 
     } catch (err) {
@@ -70,7 +72,7 @@ const login = async data =>
 			throw new Error("Invalid Credentials");
 		}
 	} catch (err) {
-		throw new Error(err);
+		throw err;
 	}
 };
 

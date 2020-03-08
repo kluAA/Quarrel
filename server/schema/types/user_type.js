@@ -18,7 +18,7 @@ const UserType = new GraphQLObjectType({
             type: new GraphQLList(require("./topic_type")),
             resolve(parentValue) {
                 return User.findById(parentValue._id)
-                    .populate("answers")
+                    .populate("topics")
                     .then(user => user.topics);
             }
         }

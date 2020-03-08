@@ -31,10 +31,10 @@ class CommentIndex extends React.Component {
 
                         <div className="comment-item-footer">
                             <div className="comment-item-icon">
-                                <i class="fas fa-reply"></i>
+                                <i className="fas fa-reply"></i>
                             </div>
                             <div className="comment-item-text">Reply Begrudgingly</div>
-                            <div className="comment-item-icon"><i class="fas fa-hand-middle-finger"></i></div>
+                            <div className="comment-item-icon"><i className="fas fa-hand-middle-finger"></i></div>
                             <div className="comment-item-text">Dislike</div>
                         </div>
                     </div>
