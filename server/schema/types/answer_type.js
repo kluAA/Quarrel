@@ -48,7 +48,7 @@ const AnswerType = new GraphQLObjectType({
           .populate("comments")
           .then(answer => answer.comments);
       }
-    },
+    }
   })
 });
 

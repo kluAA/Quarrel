@@ -2,7 +2,6 @@ import React from 'react';
 import { Mutation, Query } from "react-apollo";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
-import CommentIndex from "./CommentItem";
 const { NEW_COMMENT } = Mutations;
 const { FETCH_COMMENTS, CURRENT_USER, FETCH_QUESTION } = Queries;
 
@@ -38,8 +37,8 @@ class CommentForm extends React.Component {
 			console.log(err);
 		}
 		if (question) {
-			console.log(question);
-			console.log("newComment", newComment);
+			// console.log(question);
+			// console.log("newComment", newComment);
 			question.answers.map((answer) => {
 				if (answer._id === newComment.answer._id) {
 					answer.comments = answer.comments.concat(newComment)
@@ -113,7 +112,8 @@ class CommentForm extends React.Component {
 								<div className="comment-form-user-icon">
 									{/* <img className="comment-item-user-icon" src={user.profileUrl} /> */}
 								</div>
-								<div className="comment-form-input-box">
+								{/* <div className="comment-form-input-box"> */}
+								<div className="">
 									<input
 										onChange={this.update("comment")}
 										value={this.state.comment}
