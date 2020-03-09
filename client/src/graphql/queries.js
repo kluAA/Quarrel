@@ -102,9 +102,6 @@ export default {
           lname
           email
           profileUrl
-          topics {
-            _id
-          }
         }
       }
     `,

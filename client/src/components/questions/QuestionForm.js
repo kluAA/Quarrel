@@ -82,7 +82,6 @@ class QuestionForm extends React.Component {
             return;
         }
         if (questions) {
-            debugger
             let questionArray = questions.questions;
             let newQuestion = data.newQuestion;
             questionArray.push(newQuestion);

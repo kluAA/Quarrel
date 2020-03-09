@@ -49,6 +49,7 @@ export default {
                 }
                 answers {
                     _id
+                    date
                     body
                     upvotesTotal
                     user {
