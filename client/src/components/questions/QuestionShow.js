@@ -32,14 +32,12 @@ class QuestionShow extends React.Component {
     }
 
     render() {
-        debugger
         return (
             <Query
                 query={FETCH_QUESTION}
                 variables={{ id: this.props.match.params.id || this.props.id }}
             >
                 {({ loading, error, data }) => {
-                    debugger
                     if (loading) return "Loading...";
                     if (error) return `Error! ${error.message}`;
                     const { question } = data;
