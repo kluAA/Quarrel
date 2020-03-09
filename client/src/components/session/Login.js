@@ -75,7 +75,7 @@ class Login extends React.Component {
 		return (
 			<Mutation
 				mutation={LOGIN_USER}
-				onCompleted={ async data => {
+				onCompleted={ data => {
 					const { token } = data.login;
 					localStorage.setItem("auth-token", token);
 					localStorage.setItem("currentUserId", data.login._id)

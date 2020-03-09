@@ -8,7 +8,9 @@ class FeedItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showForm: false
+            showForm: false,
+            hideContent: true,
+            showMore: false
         }
         this.toggleForm = this.toggleForm.bind(this);
     }
@@ -18,8 +20,9 @@ class FeedItem extends React.Component {
     }
 
     render() {
-       const { question, _id } = this.props;
-       let popularAnswer;
+        const { question } = this.props;
+        const { hideContent } = this.state;
+        let popularAnswer;
        if (question.answers.length > 0) {
             const answer = question.answers[0];
             popularAnswer = (
@@ -36,12 +39,18 @@ class FeedItem extends React.Component {
                          <span className="ai-date">Answered {moment(new Date(parseInt(answer.date)), "YYYY-MM-DD").fromNow()}</span>
                      </div>
                  </div>
-                 <div
-                     className="ai-content edit-style"
-                     dangerouslySetInnerHTML={
-                         { __html: answer.body }}
-                 >
-                 </div>
+                <div
+                    className={ hideContent ? "ai-content edit-style hide-content" : "ai-content edit-style"}
+                    id="content"
+                    onClick={ e => {
+                        e.stopPropagation();
+                        this.setState({showMore: true, hideContent: false})
+                    }}
+                    dangerouslySetInnerHTML={
+                        { __html: answer.body }}
+                >
+                </div>
+                    
                 </Fragment>
             )
        } 

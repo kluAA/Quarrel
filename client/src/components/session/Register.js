@@ -1,6 +1,7 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
 import Mutations from "../../graphql/mutations";
+import { withRouter } from "react-router-dom";
 // import * as SessionUtil from "../../util/session_util";
 
 const { REGISTER_USER } = Mutations;
@@ -59,11 +60,11 @@ class Register extends React.Component {
 				onError={err => this.renderErrors(err.graphQLErrors)}
 				// {console.log(err.graphQLErrors)}}
 				update={(client, cache, data) => this.updateCache(client, cache, data)}
-				onCompleted={data => {
+				onCompleted={ data => {
 					const { token } = data.register;
 					localStorage.setItem("auth-token", token);
+					localStorage.setItem("currentUserId", data.register._id)
 					this.props.history.push("/");
-					const { user } = data.newUser;
 					this.setState({
 						message: `New user created successfully`
 					});
@@ -135,4 +136,4 @@ class Register extends React.Component {
 	}
 }
 
-export default Register;
+export default withRouter(Register);
