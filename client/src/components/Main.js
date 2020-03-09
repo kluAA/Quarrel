@@ -26,7 +26,7 @@ const Main = () => {
                     <Route exact path="/" component={Feed} />
                     <Route exact path="/topics" component={TopicsShow} />
                     <Route exact path="/topic/:name" component={TopicShow} />
-                    <Route exact path="/topic/:name/top_questions" component={TopicQuestions} />
+                    <Route exact path="/topic/:name/questions" component={TopicQuestions} />
                     <Route exact path="/search/:query" component={SearchResults} />
                     <Route exact path="/answer" component={QuestionsForYou} />
                     <Route exact path="/answered" component={QuestionsYouAnswered} />
