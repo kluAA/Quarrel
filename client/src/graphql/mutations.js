@@ -163,14 +163,68 @@ export default {
         mutation NewComment($comment: String, $answerId: ID!) {
             newComment(comment: $comment, answerId: $answerId) {
                 _id
-                comment
+								comment
+								date
                 user {
-                    _id
+										_id
+										fname
+										lname
+										profileUrl
                 }
                 answer {
                     _id
-                }
+								}
+								dislikes {
+									user {
+										_id
+									}
+								}
             }
         }
-    `,
+		`,
+		DELETE_COMMENT: gql`
+				mutation DeleteComment($id: ID!) {
+						deleteComment(_id: $id) {
+								_id
+						}
+				}
+		`,
+		DISLIKE_COMMENT: gql`
+				mutation DislikeComment($commentId: ID) {
+						dislikeComment(commentId: $commentId) {
+								_id
+								comment
+								user {
+										_id
+										fname
+										lname
+										profileUrl
+								}
+								dislikes {
+										user {
+											_id
+										}
+								}
+						}
+				}	
+		`,
+		DELETE_DISLIKE: gql`
+				mutation DeleteDislike($commentId: ID) {
+					deleteDislike(commentId: $commentId) {
+						_id
+						comment
+						user {
+							_id
+							fname
+							lname
+							profileUrl
+						}
+						dislikes {
+							user {
+								_id
+							}
+						}
+					}
+				}
+		`
 }
