@@ -57,3 +57,42 @@
     max-height: 40em;
 }
 
+.feed-item-unanswered {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+}
+
+#unanswered-msg {
+    color: #939598;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#time-asked {
+    color: #939598;
+    font-size: 13px;
+    font-weight: 400;
+    margin-left: 5px;
+}
+
+.feed-item-unanswered > div {
+    background: #939598;
+    height: 2px;
+    width: 2px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+#feed-answer-upvotes {
+    position: absolute;
+    right: 1px;
+    font-size: 20px;
+    color: #7f8083;
+    font-weight: 500;
+}
+
+#feed-answer-upvotes .fa-arrow-up {
+    margin-right: 3px;
+    font-size: 18px;
+}

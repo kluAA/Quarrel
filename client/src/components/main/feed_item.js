@@ -38,6 +38,7 @@ class FeedItem extends React.Component {
                          <span className="ai-user-name">{answer.user.fname} {answer.user.lname}</span>
                          <span className="ai-date">Answered {moment(new Date(parseInt(answer.date)), "YYYY-MM-DD").fromNow()}</span>
                      </div>
+                        <div id="feed-answer-upvotes"><i className="fas fa-arrow-up"></i>{answer.upvotesTotal}</div>
                  </div>
                 <div
                     className={ hideContent ? "ai-content edit-style hide-content" : "ai-content edit-style"}
@@ -54,6 +55,15 @@ class FeedItem extends React.Component {
                 </Fragment>
             )
        } 
+
+       const noAnswer = (
+           <div className="feed-item-unanswered">
+               <span id="unanswered-msg">No answer yet</span>
+               <div></div>
+               <span id="time-asked">Asked {moment(new Date(parseInt(question.date)), "YYYY-MM-DD").fromNow()}</span>
+           </div>
+       )
+  
         return(
             <li className="feed-item">
                 <h1>
@@ -61,7 +71,7 @@ class FeedItem extends React.Component {
                         {question.question}
                     </Link>
                 </h1>
-                { question.answers.length > 0 ? popularAnswer : null }
+                { question.answers.length > 0 ? popularAnswer : noAnswer }
                 <div className="feed-item-options">
                     <div onClick={e => this.toggleForm()} className="feed-item-answer">
                         <i className="far fa-angry"></i>
