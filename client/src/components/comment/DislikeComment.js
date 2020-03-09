@@ -81,7 +81,7 @@ class DislikeComment extends React.Component {
 					>
 						{(deleteDislike, { data }) => (
 							<div className="comment-dislike" onClick={e => this.handleUndislike(e, deleteDislike)}>
-								<div className="comment-item-icon"><i class="fas fa-poo"></i></div>
+								<div className="comment-item-icon"><i className="fas fa-poo"></i></div>
 								<div className="comment-item-text">Poos {this.props.comment.dislikes.length}</div>
 							</div>
 						)}
@@ -102,7 +102,7 @@ class DislikeComment extends React.Component {
 					>
 						{(dislikeComment, { data }) => (
 							<div className="comment-dislike" onClick={e => this.handleDislike(e, dislikeComment)}>
-								<div className="comment-item-icon"><i class="fas fa-poo"></i></div>
+								<div className="comment-item-icon"><i className="fas fa-poo"></i></div>
 								<div className="comment-item-text">Poos {this.props.comment.dislikes.length}</div>
 								
 							</div>

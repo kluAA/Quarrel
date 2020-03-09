@@ -1,5 +1,5 @@
 .comment-form-container {
-  width: 568px;
+  width: 100%;
   display: flex;
   box-sizing: content-box;
   padding: 0 16px 16px 8px;

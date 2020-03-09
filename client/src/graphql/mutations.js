@@ -171,6 +171,9 @@ export default {
 										lname
 										profileUrl
                 }
+                dislikes {
+                    _id
+                }
                 answer {
                     _id
 								}

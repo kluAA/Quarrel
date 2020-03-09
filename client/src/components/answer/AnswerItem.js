@@ -9,49 +9,46 @@ class AnswerItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-						edit: false,
-						showForm: false
-				}
-				this.numComments = this.numComments.bind(this);
-				this.toggleForm = this.toggleForm.bind(this);
+			edit: false,
+			showForm: false
+		}
+			this.toggleForm = this.toggleForm.bind(this);
 		}
 		
-		toggleForm() {
-			this.setState({ showForm: !this.state.showForm })
+		toggleForm(e) {
+            e.preventDefault();
+			this.setState({ showForm: !this.state.showForm });
 		}
 
-		numComments(answer) {
-			const num = answer.comments.length;
-			const user = answer.comments.user;
-			if (num === 1) {
-				return `1 Comment from ${ user }`;
-			} else {
-				return `${num} Comments from ${user}`;
-			}
-		}
 
-		commentSection() {
-			const { answer } = this.props;
-			if (this.props.answer.comments.length === 0) {
-				return (
-					<div>
-					<CommentForm answerId={this.props.answer._id} questionId={this.props.questionId} />
-					</div>
-				);
-			} else {
-				return (
-					<div>
-						<div className="comments-link-container" onClick={this.toggleForm}>
-							<span className="comments-link-text">{this.numComments(answer)}</span>
-						</div>
-						{this.state.showForm ? <CommentIndex questionId={this.props.questionId} answerId={this.props.answer._id} comments={answer.comments} /> : null }
-					</div>
-				);
-			}
-		}
+		// commentSection() {
+		// 	const { answer } = this.props;
+		// 	if (this.props.answer.comments.length === 0) {
+		// 		return (
+		// 			<div>
+		// 			<CommentForm answerId={this.props.answer._id} questionId={this.props.questionId} />
+		// 			</div>
+		// 		);
+		// 	} else {
+		// 		return (
+		// 			<div>
+		// 				<div className="comments-link-container" onClick={this.toggleForm}>
+		// 					<span className="comments-link-text">{this.numComments(answer)}</span>
+		// 				</div>
+		// 				{this.state.showForm ? <CommentIndex questionId={this.props.questionId} answerId={this.props.answer._id} comments={answer.comments} /> : null }
+		// 			</div>
+		// 		);
+		// 	}
+		// }
 
     render() {
         const { answer } = this.props;
+        const commentShow = (
+            <div>
+                <CommentIndex comments={answer.comments} answerId={answer._id} questionId={this.props.questionId} />
+            </div>
+        )
+
         return (
             <div className="qns-answer-item">
                 <div className="ai-user-header">
@@ -74,13 +71,16 @@ class AnswerItem extends React.Component {
                     dangerouslySetInnerHTML={{ __html: answer.body }}
                 >
                 </div>
-                {/* <br />
-                <p onClick={e => this.setState({edit: true})}>Toggle Edit</p> */}
-                <Upvote answer={answer} questionId={this.props.questionId} />
 
-
-								{this.commentSection()}
-
+                <div className="ai-options">
+                    <Upvote answer={answer} questionId={this.props.questionId} />
+                    <button onClick={this.toggleForm} className="comment-toggle">
+                        <i className="far fa-comments"></i>
+                        <span>Comment</span>
+                        <span>{answer.comments.length}</span>
+                    </button>
+                </div>
+                {this.state.showForm ? commentShow : null}
             </div>
         )
     }
