@@ -11,6 +11,10 @@
     border-bottom: none;
 }
 
+.answer-header-name {
+    margin-left: 5px;
+}
+
 .answer-format {
     height: 42px;
     padding: 0 4px;
