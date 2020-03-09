@@ -84,7 +84,7 @@ class QuestionForm extends React.Component {
         if (questions) {
             let questionArray = questions.questions;
             let newQuestion = data.newQuestion;
-            questionArray.push(newQuestion);
+            questionArray.unshift(newQuestion);
             cache.writeQuery({
                 query: FETCH_QUESTIONS,
                 data: { questions: questionArray }

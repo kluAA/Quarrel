@@ -23,6 +23,9 @@ class AnswerForm extends React.Component {
             bold: false,
             italic: false,
             underline: false,
+            justifyleft: false,
+            justifycenter: false,
+            justifyright: false,
             insertorderedlist: false,
             insertunorderedlist: false,
             linkMenu: false,
@@ -165,6 +168,15 @@ class AnswerForm extends React.Component {
                 <button className="format" id={underline ? "btn-active" : null} onClick={this.format("underline")}>
                     <i className="fas fa-underline"></i>
                 </button>
+                <button className="format"  onClick={this.format("justifyleft")}>
+                    <i className="fas fa-align-left"></i>
+                </button>
+                <button className="format"  onClick={this.format("justifycenter")}>
+                    <i className="fas fa-align-center"></i>
+                </button>
+                <button className="format"  onClick={this.format("justifyright")}>
+                    <i className="fas fa-align-right"></i>
+                </button>
                 <button className="format" id={insertorderedlist ? "btn-active" : null} onClick={this.format("insertorderedlist")}>
                     <i className="fas fa-list-ol"></i>
                 </button>
@@ -236,12 +248,17 @@ class AnswerForm extends React.Component {
                                         if (loading) return null;
                                         if (error) return null;
                                         if (data.currentUser.profileUrl) {
-                                            return <ProfileIcon
-                                                profileUrl={data.currentUser.profileUrl}
-                                                fname={data.currentUser.fname}
-                                                size={40}
-                                                fsize={18}
-                                            />
+                                            return (
+                                            <Fragment>
+                                                <ProfileIcon
+                                                   profileUrl={data.currentUser.profileUrl}
+                                                   fname={data.currentUser.fname}
+                                                   size={40}
+                                                   fsize={18}
+                                               />
+                                               <span className="answer-header-name">{data.currentUser.fname} {data.currentUser.lname}</span>
+                                            </Fragment>
+                                            )
                                         }
                                     }}
                                 </Query>

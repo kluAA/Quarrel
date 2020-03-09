@@ -75,6 +75,8 @@
 
 .ai-user-header {
     display: flex;
+    align-items: center;
+    position: relative;
     margin-bottom: 10px;
 }
 

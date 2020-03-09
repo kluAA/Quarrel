@@ -10,6 +10,7 @@ import TopicsShow from "./topics/TopicsShow"
 import TopicShow from "./topics/TopicShow"
 import TopicQuestions from "./topics/TopicQuestions"
 import SideBar from "./navigation/SideBar"
+import RightSideBar from "./navigation/RightSideBar";
 import QuestionShow from "./questions/QuestionShow";
 import SearchResults from "./search/SearchResults";
 import QuestionsForYou from "./answers_tab/questionsForYou";
@@ -31,6 +32,7 @@ const Main = () => {
                     <Route exact path="/answer" component={QuestionsForYou} />
                     <Route exact path="/answered" component={QuestionsYouAnswered} />
                 </Switch>
+                <Route exact path="/" component={RightSideBar} />
             </div>
         </div>
     )

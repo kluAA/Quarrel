@@ -58,3 +58,9 @@
     border-color: initial;
     border-image: initial;
 }
+
+.rsb-container {
+  margin-top: 25px;
+  width: 142px;
+  height: 500px;
+}

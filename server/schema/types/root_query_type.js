@@ -42,7 +42,7 @@ const RootQueryType = new GraphQLObjectType({
         questions: {
             type: new GraphQLList(QuestionType),
             resolve() {
-                return Question.find({});
+                return Question.find({}).sort({date: -1});
             }
         },
         question: {
