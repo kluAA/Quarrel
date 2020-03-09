@@ -8,6 +8,8 @@ import * as SessionUtil from "../../util/session_util";
 import SigninButton from "./SigninButton";
 import ProfileUpload from "./ProfileUpload";
 import ProfileIcon from "../customization/ProfileIcon";
+import OptionsMenu from "./OptionsMenu";
+import ReactDOM from "react-dom";
 const { IS_LOGGED_IN, CURRENT_USER } = Queries;
 
 class NavBar extends React.Component {
@@ -18,13 +20,25 @@ class NavBar extends React.Component {
             isLoggedIn: "",
             client: "",
             showModal: false,
-            searchFocus: ""
+            searchFocus: "",
+            showOptions: false
         };
         this.handleModal = this.handleModal.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.toggleOptions = this.toggleOptions.bind(this);
+        this.closeOptions = this.closeOptions.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
-		
+
+    componentWillMount() {
+        document.addEventListener('mousedown', this.handleClick, false);
+    }
+    
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClick, false);
+    }
+    
     logout(client) {
         return (
             <div>
@@ -50,12 +64,31 @@ class NavBar extends React.Component {
 
     openModal(e) {
         e.preventDefault();
-        this.setState({ showModal: true, searchFocus: "search-focus" });
+        this.setState({ showOptions: false, showModal: true, searchFocus: "search-focus" });
     }
 
     closeModal(e) {
         e.preventDefault();
         this.setState({ showModal: false, searchFocus: "" });
+    }
+
+    toggleOptions(e) {
+        e.stopPropagation();
+        if (!this.state.showModal) this.setState({showOptions: !this.state.showOptions});
+    }
+
+    closeOptions() {
+        this.setState({showOptions: false});
+    }
+
+    handleClick(e) {
+        const domNode = ReactDOM.findDOMNode(this);
+
+        if (!domNode || !domNode.contains(e.target)) {
+            this.setState({
+                showOptions: false
+            });
+        }
     }
 
     render() {
@@ -96,7 +129,7 @@ class NavBar extends React.Component {
                         showModal={this.state.showModal} 
                         searchFocus={this.state.searchFocus}
                     />
-                    {/* <ProfileIcon /> */}
+    
                     <Query 
                         query={CURRENT_USER}
                         variables={{ token: token }}
@@ -105,14 +138,23 @@ class NavBar extends React.Component {
                            if (loading) return null;
                            if (error) return null;
                            if (data.currentUser.profileUrl) {
-                               return <ProfileIcon
-                                 profileUrl={data.currentUser.profileUrl}
-                                 fname={data.currentUser.fname}
-                                 size={24}
-                                 fsize={12}
-                                 cn="nav-usericon"
-                               />
-                           }
+                               return (
+                            <div className="nav-relative">
+                               <div className="nav-usericon"
+                                onClick={this.toggleOptions}>
+                                   <ProfileIcon
+                                     profileUrl={data.currentUser.profileUrl}
+                                     fname={data.currentUser.fname}
+                                     size={24}
+                                     fsize={12}  
+                                     />
+                            </div> 
+                                       {this.state.showOptions && !this.state.showModal ? <div className="nav-options-menu">
+                                           <OptionsMenu closeOptions={this.closeOptions} />
+                                       </div> : null}
+                                </div>
+                               )
+                            }
                        }}
                     </Query>
 
