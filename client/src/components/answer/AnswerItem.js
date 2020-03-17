@@ -1,9 +1,13 @@
 import React from 'react';
 import Upvote from "../upvote/Upvote";
 import moment from "moment";
-import CommentForm from '../comment//CommentForm';
 import CommentIndex from '../comment//CommentIndex';
 import ProfileIcon from "../customization/ProfileIcon";
+import { Query } from "react-apollo";
+import Queries from "../../graphql/queries";
+const { CURRENT_USER } = Queries;
+
+
 
 class AnswerItem extends React.Component {
     constructor(props) {
@@ -49,6 +53,14 @@ class AnswerItem extends React.Component {
             </div>
         )
 
+        const answerOptions = (
+            <div className="ai-options-right">
+                <i id="ai-ellipsis" className="fas fa-ellipsis-h">
+
+                </i>
+            </div>
+        )
+
         return (
             <div className="qns-answer-item">
                 <div className="ai-user-header">
@@ -72,13 +84,29 @@ class AnswerItem extends React.Component {
                 >
                 </div>
 
-                <div className="ai-options">
-                    <Upvote answer={answer} questionId={this.props.questionId} />
-                    <button onClick={this.toggleForm} className="comment-toggle">
-                        <i className="far fa-comments"></i>
-                        <span>Comment</span>
-                        <span>{answer.comments.length}</span>
-                    </button>
+                <div className="ai-options-container">
+                    <div className="ai-options-left">
+                        <Upvote answer={answer} questionId={this.props.questionId} />
+                        <button onClick={this.toggleForm} className="comment-toggle">
+                            <i className="far fa-comments"></i>
+                            <span>Comment</span>
+                            <span>{answer.comments.length}</span>
+                        </button>
+                    </div>
+                <Query 
+                    query={CURRENT_USER}
+                    variables={ {token: localStorage.getItem("auth-token")} }
+                >
+                    {({loading, error, data}) => {
+                        if (loading) return null;
+                        if (error) return null;
+                        if (data.currentUser._id === answer.user._id) {
+                           return answerOptions;
+                        } else {
+                            return null;
+                        }
+                    }}
+                </Query>
                 </div>
                 {this.state.showForm ? commentShow : null}
             </div>

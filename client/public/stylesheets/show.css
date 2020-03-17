@@ -103,3 +103,41 @@
     font-size: 13px;
     color: #8b8b8b;
 }
+
+.ai-options-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.ai-options-left {
+    display: flex;
+    align-items: flex-end;
+}
+
+.comment-toggle {
+    display: flex;
+    color: #666;
+    background: #fafafa;
+    width: 122px;
+    height: 30px;
+    border-radius: 20px;
+    justify-content: space-evenly;
+    align-items: center;
+    cursor: pointer;
+    font-size: 15px;
+    margin-bottom: 2px;
+    margin-left: 5px;
+}
+
+#ai-ellipsis {
+    position: relative;
+    cursor: pointer;
+    color: #666666;
+    padding: 7px 5px;
+    border-radius: 10px;
+}
+
+#ai-ellipsis:hover {
+    background: #fafafa;
+}
