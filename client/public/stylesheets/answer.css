@@ -62,6 +62,7 @@
     padding: 8px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .answer-submit {
@@ -76,6 +77,16 @@
 
 .answer-submit:hover {
     background: #1a5aff;
+}
+
+.answer-cancel {
+    cursor: pointer;
+    padding: 7px 15px;
+    background: #2e69ff;
+    border-radius: 20px;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
 }
 
 .format {

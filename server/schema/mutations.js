@@ -93,6 +93,25 @@ const mutation = new GraphQLObjectType({
                 }
             }
         },
+        updateAnswer: {
+            type: AnswerType,
+            args: {
+                answerId: { type: GraphQLID },
+                body: { type: GraphQLString }
+            },
+            async resolve(_, { answerId, body }, ctx) {
+                const validUser = await AuthService.verifyUser({ token: ctx.token });
+                if (validUser.loggedIn) {
+                    Answer.findByIdAndUpdate(
+                        answerId, 
+                        { $set: { body } }, 
+                        { new: true }, (err, answer) => {
+                            return answer;
+                        }
+                    );
+                }
+            }
+        },
         newTopic: {
             type: TopicType,
             args: {

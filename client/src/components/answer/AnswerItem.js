@@ -4,6 +4,7 @@ import moment from "moment";
 import CommentIndex from '../comment//CommentIndex';
 import ProfileIcon from "../customization/ProfileIcon";
 import ReactDOM from "react-dom";
+import AnswerEditForm from "./AnswerEditForm";
 
 
 
@@ -19,6 +20,7 @@ class AnswerItem extends React.Component {
             this.toggleForm = this.toggleForm.bind(this);
             this.toggleOptionsMenu = this.toggleOptionsMenu.bind(this);
             this.handleClick = this.handleClick.bind(this);
+            this.closeEdit = this.closeEdit.bind(this);
     }
         
         componentWillMount() {
@@ -49,6 +51,10 @@ class AnswerItem extends React.Component {
             this.setState({ optionsMenu: !this.state.optionsMenu})
         }
 
+        closeEdit() {
+            this.setState({ edit: false })
+        }
+
 
 
     render() {
@@ -61,7 +67,7 @@ class AnswerItem extends React.Component {
 
         const answerOptionsMenu = (
             <ul className="ai-options-menu">
-                <li id="first-item">
+                <li id="first-item" onClick={e => this.setState({edit: true, optionsMenu: false})}>
                     Edit
                 <div id="ai-options-triangle">
                     <div id="inner-triangle"></div>
@@ -84,6 +90,16 @@ class AnswerItem extends React.Component {
             </div>
         )
 
+        const body = (
+            <div
+                id="test"
+                contentEditable={this.state.edit}
+                className="ai-content edit-style"
+                dangerouslySetInnerHTML={{ __html: answer.body }}
+            >
+            </div>
+        )
+
         return (
             <div className="qns-answer-item">
                 <div className="ai-user-header">
@@ -99,13 +115,8 @@ class AnswerItem extends React.Component {
                         <span className="ai-date">Answered {moment(new Date(parseInt(answer.date)), "YYYY-MM-DD").fromNow()}</span>
                     </div>
                 </div>
-                <div
-                    id="test"
-                    contentEditable={this.state.edit}
-                    className="ai-content edit-style"
-                    dangerouslySetInnerHTML={{ __html: answer.body }}
-                >
-                </div>
+
+                {this.state.edit ? <AnswerEditForm answer={answer} questionId={this.props.questionId} closeEdit={this.closeEdit} /> : body}
 
                 <div className="ai-options-container">
                     <div className="ai-options-left">
