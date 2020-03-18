@@ -5,6 +5,8 @@ import CommentIndex from '../comment//CommentIndex';
 import ProfileIcon from "../customization/ProfileIcon";
 import ReactDOM from "react-dom";
 import AnswerEditForm from "./AnswerEditForm";
+import { Mutation } from "react-apollo";
+import Mutations from "../../graphql/mutations";
 
 
 

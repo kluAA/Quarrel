@@ -89,7 +89,7 @@ const mutation = new GraphQLObjectType({
                             return answer;
                         })
                 } else {
-                    throw new Error("Must be logged in to create an answer")
+                    throw new Error("Must be logged in to create an answer");
                 }
             }
         },
@@ -109,6 +109,22 @@ const mutation = new GraphQLObjectType({
                             return answer;
                         }
                     );
+                } else {
+                    throw new Error("Must be logged in to update an answer");
+                }
+            }
+        },
+        deleteAnswer: {
+            type: AnswerType,
+            args: {
+                answerId: { type: GraphQLID }
+            },
+            async resolve(_, { answerId }, ctx) {
+                const validUser = await AuthService.verifyUser({ token: ctx.token });
+                if (validUser.loggedIn) {
+                    return Answer.deleteAnswer(answerId);
+                } else {
+                    throw new Error("Must be logged in to delete an answer");
                 }
             }
         },

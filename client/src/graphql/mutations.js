@@ -127,6 +127,13 @@ export default {
         }
 
     `,
+    DELETE_ANSWER: gql`
+        mutation DeleteAnswer($answerId: ID!) {
+            deleteAnswer(answerId: $answerId) {
+                _id
+            }
+        }
+    `,
     FOLLOW_TOPIC: gql`
         mutation FollowTopic($topicId: ID!) {
             addTopicToUser(topicId: $topicId) {
