@@ -3,9 +3,8 @@ import Upvote from "../upvote/Upvote";
 import moment from "moment";
 import CommentIndex from '../comment//CommentIndex';
 import ProfileIcon from "../customization/ProfileIcon";
-import { Query } from "react-apollo";
-import Queries from "../../graphql/queries";
-const { CURRENT_USER } = Queries;
+import ReactDOM from "react-dom";
+
 
 
 
@@ -14,36 +13,43 @@ class AnswerItem extends React.Component {
         super(props);
         this.state = {
 			edit: false,
-			showForm: false
+            showForm: false,
+            optionsMenu: false
 		}
-			this.toggleForm = this.toggleForm.bind(this);
-		}
+            this.toggleForm = this.toggleForm.bind(this);
+            this.toggleOptionsMenu = this.toggleOptionsMenu.bind(this);
+            this.handleClick = this.handleClick.bind(this);
+    }
+        
+        componentWillMount() {
+            document.addEventListener('mousedown', this.handleClick, false);
+        }
+
+        componentWillUnmount() {
+            document.removeEventListener('mousedown', this.handleClick, false);
+        }
+
+        handleClick(e) {
+            const domNode = ReactDOM.findDOMNode(this);
+
+            if (!domNode || !domNode.contains(e.target)) {
+                this.setState({
+                    optionsMenu: false
+                });
+            }
+        }
 		
 		toggleForm(e) {
             e.preventDefault();
 			this.setState({ showForm: !this.state.showForm });
-		}
+        }
+        
+        toggleOptionsMenu(e) {
+            e.preventDefault();
+            this.setState({ optionsMenu: !this.state.optionsMenu})
+        }
 
 
-		// commentSection() {
-		// 	const { answer } = this.props;
-		// 	if (this.props.answer.comments.length === 0) {
-		// 		return (
-		// 			<div>
-		// 			<CommentForm answerId={this.props.answer._id} questionId={this.props.questionId} />
-		// 			</div>
-		// 		);
-		// 	} else {
-		// 		return (
-		// 			<div>
-		// 				<div className="comments-link-container" onClick={this.toggleForm}>
-		// 					<span className="comments-link-text">{this.numComments(answer)}</span>
-		// 				</div>
-		// 				{this.state.showForm ? <CommentIndex questionId={this.props.questionId} answerId={this.props.answer._id} comments={answer.comments} /> : null }
-		// 			</div>
-		// 		);
-		// 	}
-		// }
 
     render() {
         const { answer } = this.props;
@@ -53,11 +59,28 @@ class AnswerItem extends React.Component {
             </div>
         )
 
+        const answerOptionsMenu = (
+            <ul className="ai-options-menu">
+                <li id="first-item">
+                    Edit
+                <div id="ai-options-triangle">
+                    <div id="inner-triangle"></div>
+                </div>
+                </li>
+                <li>
+                    Delete
+                </li>
+            </ul>
+        )
+
         const answerOptions = (
             <div className="ai-options-right">
-                <i id="ai-ellipsis" className="fas fa-ellipsis-h">
-
+                <i id="ai-ellipsis" 
+                    className="fas fa-ellipsis-h"
+                    onClick={this.toggleOptionsMenu}    
+                >
                 </i>
+                    {this.state.optionsMenu ? answerOptionsMenu : null}
             </div>
         )
 
@@ -93,20 +116,7 @@ class AnswerItem extends React.Component {
                             <span>{answer.comments.length}</span>
                         </button>
                     </div>
-                <Query 
-                    query={CURRENT_USER}
-                    variables={ {token: localStorage.getItem("auth-token")} }
-                >
-                    {({loading, error, data}) => {
-                        if (loading) return null;
-                        if (error) return null;
-                        if (data.currentUser._id === answer.user._id) {
-                           return answerOptions;
-                        } else {
-                            return null;
-                        }
-                    }}
-                </Query>
+                    {localStorage.getItem("currentUserId") === answer.user._id ? answerOptions : null}
                 </div>
                 {this.state.showForm ? commentShow : null}
             </div>

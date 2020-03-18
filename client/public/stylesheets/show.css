@@ -1,10 +1,10 @@
 .show {
    height: 100%;
    width: 100%;
-   position: fixed;
+   /* position: fixed; */
    display: flex;
    justify-content: center;
-   overflow-y: auto;
+   /* overflow-y: auto; */
 }
 
 .show-body {
@@ -12,10 +12,13 @@
     width: 990px;
     padding: 20px 30px;
     display: flex;
+    margin-bottom: 30px;
+
 }
 
 .qns-container {
     margin-top: 20px;
+    /* margin-bottom: 20px; */
     width: 600px;
     display: flex;
     flex-direction: column;
@@ -131,7 +134,6 @@
 }
 
 #ai-ellipsis {
-    position: relative;
     cursor: pointer;
     color: #666666;
     padding: 7px 5px;
@@ -140,4 +142,64 @@
 
 #ai-ellipsis:hover {
     background: #fafafa;
+}
+
+.ai-options-right {
+    position: relative;
+}
+
+
+.ai-options-menu {
+    position: absolute;
+    z-index: 5;
+    background: #faf9f9;
+    top: 30px;
+    right: 0;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #2b6dad;
+    font-weight: 400;
+}
+
+#ai-options-triangle {
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: -7px;
+    right: 5px;
+    border-bottom: 7px solid #ccc;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+}
+
+#inner-triangle {
+    content: "";
+    width: 0;
+    height: 0;
+    top: 1px;
+    left: -6px;
+    position: absolute;
+    border-bottom: 6px solid #faf9f9;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+}
+
+#first-item:hover #inner-triangle {
+    border-bottom: 6px solid #dfeffa !important;
+    z-index: 6px;
+}
+
+.ai-options-menu li {
+    cursor: pointer;
+    padding: 5px 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.ai-options-menu li:hover {
+    background: #dfeffa;
+}
+
+.ai-options-menu:last-child {
+    border-bottom: none;
 }
