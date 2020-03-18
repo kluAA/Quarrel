@@ -102,9 +102,9 @@ const mutation = new GraphQLObjectType({
             async resolve(_, { answerId, body }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
-                    Answer.findByIdAndUpdate(
+                    return Answer.findByIdAndUpdate(
                         answerId, 
-                        { $set: { body } }, 
+                        { body }, 
                         { new: true }, (err, answer) => {
                             return answer;
                         }

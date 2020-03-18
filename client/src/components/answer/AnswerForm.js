@@ -56,7 +56,6 @@ class AnswerForm extends React.Component {
             return;
         }
         if (question) {
-            console.log(question);
             let newAnswer = data.newAnswer;
             question.answers.push(newAnswer)
             cache.writeQuery({
@@ -70,7 +69,6 @@ class AnswerForm extends React.Component {
         e.preventDefault();
         const div = document.getElementById("editable");
         const cleanBody = clean(div.innerHTML)
-        console.log(cleanBody);
         newAnswer({
             variables: {
                 body: cleanBody,
@@ -107,7 +105,6 @@ class AnswerForm extends React.Component {
         fd.append('image', imageFile, imageFile.name)
         axios.post('/api/upload', fd)
             .then(res => {
-                console.log(res);
                 this.setState({
                     imageUrl: res.data.imageUrl,
                 })

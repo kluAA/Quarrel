@@ -12,7 +12,7 @@ const window = (new JSDOM('')).window;
 const DOMPurify = createDOMPurify(window);
 const clean = DOMPurify.sanitize;
 
-const { NEW_ANSWER } = Mutations;
+const { UPDATE_ANSWER } = Mutations;
 const { FETCH_QUESTION, CURRENT_USER } = Queries;
 
 class AnswerEditForm extends React.Component {
@@ -56,9 +56,14 @@ class AnswerEditForm extends React.Component {
             return;
         }
         if (question) {
-            console.log(question);
-            let newAnswer = data.newAnswer;
-            question.answers.push(newAnswer)
+            let updateAnswer = data.updateAnswer;
+            question.answers = question.answers.map(answer => {
+                if (answer._id === updateAnswer._id) {
+                    return updateAnswer;
+                } else {
+                    return answer;
+                }
+            })
             cache.writeQuery({
                 query: FETCH_QUESTION,
                 data: { question: question }
@@ -66,17 +71,18 @@ class AnswerEditForm extends React.Component {
         }
     }
 
-    handleSubmit(e, newAnswer) {
+    handleSubmit(e, updateAnswer) {
         e.preventDefault();
         const div = document.getElementById("editable");
         const cleanBody = clean(div.innerHTML)
-        console.log(cleanBody);
-        newAnswer({
+        updateAnswer({
             variables: {
                 body: cleanBody,
-                questionId: this.props.questionId
+                answerId: this.props.answer._id
             }
-        }).then(({ data }) => this.props.history.push(`/q/${data.newAnswer.question._id}`))
+        }).then(({ data }) => {
+            this.props.history.push(`/q/${data.updateAnswer.question._id}`)
+        })
     }
 
     format(type) {
@@ -107,7 +113,6 @@ class AnswerEditForm extends React.Component {
         fd.append('image', imageFile, imageFile.name)
         axios.post('/api/upload', fd)
             .then(res => {
-                console.log(res);
                 this.setState({
                     imageUrl: res.data.imageUrl,
                 })
@@ -228,15 +233,15 @@ class AnswerEditForm extends React.Component {
 
         return (
             <Mutation
-                mutation={NEW_ANSWER}
+                mutation={UPDATE_ANSWER}
                 update={(cache, data) => {
                     this.updateCache(cache, data);
                 }}
                 onCompleted={data => {
-                    this.props.toggleForm();
+                    this.props.closeEdit();
                 }}
             >
-                {newAnswer => {
+                {updateAnswer => {
                     return (
                         <div className="answer-form">
                             <div className="answer-header">
@@ -282,7 +287,7 @@ class AnswerEditForm extends React.Component {
                             <div className="answer-footer">
 
                                 <div className="answer-submit"
-                                    onClick={e => this.handleSubmit(e, newAnswer)}>
+                                    onClick={e => this.handleSubmit(e, updateAnswer)}>
                                     Submit
                                 </div>
                                 <div className="answer-cancel"

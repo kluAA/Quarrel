@@ -62,7 +62,6 @@
     padding: 8px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
 }
 
 .answer-submit {
@@ -81,12 +80,14 @@
 
 .answer-cancel {
     cursor: pointer;
-    padding: 7px 15px;
-    background: #2e69ff;
-    border-radius: 20px;
-    color: white;
+    margin-left: 5px;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 400;
+    color: #949494;
+}
+
+.answer-cancel:hover {
+    text-decoration: underline;
 }
 
 .format {
