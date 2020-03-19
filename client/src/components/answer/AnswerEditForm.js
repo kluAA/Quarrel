@@ -12,14 +12,14 @@ const window = (new JSDOM('')).window;
 const DOMPurify = createDOMPurify(window);
 const clean = DOMPurify.sanitize;
 
-const { NEW_ANSWER } = Mutations;
+const { UPDATE_ANSWER } = Mutations;
 const { FETCH_QUESTION, CURRENT_USER } = Queries;
 
-class AnswerForm extends React.Component {
+class AnswerEditForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            body: "",
+            body: props.answer.body,
             bold: false,
             italic: false,
             underline: false,
@@ -42,22 +42,28 @@ class AnswerForm extends React.Component {
     }
 
     update(e) {
-        this.setState({body: e.target.innerHTML})
+        this.setState({ body: e.target.innerHTML })
     }
 
     updateCache(cache, { data }) {
         let question;
-        try { 
-            question = cache.readQuery({ 
+        try {
+            question = cache.readQuery({
                 query: FETCH_QUESTION,
-                variables: { id: this.props.questionId } 
+                variables: { id: this.props.questionId }
             }).question;
         } catch (err) {
             return;
         }
         if (question) {
-            let newAnswer = data.newAnswer;
-            question.answers.push(newAnswer)
+            let updateAnswer = data.updateAnswer;
+            question.answers = question.answers.map(answer => {
+                if (answer._id === updateAnswer._id) {
+                    return updateAnswer;
+                } else {
+                    return answer;
+                }
+            })
             cache.writeQuery({
                 query: FETCH_QUESTION,
                 data: { question: question }
@@ -65,16 +71,18 @@ class AnswerForm extends React.Component {
         }
     }
 
-    handleSubmit(e, newAnswer) {
+    handleSubmit(e, updateAnswer) {
         e.preventDefault();
         const div = document.getElementById("editable");
         const cleanBody = clean(div.innerHTML)
-        newAnswer({
+        updateAnswer({
             variables: {
                 body: cleanBody,
-                questionId: this.props.questionId
+                answerId: this.props.answer._id
             }
-        }).then(({data}) => this.props.history.push(`/q/${data.newAnswer.question._id}`))
+        }).then(({ data }) => {
+            this.props.history.push(`/q/${data.updateAnswer.question._id}`)
+        })
     }
 
     format(type) {
@@ -82,7 +90,7 @@ class AnswerForm extends React.Component {
             e.preventDefault();
             e.stopPropagation();
             document.execCommand(type, false, null);
-            this.setState({[type]: document.queryCommandState(type)});
+            this.setState({ [type]: document.queryCommandState(type) });
         }
     }
 
@@ -95,7 +103,7 @@ class AnswerForm extends React.Component {
     handleImage(e) {
         e.preventDefault();
         e.stopPropagation();
-        this.setState({imageMenu: true})
+        this.setState({ imageMenu: true })
     }
 
     uploadImageFile(e) {
@@ -120,7 +128,7 @@ class AnswerForm extends React.Component {
         div.focus();
         document.execCommand("insertImage", false, this.state.imageUrl)
         div.innerHTML = text + div.innerHTML;
-        this.setState({imageMenu: false, imageUrl: ""})
+        this.setState({ imageMenu: false, imageUrl: "" })
     }
 
     render() {
@@ -140,7 +148,7 @@ class AnswerForm extends React.Component {
                             id="form-image-url"
                             placeholder="Image Url"
                             value={imageUrl}
-                            onChange={e => this.setState({imageUrl: e.target.value})}
+                            onChange={e => this.setState({ imageUrl: e.target.value })}
                         />
                     </div>
                     <div className="form-actions">
@@ -165,13 +173,13 @@ class AnswerForm extends React.Component {
                 <button className="format" id={underline ? "btn-active" : null} onClick={this.format("underline")}>
                     <i className="fas fa-underline"></i>
                 </button>
-                <button className="format"  onClick={this.format("justifyleft")}>
+                <button className="format" onClick={this.format("justifyleft")}>
                     <i className="fas fa-align-left"></i>
                 </button>
-                <button className="format"  onClick={this.format("justifycenter")}>
+                <button className="format" onClick={this.format("justifycenter")}>
                     <i className="fas fa-align-center"></i>
                 </button>
-                <button className="format"  onClick={this.format("justifyright")}>
+                <button className="format" onClick={this.format("justifyright")}>
                     <i className="fas fa-align-right"></i>
                 </button>
                 <button className="format" id={insertorderedlist ? "btn-active" : null} onClick={this.format("insertorderedlist")}>
@@ -186,7 +194,7 @@ class AnswerForm extends React.Component {
                 <button className="format" onClick={this.handleImage}>
                     <i className="far fa-images"></i>
                 </button>
-           
+
                 {this.state.imageMenu ? modal : null}
             </Fragment>
         )
@@ -200,14 +208,14 @@ class AnswerForm extends React.Component {
                     autoFocus
                     value={this.state.url}
                     onChange={e => {
-                        this.setState({url: e.target.value})
+                        this.setState({ url: e.target.value })
                     }}
                 />
                 <button id="link-add"
                     onClick={e => {
                         e.preventDefault();
                         if (this.state.url === "") {
-                            this.setState({linkMenu: "false"})
+                            this.setState({ linkMenu: "false" })
                         } else {
                             const div = document.getElementById("editable");
                             const text = div.innerHTML;
@@ -222,39 +230,39 @@ class AnswerForm extends React.Component {
                 </button>
             </Fragment>
         )
-        
+
         return (
-            <Mutation 
-                mutation={NEW_ANSWER}
+            <Mutation
+                mutation={UPDATE_ANSWER}
                 update={(cache, data) => {
                     this.updateCache(cache, data);
                 }}
                 onCompleted={data => {
-                    this.props.toggleForm();
+                    this.props.closeEdit();
                 }}
             >
-                {newAnswer => {
+                {updateAnswer => {
                     return (
                         <div className="answer-form">
                             <div className="answer-header">
-                                <Query 
+                                <Query
                                     query={CURRENT_USER}
-                                    variables={{token : localStorage.getItem("auth-token") }}
+                                    variables={{ token: localStorage.getItem("auth-token") }}
                                 >
-                                    {({loading, error, data}) => {
+                                    {({ loading, error, data }) => {
                                         if (loading) return null;
                                         if (error) return null;
                                         if (data.currentUser.profileUrl) {
                                             return (
-                                            <Fragment>
-                                                <ProfileIcon
-                                                   profileUrl={data.currentUser.profileUrl}
-                                                   fname={data.currentUser.fname}
-                                                   size={40}
-                                                   fsize={18}
-                                               />
-                                               <span className="answer-header-name">{data.currentUser.fname} {data.currentUser.lname}</span>
-                                            </Fragment>
+                                                <Fragment>
+                                                    <ProfileIcon
+                                                        profileUrl={data.currentUser.profileUrl}
+                                                        fname={data.currentUser.fname}
+                                                        size={40}
+                                                        fsize={18}
+                                                    />
+                                                    <span className="answer-header-name">{data.currentUser.fname} {data.currentUser.lname}</span>
+                                                </Fragment>
                                             )
                                         }
                                     }}
@@ -270,15 +278,21 @@ class AnswerForm extends React.Component {
                                 contentEditable="true"
                                 spellCheck="false"
                                 onInput={this.update}
-                                onFocus={e => this.setState({linkMenu: false})}
+                                onFocus={e => this.setState({ linkMenu: false })}
+                                dangerouslySetInnerHTML={{ __html: this.props.answer.body }}
                             >
+                                
                             </div>
 
                             <div className="answer-footer">
 
-                                <div className="answer-submit" 
-                                    onClick={e => this.handleSubmit(e, newAnswer)}>
+                                <div className="answer-submit"
+                                    onClick={e => this.handleSubmit(e, updateAnswer)}>
                                     Submit
+                                </div>
+                                <div className="answer-cancel"
+                                    onClick={e => this.props.closeEdit()}>
+                                    Cancel    
                                 </div>
                             </div>
                         </div>
@@ -290,4 +304,4 @@ class AnswerForm extends React.Component {
     }
 }
 
-export default withRouter(AnswerForm);
+export default withRouter(AnswerEditForm);

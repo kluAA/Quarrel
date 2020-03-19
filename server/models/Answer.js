@@ -35,4 +35,16 @@ const AnswerSchema = new Schema({
 	]
 });
 
+AnswerSchema.statics.deleteAnswer = answerId => {
+	const Answer = mongoose.model("answer");
+	const Upvote = mongoose.model("upvote");
+	const Comment = mongoose.model("comment");
+	return Answer.findByIdAndDelete(answerId).then(answer => {
+		Comment.deleteMany( {answer: answerId}).exec();
+		Upvote.deleteMany( {answer: answerId}).exec();
+		return answer;
+	})
+
+}
+
 module.exports = mongoose.model("answer", AnswerSchema);

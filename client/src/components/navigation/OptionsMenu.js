@@ -46,27 +46,25 @@ class OptionsMenu extends React.Component {
     }
 
 
-    // updateCache(cache, { data }) {
-    //     let user;
-    //     try {
-    //         user = cache.readQuery({
-    //             query: CURRENT_USER,
-    //             variables: { token: localStorage.getItem("auth-token") }
-    //         }).currentUser
-    //     } catch(err) {
-    //         console.log(err);
-    //     } 
-    //     if (user) {
-    //         let newUser = Object.assign({}, user);
-    //         debugger
-    //         newUser["profileUrl"] = data.updateProfileUrl.profileUrl;
-    //         debugger
-    //         cache.writeQuery({
-    //             query: CURRENT_USER,
-    //             data: { currentUser: newUser }
-    //         })
-    //     }
-    // }
+    updateCache(cache, { data }) {
+        let user;
+        try {
+            user = cache.readQuery({
+                query: CURRENT_USER,
+                variables: { token: localStorage.getItem("auth-token") }
+            }).currentUser
+        } catch(err) {
+            console.log(err);
+        } 
+        if (user) {
+            let newUser = Object.assign({}, user);
+            newUser.profileUrl = data.updateProfileUrl.profileUrl;
+            cache.writeQuery({
+                query: CURRENT_USER,
+                data: { currentUser: newUser }
+            })
+        }
+    }
 
     logout(client) {
         return e => {
@@ -112,8 +110,8 @@ class OptionsMenu extends React.Component {
                         mutation={UPDATE_PROFILE_PIC}
                         onCompleted={ data => {
                             this.props.closeOptions();
-                        }
-                        }
+                        }}
+                        update={(cache, data) => this.updateCache(cache, data)}
                         >
                         {updateProfilePic => {
                             return <React.Fragment>

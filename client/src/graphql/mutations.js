@@ -99,6 +99,41 @@ export default {
             }
         }
     `,
+    UPDATE_ANSWER: gql`
+        mutation UpdateAnswer($answerId: ID!, $body: String!) {
+            updateAnswer(answerId: $answerId, body: $body) {
+                _id
+                body
+                date
+                user {
+                    _id
+                    fname
+                    lname
+                    profileUrl
+                }
+                question {
+                    _id
+                }
+                upvotesTotal
+                upvotes {
+                    user {
+                        _id
+                    }
+                }
+                comments {
+                    _id
+                }
+            }
+        }
+
+    `,
+    DELETE_ANSWER: gql`
+        mutation DeleteAnswer($answerId: ID!) {
+            deleteAnswer(answerId: $answerId) {
+                _id
+            }
+        }
+    `,
     FOLLOW_TOPIC: gql`
         mutation FollowTopic($topicId: ID!) {
             addTopicToUser(topicId: $topicId) {

@@ -78,6 +78,18 @@
     background: #1a5aff;
 }
 
+.answer-cancel {
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #949494;
+}
+
+.answer-cancel:hover {
+    text-decoration: underline;
+}
+
 .format {
     cursor: pointer;
 }
@@ -246,22 +258,5 @@
     background: #4267b2;
 }
 
-.ai-options {
-    display: flex;
-    align-items: flex-end;
-}
 
-.comment-toggle {
-    display: flex;
-    color: #666;
-    background: #fafafa;
-    width: 122px;
-    height: 30px;
-    border-radius: 20px;
-    justify-content: space-evenly;
-    align-items: center;
-    cursor: pointer;
-    font-size: 15px;
-    margin-bottom: 2px;
-    margin-left: 5px;
-}
+

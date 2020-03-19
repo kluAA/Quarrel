@@ -89,7 +89,42 @@ const mutation = new GraphQLObjectType({
                             return answer;
                         })
                 } else {
-                    throw new Error("Must be logged in to create an answer")
+                    throw new Error("Must be logged in to create an answer");
+                }
+            }
+        },
+        updateAnswer: {
+            type: AnswerType,
+            args: {
+                answerId: { type: GraphQLID },
+                body: { type: GraphQLString }
+            },
+            async resolve(_, { answerId, body }, ctx) {
+                const validUser = await AuthService.verifyUser({ token: ctx.token });
+                if (validUser.loggedIn) {
+                    return Answer.findByIdAndUpdate(
+                        answerId, 
+                        { body }, 
+                        { new: true }, (err, answer) => {
+                            return answer;
+                        }
+                    );
+                } else {
+                    throw new Error("Must be logged in to update an answer");
+                }
+            }
+        },
+        deleteAnswer: {
+            type: AnswerType,
+            args: {
+                answerId: { type: GraphQLID }
+            },
+            async resolve(_, { answerId }, ctx) {
+                const validUser = await AuthService.verifyUser({ token: ctx.token });
+                if (validUser.loggedIn) {
+                    return Answer.deleteAnswer(answerId);
+                } else {
+                    throw new Error("Must be logged in to delete an answer");
                 }
             }
         },
@@ -142,7 +177,7 @@ const mutation = new GraphQLObjectType({
             async resolve(parentValue, { profileUrl }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
-                    return User.findByIdAndUpdate(validUser._id, { profileUrl }).exec();
+                    return User.findByIdAndUpdate(validUser._id, { profileUrl }, {new: true}).exec();
                 } else {
                     throw new Error("Must be logged in to upload!")
                 }
