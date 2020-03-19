@@ -7,6 +7,9 @@ import ReactDOM from "react-dom";
 import AnswerEditForm from "./AnswerEditForm";
 import { Mutation } from "react-apollo";
 import Mutations from "../../graphql/mutations";
+import Queries from "../../graphql/queries";
+const { DELETE_ANSWER } = Mutations;
+const { FETCH_QUESTION } = Queries;
 
 
 
@@ -57,6 +60,30 @@ class AnswerItem extends React.Component {
             this.setState({ edit: false })
         }
 
+        updateCache(cache, { data }) {
+            let question;
+            try {
+                question = cache.readQuery({
+                    query: FETCH_QUESTION,
+                    variables: { id: this.props.questionId }
+                }).question;
+            } catch (err) {
+                return;
+            }
+            if (question) {
+                let newQuestion = Object.assign({}, question);
+                let newAnswers = newQuestion.answers.filter(answer => {
+                    return answer._id !== this.props.answer._id;
+                })
+                newQuestion.answers = newAnswers;
+                cache.writeQuery({
+                    query: FETCH_QUESTION,
+                    data: { question: newQuestion }
+                })
+            }
+        }
+
+
 
 
     render() {
@@ -75,9 +102,25 @@ class AnswerItem extends React.Component {
                     <div id="inner-triangle"></div>
                 </div>
                 </li>
-                <li>
-                    Delete
-                </li>
+                <Mutation
+                    mutation={DELETE_ANSWER}
+                    update={(cache, data) => {
+                        this.updateCache(cache, data);
+                    }}
+                    onCompleted={data => this.setState({optionsMenu: false})}
+                >
+                    {deleteAnswer => {
+                        return <li onClick={e => {
+                            deleteAnswer({
+                                variables: {
+                                    answerId: answer._id
+                                }
+                            });
+                        }}>
+                            Delete
+                        </li>
+                    }}
+                </Mutation>
             </ul>
         )
 
