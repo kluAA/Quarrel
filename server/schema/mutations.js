@@ -177,7 +177,7 @@ const mutation = new GraphQLObjectType({
             async resolve(parentValue, { profileUrl }, ctx) {
                 const validUser = await AuthService.verifyUser({ token: ctx.token });
                 if (validUser.loggedIn) {
-                    return User.findByIdAndUpdate(validUser._id, { profileUrl }).exec();
+                    return User.findByIdAndUpdate(validUser._id, { profileUrl }, {new: true}).exec();
                 } else {
                     throw new Error("Must be logged in to upload!")
                 }
