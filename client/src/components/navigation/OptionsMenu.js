@@ -58,9 +58,7 @@ class OptionsMenu extends React.Component {
         } 
         if (user) {
             let newUser = Object.assign({}, user);
-            debugger
             newUser.profileUrl = data.updateProfileUrl.profileUrl;
-            debugger
             cache.writeQuery({
                 query: CURRENT_USER,
                 data: { currentUser: newUser }
