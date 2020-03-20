@@ -311,8 +311,8 @@ class QuestionForm extends React.Component {
                                         </div>
                                     </div>
                                     <div className="add-question-modal-footer">
-                                        <p onClick={this.handleModal}>Cancel</p>
-                                        <button type="submit">Add Question</button>
+                                        <button className="cancel-button" onClick={this.handleModal}>Cancel</button>
+                                        <button className="add-button" type="submit">Add Question</button>
                                     </div>
                                 </form>
                             </div>
