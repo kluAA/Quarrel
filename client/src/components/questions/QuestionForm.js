@@ -25,7 +25,8 @@ class QuestionForm extends React.Component {
             showTopicModal: false,
             topics: [],
             checked: {
-            }
+            },
+            dataMatches: []
         };
         this.handleModal = this.handleModal.bind(this);
         this.closeMessage = this.closeMessage.bind(this);
@@ -219,11 +220,25 @@ class QuestionForm extends React.Component {
             matchesList = (
                 <Query query={SIMILAR_QUESTIONS} variables={{ question: this.state.question }}>
                     {({ loading, error, data }) => {
-                        if (loading) return "loading...";
+                        if (loading) {
+                            return this.state.dataMatches.map(match => {
+                                return (
+                                    <li className="matches-item" onClick={this.redirect(match._id)}>
+                                        <div>{`${match.question}`}</div>
+                                        <div className="question-form-answers-number">
+                                            {`${match.answers.length} ${match.answers.length === 1 ? "answer" : "answers"}`}
+                                        </div>
+                                    </li>
+                                )
+                            })
+                        }
                         if (error) return `Error! ${error.message}`;
-                        return data.similarQuestions.map(match => {
+                        if (data.similarQuestions.length) {
+                            this.state.dataMatches = data.similarQuestions;
+                        }
+                        return this.state.dataMatches.map(match => {
                             return (
-                                <li className="matches-item" onClick={this.redirect(match._id)}>
+                                <li className="matches-item" onClick={this.redirect(match._id)} key={match._id}>
                                     <div>{`${match.question}`}</div>
                                     <div className="question-form-answers-number">
                                         {`${match.answers.length} ${match.answers.length === 1 ? "answer" : "answers"}`}
