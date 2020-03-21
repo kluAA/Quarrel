@@ -5,6 +5,7 @@ import Mutations from "../../graphql/mutations";
 import { FaLink } from "react-icons/fa";
 import { Link, withRouter } from "react-router-dom";
 import ProfileIcon from "../customization/ProfileIcon";
+import AddQuestionDiv from "./AddQuestionDiv";
 const Validator = require("validator");
 const { FETCH_QUESTIONS, CURRENT_USER, SIMILAR_QUESTIONS, FETCH_TOPICS } = Queries;
 const { NEW_QUESTION, ADD_TOPIC_TO_QUESTION } = Mutations;
@@ -350,7 +351,16 @@ class QuestionForm extends React.Component {
                     <p className="add-question-item-user">Username</p>
                     <p className="add-question-item-prompt">What is your question or link?</p>
                 </div> */}
-                <button className="nav-ask-btn" onClick={this.handleModal}>Add Question</button>
+                {
+                    // if the props specify a button, the button gets rendered
+                    this.props.button &&
+                    <button className="nav-ask-btn" onClick={this.handleModal}>Add Question</button>
+                }
+                {
+                    // otherwise if a div is specified, the div gets rendered
+                    this.props.div &&
+                    <AddQuestionDiv handleModal={this.handleModal}/>
+                }
                 {this.state.showModal && button}
                 {
                     this.state.showTopicModal && topicModal

@@ -15,6 +15,7 @@ import QuestionShow from "./questions/QuestionShow";
 import SearchResults from "./search/SearchResults";
 import QuestionsForYou from "./answers_tab/questionsForYou";
 import QuestionsYouAnswered from "./answers_tab/questionsYouAnswered";
+import MainFeedContainer from "./main/main_feed_container";
 
 const Main = () => {
     return (
@@ -24,7 +25,7 @@ const Main = () => {
             <div className="main-body">
                 <Route exact path="/" component={SideBar} />
                 <Switch>
-                    <Route exact path="/" component={Feed} />
+                    <Route exact path="/" component={MainFeedContainer} />
                     <Route exact path="/topics" component={TopicsShow} />
                     <Route exact path="/topic/:name" component={TopicShow} />
                     <Route exact path="/topic/:name/questions" component={TopicQuestions} />
