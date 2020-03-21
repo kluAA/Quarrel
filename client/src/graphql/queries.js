@@ -147,6 +147,9 @@ export default {
           questions {
             _id
             question
+            answers {
+             _id
+            }
           }
         }
       }
@@ -192,25 +195,25 @@ export default {
         }
       }
     `,
-    // ANSWERS_BY_USER: gql`
-    //   query AnswersByUser($userId: ID) {
-    //     answersByUser(userId: $userId) {
-    //       _id
-    //       body
-    //       question {
-    //         _id
-    //         question
-    //       }
-    //       user {
-    //         _id
-    //       }
-    //       upvotes {
-    //         _id
-    //       }
-    //     }
-    //   }
-    // `
-    ANSWERS_BY_USER: gql`
+  // ANSWERS_BY_USER: gql`
+  //   query AnswersByUser($userId: ID) {
+  //     answersByUser(userId: $userId) {
+  //       _id
+  //       body
+  //       question {
+  //         _id
+  //         question
+  //       }
+  //       user {
+  //         _id
+  //       }
+  //       upvotes {
+  //         _id
+  //       }
+  //     }
+  //   }
+  // `
+  ANSWERS_BY_USER: gql`
         query AnswersByUser($userId: ID) {
           answersByUser(userId: $userId) {
             _id
