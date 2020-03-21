@@ -35,7 +35,6 @@ const TopicSchema = new Schema({
 });
 
 TopicSchema.statics.findData = function (topicId, type) {
-
   if (type === "questions") {
     return this.findById(topicId).populate(`${type}`).then(
       topic => topic[type].sort((question1, question2) => {
