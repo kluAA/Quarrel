@@ -47,7 +47,7 @@
 
 .modal-child {
   position: absolute;
-  top: 245px;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -125,7 +125,7 @@
     display: flex;
     justify-content: flex-end;
     border-top: 1px solid #e2e2e2;
-    padding: 10px;
+    padding: 10px 14px;
     background: #fafafa;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
