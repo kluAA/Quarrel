@@ -39,9 +39,11 @@ AnswerSchema.statics.deleteAnswer = answerId => {
 	const Answer = mongoose.model("answer");
 	const Upvote = mongoose.model("upvote");
 	const Comment = mongoose.model("comment");
+	const Question = mongoose.model("question");
 	return Answer.findByIdAndDelete(answerId).then(answer => {
 		Comment.deleteMany( {answer: answerId}).exec();
 		Upvote.deleteMany( {answer: answerId}).exec();
+		Question.findOneAndUpdate({answers: {$in: answerId}}, {$pull: { answers: answerId}}).exec();
 		return answer;
 	})
 
