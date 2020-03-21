@@ -41,6 +41,7 @@ class QuestionShow extends React.Component {
                     if (loading) return "Loading...";
                     if (error) return `Error! ${error.message}`;
                     const { question } = data;
+                    //sort by up votes here?
                     const answers = question.answers.map(answer => {
                         return (
                             <AnswerItem

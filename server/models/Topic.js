@@ -34,12 +34,26 @@ const TopicSchema = new Schema({
   }
 });
 
-
 TopicSchema.statics.findData = function (topicId, type) {
-  return this.findById(topicId)
-    .populate(`${type}`)
-    .then(topic => topic[type])
-    .catch(err => null)
+
+  if (type === "questions") {
+    return this.findById(topicId).populate(`${type}`).then(
+      topic => topic[type].sort((question1, question2) => {
+        if (q1 < q2) {
+          return 1
+        } else if (q1 > q2) {
+          return -1
+        } else {
+          return 0
+        }
+      })
+    ).catch(err => null)
+  } else {
+    return this.findById(topicId)
+      .populate(`${type}`)
+      .then(topic => topic[type])
+      .catch(err => null)
+  }
 };
 
 TopicSchema.statics.addUser = (topicId, userId) => {
