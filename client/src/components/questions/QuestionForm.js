@@ -97,7 +97,8 @@ class QuestionForm extends React.Component {
         e.preventDefault();
         const question = this.state.question;
         const link = this.state.link;
-        if (question.split(" ").length < 3) {
+        let splitQuestion = question.split(" ");
+        if (splitQuestion.length < 3 || splitQuestion.includes("")) {
             this.setState({
                 message: "This question needs more detail. " +
                     "Add more information to ask a clear question, " +
