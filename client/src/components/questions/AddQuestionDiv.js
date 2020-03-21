@@ -6,7 +6,7 @@ const { CURRENT_USER } = Queries;
 
 const AddQuestionDiv = (props) => {
     return (
-        <div onClick={props.handleModal}>
+        <div onClick={props.handleModal} className="add-question-div">
             <Query
                 query={CURRENT_USER} variables={{ token: localStorage.getItem("auth-token") }}>
                 {({ loading, error, data }) => {
