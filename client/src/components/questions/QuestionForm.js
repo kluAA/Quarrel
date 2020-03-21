@@ -96,7 +96,7 @@ class QuestionForm extends React.Component {
 
     handleSubmit(e, newQuestion) {
         e.preventDefault();
-        const question = this.state.question;
+        let question = this.state.question;
         const link = this.state.link;
         let splitQuestion = question.split(" ");
         if (splitQuestion.length < 3 || splitQuestion.includes("")) {
@@ -107,6 +107,7 @@ class QuestionForm extends React.Component {
             });
             setTimeout(this.closeMessage, 5001)
         } else if (link.length === 0 || Validator.isURL(link)) {
+            if (question[question.length-1] !== "?") question = question + '?';
             newQuestion({
                 variables: {
                     question: question,
@@ -204,9 +205,9 @@ class QuestionForm extends React.Component {
                                                 }}
                                             </Query>
                                         </div>
-                                        <div className="topics-modal-footer">
-                                            <div className="topics-modal-footer-cancel" onClick={this.handleTopicModal}>Cancel</div>
-                                            <input type="submit" value="Submit" />
+                                        <div className="add-question-modal-footer">
+                                            <button className="cancel-button" onClick={this.handleTopicModal}>Cancel</button>
+                                            <button className="add-button" type="submit">Add Topics</button>
                                         </div>
                                     </form>
                                 </div>
