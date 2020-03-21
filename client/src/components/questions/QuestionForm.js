@@ -63,7 +63,8 @@ class QuestionForm extends React.Component {
             question: "",
             link: "",
             successfulQuestion: "",
-            successfulQId: ""
+            successfulQId: "",
+            dataMatches: []
         });
     }
 
@@ -269,7 +270,8 @@ class QuestionForm extends React.Component {
                                 link: "",
                                 successfulQuestion: `${question}`,
                                 successfulQId: data.newQuestion._id,
-                                showTopicModal: true
+                                showTopicModal: true,
+                                dataMatches: []
                             });
                         }}
                     >
