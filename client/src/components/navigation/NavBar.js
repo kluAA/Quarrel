@@ -159,7 +159,7 @@ class NavBar extends React.Component {
                     </Query>
 
     
-                    <QuestionForm closeSearchModal={this.closeModal}/>
+                    <QuestionForm closeSearchModal={this.closeModal} button={true}/>
 					{/* <SigninButton /> */}
                     {/* <ProfileUpload /> */}
                 </div>
