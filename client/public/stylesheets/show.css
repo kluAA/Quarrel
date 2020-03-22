@@ -64,6 +64,10 @@
     color: #636466;
 }
 
+#qns-followed .fa-user-secret {
+    color: #2e69ff;
+}
+
 .qns-container h2 {
     font-size: 18px;
     font-weight: 500;

@@ -1,10 +1,12 @@
 import React from 'react';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 import Queries from "../../graphql/queries";
+import Mutations from "../../graphql/mutations";
 import { withRouter } from "react-router-dom";
 import AnswerForm from "../answer/AnswerForm";
 import AnswerItem from "../answer/AnswerItem";
-const { FETCH_QUESTION } = Queries;
+const { FETCH_QUESTION, CURRENT_USER } = Queries;
+const { TRACK_QUESTION } = Mutations;
 
 class QuestionShow extends React.Component {
     constructor(props) {
@@ -16,6 +18,7 @@ class QuestionShow extends React.Component {
         }
         this.toggleForm = this.toggleForm.bind(this);
         this.numAnswers = this.numAnswers.bind(this);
+        this.track = this.track.bind(this);
     }
 
     toggleForm() {
@@ -31,6 +34,17 @@ class QuestionShow extends React.Component {
         }
     }
 
+    track(e, trackQuestion, questionId) {
+        debugger;
+        e.preventDefault();
+        trackQuestion({
+            variables: {
+                questionId: questionId
+            }
+        })
+    
+    }
+
     render() {
         return (
             <Query
@@ -41,7 +55,7 @@ class QuestionShow extends React.Component {
                     if (loading) return "Loading...";
                     if (error) return `Error! ${error.message}`;
                     const { question } = data;
-                    //sort by up votes here?
+                    
                     const answers = question.answers.map(answer => {
                         return (
                             <AnswerItem
@@ -53,25 +67,6 @@ class QuestionShow extends React.Component {
                     })
                     return (
                         <div className="qns-container">
-                            {/* {data.question.question}
-                            <br />
-                            <br />
-                            <div id="test" contentEditable={this.state.edit}
-                                onInput={e => {
-                                    this.setState({body: e.target.innerHTML})
-                                    console.log(this.state.body);
-                                }}
-                                dangerouslySetInnerHTML={{__html: data.question.answers[0].body}}
-                            >
-                                
-                            </div>
-                            <p onClick={e => {
-                                const div = document.getElementById("test");
-                                this.setState({edit: true, body: div.innerHTML})
-                                
-                                }}>
-                                TOGGLE
-                            </p> */}
                             <h1>{question.question}</h1>
                             <div className="qns-actions">
                                 <div className="qns-answer"
@@ -80,10 +75,47 @@ class QuestionShow extends React.Component {
                                     <i className="far fa-angry"></i>
                                     <span>Quarrel</span>
                                 </div>
-                                <div className="qns-follow">
-                                    <i className="fas fa-user-secret"></i>
-                                    <span>Track</span>
-                                </div>
+                                <Query
+                                    query={CURRENT_USER}
+                                    variables={{token: localStorage.getItem("auth-token")}}
+                                >
+                                    {({ loading, error, data }) => {
+                                        if (loading) return null;
+                                        if (error) return null;
+                                        if (data) {
+                                            const trackedQuestions = data.currentUser.trackedQuestions;
+                                            return (
+                                                <Mutation
+                                                    mutation={TRACK_QUESTION}
+                                                >
+                                                    {trackQuestion => {
+                                                        let isTracked;
+                                                        trackedQuestions.forEach(trackedQuestion => {
+                                                            if (trackedQuestion._id === question._id) {
+                                                                isTracked = true;
+                                                            }
+                                                        })
+
+                                                        return (
+                                                            <div className="qns-follow"
+                                                                id={isTracked ? "qns-followed" : null}
+                                                                onClick={e => this.track(e, trackQuestion, question._id)}
+                                                            >
+                                                                <i className="fas fa-user-secret"></i>
+                                                                <span>
+                                                                    Tracked
+                                                                </span>
+                                                            </div>
+                                                        )
+                                                
+                                                    }}
+
+                                                </Mutation>
+                                            )
+                                        }
+
+                                    }} 
+                                </Query>
                             </div>
                             {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={question._id} /> : null}
                             <h2>{this.numAnswers(question)}</h2>
