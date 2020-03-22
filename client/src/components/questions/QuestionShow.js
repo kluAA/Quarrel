@@ -42,7 +42,7 @@ class QuestionShow extends React.Component {
                 questionId: questionId
             }
         })
-    
+
     }
 
     render() {
@@ -55,7 +55,7 @@ class QuestionShow extends React.Component {
                     if (loading) return "Loading...";
                     if (error) return `Error! ${error.message}`;
                     const { question } = data;
-                    
+                    debugger
                     const answers = question.answers.map(answer => {
                         return (
                             <AnswerItem
@@ -65,6 +65,7 @@ class QuestionShow extends React.Component {
                             />
                         )
                     })
+
                     return (
                         <div className="qns-container">
                             <h1>{question.question}</h1>
@@ -77,7 +78,7 @@ class QuestionShow extends React.Component {
                                 </div>
                                 <Query
                                     query={CURRENT_USER}
-                                    variables={{token: localStorage.getItem("auth-token")}}
+                                    variables={{ token: localStorage.getItem("auth-token") }}
                                 >
                                     {({ loading, error, data }) => {
                                         if (loading) return null;
@@ -107,14 +108,14 @@ class QuestionShow extends React.Component {
                                                                 </span>
                                                             </div>
                                                         )
-                                                
+
                                                     }}
 
                                                 </Mutation>
                                             )
                                         }
 
-                                    }} 
+                                    }}
                                 </Query>
                             </div>
                             {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={question._id} /> : null}
