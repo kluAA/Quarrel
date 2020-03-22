@@ -30,6 +30,12 @@ const UserSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "topic"
         }
+    ],
+    trackedQuestions: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "question"
+        }
     ]
 });
 
@@ -46,4 +52,17 @@ UserSchema.statics.addTopic = (topicId, userId) => {
         }
     });
 };
+
+UserSchema.statics.trackQuestion = (questionId, userId) => {
+    const User = mongoose.model("user");
+    return User.findById(userId).then(user => {
+        if (!user.trackedQuestions.includes(questionId)) {
+            user.trackedQuestions.push(questionId);
+            return user.save();
+        } else {
+            user.trackedQuestions.pull(questionId);
+            return user.save();
+        }
+    });
+}
 module.exports = mongoose.model("user", UserSchema);

@@ -21,6 +21,14 @@ const UserType = new GraphQLObjectType({
                     .populate("topics")
                     .then(user => user.topics);
             }
+        },
+        trackedQuestions: {
+            type: new GraphQLList(require("./question_type")),
+            resolve(parentValue) {
+                return User.findById(parentValue._id)
+                    .populate("trackedQuestions")
+                    .then(user => user.trackedQuestions);
+            }
         }
     })
 

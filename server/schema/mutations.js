@@ -169,6 +169,22 @@ const mutation = new GraphQLObjectType({
                 )
             }
         },
+        trackQuestion: {
+            type: UserType,
+            args: {
+                questionId: { type: GraphQLID }
+            },
+            async resolve(parentValue, { questionId}, ctx) {
+                const validUser = await AuthService.verifyUser({ token: ctx.token });
+                if (validUser) {
+                    return User.trackQuestion(questionId, validUser._id)
+                } else {
+                    throw new Error("Must be logged in to track");
+                }
+            }
+
+            
+        },
         updateProfileUrl: {
             type: UserType,
             args: {
