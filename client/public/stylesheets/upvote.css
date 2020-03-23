@@ -1,0 +1,42 @@
+.upvote {
+    margin-top: 16px;
+}
+
+.upvote-container {
+    display: flex;
+    color: #666;
+    background: #fafafa;
+    width: 122px;
+    height: 30px;
+    border-radius: 20px;
+    justify-content: space-evenly;
+    align-items: center;
+    cursor: pointer;
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+
+.upvote-text {
+
+}
+
+.upvote-numbers {
+
+}
+
+.upvoted {
+    color: #329bff;
+}
+
+.upvoted-message {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #666;
+    font-size: 13px;
+    width: 122px;
+}
+
+.upvoted-message-text {
+
+}

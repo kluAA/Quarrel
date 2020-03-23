@@ -1,2 +1,10 @@
 node_modules
-/config
+config
+config2
+keys_dev.js
+Dockerfile
+docker-compose.yml
+Dockerfile.web
+.env
+config2
+config

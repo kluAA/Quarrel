@@ -3,20 +3,23 @@ import { Route, Switch } from "react-router-dom";
 import Login from "./session/Login";
 import Register from "./session/Register";
 import AuthRoute from "../util/route_util";
-import NavBar from "./navigation/NavBar";
-
+import Main from "./Main";
+import SessionForm from "./session/SessionForm";
+import Show from "./Show";
 
 const App = () => {
-  return (
-    <div>
-      <NavBar />
-      <h1>Template</h1>
-      <Switch>
-          <AuthRoute exact path="/login" component={Login} routeType="auth" />
-          <AuthRoute exact path="/register" component={Register} routeType="auth" />
-      </Switch>
-    </div>
-  )
+	return (
+		<div>
+			{/* <SessionForm /> */}
+			<Switch>
+				<Route exact path="/login" component={Login} />
+				<Route exact path="/signup" component={Register} />
+				<Route path="/q/:id" component={Show} />
+				<AuthRoute exact path="/session" component={SessionForm} routeType="auth" />
+				<AuthRoute path="/" component={Main} />
+			</Switch>
+		</div>
+	);
 };
 
 export default App;

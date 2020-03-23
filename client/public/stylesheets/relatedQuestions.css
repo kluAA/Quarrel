@@ -1,0 +1,24 @@
+.related-questions {
+    margin-top: 20px;
+    margin-left: 40px;
+    width: 300px;
+}
+
+.related-questions-header {
+    padding: 0 0 10px;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.related-questions-list {
+
+}
+
+.related-questions-list li {
+    padding: 10px 0;
+    color: #3b5998;
+    font-size: 16px;
+}
+
+.related-questions-list li:hover {
+    text-decoration: underline;
+}

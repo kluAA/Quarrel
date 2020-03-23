@@ -2,9 +2,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const User = mongoose.model("user");
-const keys = require("../../config/keys");
+const keys = require("../../config2/keys");
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
+const randomColor = require("../services/profilecolor");
 
 const register = async data => {
     try {
@@ -14,22 +15,23 @@ const register = async data => {
             throw new Error(message);
         }
 
-        const { name, username, email, password } = data;
+        const { fname, lname, email, password } = data;
 
-        const existingUser = await User.findOne({ username });
+        const existingUser = await User.findOne({ email });
 
         if (existingUser) {
-            throw new Error("This user already exists");
+            throw new Error("This email already exists");
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = new User(
             {
-                name,
-                username,
+                fname,
+                lname,
                 email,
-                password: hashedPassword
+                password: hashedPassword,
+                profileUrl: randomColor()
             },
             err => {
                 if (err) throw err;
@@ -38,7 +40,7 @@ const register = async data => {
 
         user.save();
 
-        const token = jwt.sign({ _id: user._id }, keys.secretOrKey);
+		const token = jwt.sign({ _id: user._id }, keys.secretOrKey);
         return { token, loggedIn: true, ...user._doc, password: null };
 
     } catch (err) {
@@ -47,43 +49,38 @@ const register = async data => {
 
 };
 
+const login = async data =>
+{
+	try {
+		const { message, isValid } = validateLoginInput(data);
+
+		if (!isValid) throw new Error(message);
+
+		const user = await User.findOne({ email: data.email });
+
+		if (!user) throw new Error("Invalid Credentials");
+
+		let password_matches = await bcrypt.compareSync(
+			data.password,
+			user.password
+		);
+		if (password_matches) {
+			const token = jwt.sign({ _id: user._id }, keys.secretOrKey);
+			return { token, loggedIn: true, ...user._doc, password: null };
+		} else {
+			throw new Error("Invalid Credentials");
+		}
+	} catch (err) {
+		throw err;
+	}
+};
+
 const logout = async data => {
     try {
         const { _id } = data;
         user = await User.findById(_id);
         const token = "";
         return { token, loggedIn: false, ...user._doc, password: null }
-    } catch (err) {
-        throw err;
-    }
-};
-
-const login = async data => {
-    try {
-        const { message, isValid } = validateLoginInput(data);
-
-        if (!isValid) {
-            throw new Error(message);
-        }
-
-        const { username, password } = data;
-
-        const existingUser = await User.findOne({ username });
-
-        if (!existingUser) {
-            throw new Error("GUESS AGAIN");
-        }
-
-        const validPassword = await bcrypt.compareSync(password, existingUser.password);
-
-        if (!validPassword) {
-            throw new Error("WRONG PASSWORD");
-        }
-
-        const token = jwt.sign({ _id: existingUser._id }, keys.secretOrKey);
-        return { token, loggedIn: true, ...existingUser._doc, password: null };
-
-
     } catch (err) {
         throw err;
     }
@@ -98,10 +95,22 @@ const verifyUser = async data => {
             return user ? true : false;
         });
 
-        return { loggedIn };
+        return { loggedIn, _id };
     } catch (err) {
         return { loggedIn: false };
     }
 };
 
-module.exports = { register, logout, login, verifyUser };
+const currentUser = async data => {
+    try {
+        const { token } = data;
+        const decoded = jwt.verify(token, keys.secretOrKey);
+        const { _id } = decoded;
+        const user = await User.findById(_id)
+        return user;
+    } catch (err) {
+        return { user: "No user found."}
+    }
+}
+
+module.exports = { register, logout, login, verifyUser, currentUser };

@@ -1,0 +1,21 @@
+.answers-tab-header {
+    display: flex;
+    border-bottom: 1px solid #e2e2e2;
+    height: 40px;
+}
+
+.answer-tab {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.unselected {
+    color: #636466;
+}
+
+.my-answer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}

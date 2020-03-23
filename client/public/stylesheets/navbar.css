@@ -1,0 +1,123 @@
+.nav-container {
+    display: flex;
+    position: fixed;
+    z-index: 5;
+    width: 100%;
+    height: 50px;
+    justify-content: center;
+    background: white;
+    border: 1px solid rgb(222, 224, 225);
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 6px;
+}
+
+.nav-content {
+    width: 1002px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: #B92B28;
+    padding: 0 5px;
+}
+
+.nav-links {
+    display: flex;
+}
+
+.nav-links li {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 49px;
+    padding: 0 16px;
+}
+
+.nav-links li:hover {
+    background: #F8F8F8;
+}
+
+.nav-links li span {
+    margin-left: 5px;
+}
+
+.search-container {
+    width: 249px;
+    height: 26px;
+    padding: 4px 8px;
+    border: 1px solid rgb(222, 224, 225);
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+}
+
+.search-container > .fa-search {
+    color: #93959888;
+}
+
+.search {
+    margin-left: 5px;
+    font-size: 13px;
+    width: 100%;
+}
+
+.nav-ask-btn {
+    width: 113px;
+    height: 30px;
+    margin-left: 10px;
+    padding: 5px 15px;
+    font-size: 13px;
+    border-radius: 20px;
+    background: #b92b27;
+    color: white;
+    font-weight: 500;
+}
+
+.nav-relative {
+    position: relative;
+}
+
+.nav-usericon {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.nav-ask-btn:hover {
+    background: #a82624;
+}
+
+.nav-options-menu {
+    width: 100px;
+    background: white;
+    border: 1px solid rgb(222, 224, 225);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    position: absolute;
+    top: 35px;
+    left: -35px;
+    padding: 4px 8px;
+
+    border-radius: 3px;
+}
+
+.nav-options-menu li, .nav-options-menu label {
+    font-size: 13px;
+    color: #7c7a7a;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 2px 4px;
+    text-transform: capitalize;
+}
+
+hr {
+    width: 100%;
+    height: 1px;
+    background: #e9ebee;
+    margin: 4px 0;
+}
+
+.nav-options-menu li:hover {
+    background: rgba(247, 245, 245, 0.815);
+}
+

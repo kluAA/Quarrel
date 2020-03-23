@@ -1,0 +1,97 @@
+.feed-container {
+    width: 600px;
+}
+
+.feed-item {
+    /* min-height: 100px; */
+    background: white;
+    padding: 16px 16px 4px;
+    border: 1px solid rgb(222, 224, 225);
+    border-radius: 3px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 2px -2px rgb(222, 224, 225);
+    display: flex;
+    flex-direction: column;
+}
+
+.feed-item h1 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #282829;
+    margin-bottom: 5px;
+}
+
+.feed-item h1:hover {
+    text-decoration: underline;
+}
+
+.feed-item-options {
+    margin-top: 10px;
+}
+
+.feed-item-answer {
+    cursor: pointer;
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 20px;
+}
+
+.feed-item-answer:hover {
+    background: #f8f8f8;
+}
+
+.feed-item-answer .fa-angry {
+    color: #2e69ff;
+}
+
+.feed-item-answer > span {
+    margin-left: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #636466;
+}
+
+.hide-content {
+    overflow: hidden;
+    max-height: 40em;
+}
+
+.feed-item-unanswered {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+}
+
+#unanswered-msg {
+    color: #939598;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#time-asked {
+    color: #939598;
+    font-size: 13px;
+    font-weight: 400;
+    margin-left: 5px;
+}
+
+.feed-item-unanswered > div {
+    background: #939598;
+    height: 2px;
+    width: 2px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+#feed-answer-upvotes {
+    position: absolute;
+    right: 1px;
+    font-size: 20px;
+    color: #7f8083;
+    font-weight: 500;
+}
+
+#feed-answer-upvotes .fa-arrow-up {
+    margin-right: 3px;
+    font-size: 18px;
+}
