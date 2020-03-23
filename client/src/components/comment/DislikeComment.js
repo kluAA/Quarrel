@@ -1,10 +1,10 @@
 import React from "react";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
-import { Mutation, Query } from "react-apollo";
+import { Mutation } from "react-apollo";
 import { FaArrowUp } from "react-icons/fa";
 const { DISLIKE_COMMENT, DELETE_DISLIKE } = Mutations;
-const { FETCH_QUESTION, CURRENT_USER } = Queries;
+const { FETCH_QUESTION } = Queries;
 
 class DislikeComment extends React.Component {
 	constructor(props) {
@@ -49,7 +49,6 @@ class DislikeComment extends React.Component {
 		const userIds = this.props.comment.dislikes.map(dislike => {
 			return dislike.user._id;
 		})
-		const { comment } = this.props;
 
 		if (userIds.includes(localStorage.getItem("currentUserId"))) {
 			return (
@@ -59,7 +58,7 @@ class DislikeComment extends React.Component {
 						onError={err => this.setState({ message: err.message })}
 						update={(cache, data) => this.updateCache(cache, data)}
 						onCompleted={data => {
-							const { answer } = data.deleteDislike;
+							// const { answer } = data.deleteDislike;
 							this.setState({ message: "" });
 						}}
 					>
@@ -80,7 +79,7 @@ class DislikeComment extends React.Component {
 						onError={err => this.setState({ message: err.message })}
 						update={(cache, data) => this.updateCache(cache, data)}
 						onCompleted={data => {
-							const {answer} = data.dislikeComment;
+							// const {answer} = data.dislikeComment;
 						}}
 					>
 						{(dislikeComment, { data }) => (

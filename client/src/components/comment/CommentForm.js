@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Mutation, Query } from "react-apollo";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
+import ProfileIcon from "../customization/ProfileIcon";
 const { NEW_COMMENT } = Mutations;
 const { FETCH_COMMENTS, CURRENT_USER, FETCH_QUESTION } = Queries;
 
@@ -109,8 +110,26 @@ class CommentForm extends React.Component {
 					return (
 						<div className="comment-form-container">
 							<form onSubmit={e => this.handleSubmit(e, newComment)} className="comment-form">
-								<div className="comment-form-user-icon">
+								<div className="">
 									{/* <img className="comment-item-user-icon" src={user.profileUrl} /> */}
+									<Query query={CURRENT_USER} variables={{token : localStorage.getItem("auth-token") }}>
+										{({loading, error, data}) => {
+											if (loading) return null;
+											if (error) return null;
+											if (data.currentUser.profileUrl) {
+												return (
+												<Fragment>
+													<ProfileIcon 
+														profileUrl={data.currentUser.profileUrl}
+														fname={data.currentUser.fname}
+														size={40}
+														fsize={18}
+													/>
+												</Fragment>
+												)
+											}
+										}}
+									</Query>
 								</div>
 								{/* <div className="comment-form-input-box"> */}
 								<div className="comment-form-input-box">

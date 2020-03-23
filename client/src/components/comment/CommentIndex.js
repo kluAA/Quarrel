@@ -1,11 +1,11 @@
 import React from "react";
-import { Query } from "react-apollo";
-import Queries from "../../graphql/queries";
-import { Link } from "react-router-dom";
+// import { Query } from "react-apollo";
+// import Queries from "../../graphql/queries";
+// import { Link } from "react-router-dom";
 import moment from "moment";
 import CommentForm from "./CommentForm";
 import DislikeComment from "./DislikeComment";
-const { FETCH_COMMENTS, FETCH_ANSWER } = Queries;
+// const { FETCH_COMMENTS, FETCH_ANSWER } = Queries;
 
 class CommentIndex extends React.Component {
     constructor(props) {
