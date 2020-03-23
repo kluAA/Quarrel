@@ -19,6 +19,7 @@ class QuestionShow extends React.Component {
         this.toggleForm = this.toggleForm.bind(this);
         this.numAnswers = this.numAnswers.bind(this);
         this.track = this.track.bind(this);
+        this.renderTopicsList = this.renderTopicsList.bind(this)
     }
 
     toggleForm() {
@@ -42,7 +43,15 @@ class QuestionShow extends React.Component {
                 questionId: questionId
             }
         })
-    
+
+    }
+
+    renderTopicsList(topics) {
+        return topics.map(topic => {
+            return <div className="topics-list-item">
+                {topic.name}
+            </div>
+        })
     }
 
     render() {
@@ -55,7 +64,6 @@ class QuestionShow extends React.Component {
                     if (loading) return "Loading...";
                     if (error) return `Error! ${error.message}`;
                     const { question } = data;
-                    
                     const answers = question.answers.map(answer => {
                         return (
                             <AnswerItem
@@ -65,61 +73,68 @@ class QuestionShow extends React.Component {
                             />
                         )
                     })
+
                     return (
-                        <div className="qns-container">
-                            <h1>{question.question}</h1>
-                            <div className="qns-actions">
-                                <div className="qns-answer"
-                                    onClick={this.toggleForm}
-                                >
-                                    <i className="far fa-angry"></i>
-                                    <span>Quarrel</span>
-                                </div>
-                                <Query
-                                    query={CURRENT_USER}
-                                    variables={{token: localStorage.getItem("auth-token")}}
-                                >
-                                    {({ loading, error, data }) => {
-                                        if (loading) return null;
-                                        if (error) return null;
-                                        if (data) {
-                                            const trackedQuestions = data.currentUser.trackedQuestions;
-                                            return (
-                                                <Mutation
-                                                    mutation={TRACK_QUESTION}
-                                                >
-                                                    {trackQuestion => {
-                                                        let isTracked;
-                                                        trackedQuestions.forEach(trackedQuestion => {
-                                                            if (trackedQuestion._id === question._id) {
-                                                                isTracked = true;
-                                                            }
-                                                        })
-
-                                                        return (
-                                                            <div className="qns-follow"
-                                                                id={isTracked ? "qns-followed" : null}
-                                                                onClick={e => this.track(e, trackQuestion, question._id)}
-                                                            >
-                                                                <i className="fas fa-user-secret"></i>
-                                                                <span>
-                                                                    Tracked
-                                                                </span>
-                                                            </div>
-                                                        )
-                                                
-                                                    }}
-
-                                                </Mutation>
-                                            )
-                                        }
-
-                                    }} 
-                                </Query>
+                        <div >
+                            <div className="topics-list-container">
+                                {this.renderTopicsList(question.topics)}
                             </div>
-                            {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={question._id} /> : null}
-                            <h2>{this.numAnswers(question)}</h2>
-                            {answers}
+                            <div className="qns-container">
+
+                                <h1>{question.question}</h1>
+                                <div className="qns-actions">
+                                    <div className="qns-answer"
+                                        onClick={this.toggleForm}
+                                    >
+                                        <i className="far fa-angry"></i>
+                                        <span>Quarrel</span>
+                                    </div>
+                                    <Query
+                                        query={CURRENT_USER}
+                                        variables={{ token: localStorage.getItem("auth-token") }}
+                                    >
+                                        {({ loading, error, data }) => {
+                                            if (loading) return null;
+                                            if (error) return null;
+                                            if (data) {
+                                                const trackedQuestions = data.currentUser.trackedQuestions;
+                                                return (
+                                                    <Mutation
+                                                        mutation={TRACK_QUESTION}
+                                                    >
+                                                        {trackQuestion => {
+                                                            let isTracked;
+                                                            trackedQuestions.forEach(trackedQuestion => {
+                                                                if (trackedQuestion._id === question._id) {
+                                                                    isTracked = true;
+                                                                }
+                                                            })
+
+                                                            return (
+                                                                <div className="qns-follow"
+                                                                    id={isTracked ? "qns-followed" : null}
+                                                                    onClick={e => this.track(e, trackQuestion, question._id)}
+                                                                >
+                                                                    <i className="fas fa-user-secret"></i>
+                                                                    <span>
+                                                                        Tracked
+                                                                </span>
+                                                                </div>
+                                                            )
+
+                                                        }}
+
+                                                    </Mutation>
+                                                )
+                                            }
+
+                                        }}
+                                    </Query>
+                                </div>
+                                {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={question._id} /> : null}
+                                <h2>{this.numAnswers(question)}</h2>
+                                {answers}
+                            </div>
                         </div>
                     )
                 }}

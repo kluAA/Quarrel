@@ -38,9 +38,9 @@ TopicSchema.statics.findData = function (topicId, type) {
   if (type === "questions") {
     return this.findById(topicId).populate(`${type}`).then(
       topic => topic[type].sort((question1, question2) => {
-        if (q1 < q2) {
+        if (question1.answers.length < question2.answers.length) {
           return 1
-        } else if (q1 > q2) {
+        } else if (question1.answers.length > question2.answers.length) {
           return -1
         } else {
           return 0

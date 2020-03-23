@@ -124,3 +124,15 @@
 .linked_list_item:focus {
   border-bottom: 2px solid red;
 }
+
+.topics-list-container {
+  display: flex;
+  margin-top: 20px;
+}
+
+.topics-list-item {
+  background: #f7f7f7;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+}

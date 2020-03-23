@@ -64,6 +64,9 @@ export default {
           _id
           question
           date
+          topics {
+            name
+          }
           answers {
             _id
             body
