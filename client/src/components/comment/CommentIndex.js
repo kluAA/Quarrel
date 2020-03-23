@@ -52,7 +52,7 @@ class CommentIndex extends React.Component {
                             <div className="comment-item-icon">
                                 <i className="fas fa-reply"></i>
                             </div>
-                            <div className="comment-item-text">Reply Begrudgingly</div>
+                            <div className="comment-item-text">Reply</div>
                             
 														<DislikeComment comment={comment} questionId={this.props.questionId} />
 
