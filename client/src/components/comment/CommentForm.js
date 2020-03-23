@@ -110,7 +110,7 @@ class CommentForm extends React.Component {
 					return (
 						<div className="comment-form-container">
 							<form onSubmit={e => this.handleSubmit(e, newComment)} className="comment-form">
-								<div className="">
+								<div className="comment-item-user-icon">
 									{/* <img className="comment-item-user-icon" src={user.profileUrl} /> */}
 									<Query query={CURRENT_USER} variables={{token : localStorage.getItem("auth-token") }}>
 										{({loading, error, data}) => {

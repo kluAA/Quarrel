@@ -2,7 +2,7 @@
   width: 100%;
   display: flex;
   box-sizing: content-box;
-  padding: 0 16px 16px 8px;
+  padding: 0 16px 16px;
   height: auto;
   border: 1px solid #efefef;
   margin-top: 16px;
@@ -41,7 +41,7 @@
   padding: 4px 16px;
   border-radius: 20px;
   display: inline-block;
-  width: 468px;
+  width: -webkit-fill-available;
   height: 32px;
 	justify-self: center;
 	/* margin-left: 16px; */
