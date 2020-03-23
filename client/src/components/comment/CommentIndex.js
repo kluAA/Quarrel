@@ -9,7 +9,10 @@ import DislikeComment from "./DislikeComment";
 
 class CommentIndex extends React.Component {
     constructor(props) {
-        super(props);
+				super(props);
+				this.state = {
+					showCommentForm: false
+				}
 		}
 		
 		handleDelete(e, deleteComment)
@@ -49,10 +52,10 @@ class CommentIndex extends React.Component {
                         </div>
 
                         <div className="comment-item-footer">
-                            <div className="comment-item-icon">
+                            {/* <div className="comment-item-icon">
                                 <i className="fas fa-reply"></i>
                             </div>
-                            <div className="comment-item-text">Reply</div>
+                            <div className="comment-item-text">Reply</div> */}
                             
 														<DislikeComment comment={comment} questionId={this.props.questionId} />
 
