@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Mutation, Query } from "react-apollo";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
+import ProfileIcon from "../customization/ProfileIcon";
 const { NEW_COMMENT } = Mutations;
-const { FETCH_COMMENTS, CURRENT_USER, FETCH_QUESTION } = Queries;
+const { CURRENT_USER, FETCH_QUESTION } = Queries;
 
 class CommentForm extends React.Component {
 	constructor(props) {
@@ -11,11 +12,13 @@ class CommentForm extends React.Component {
 		this.state = {
 			answerId: this.props.answerId,
 			comment: "",
-			bold: false,
-			italic: false,
-			history: this.props.history
+			// bold: false,
+			// italic: false,
+			history: this.props.history,
+			showCommentForm: true
 		}
 		this.update = this.update.bind(this);
+		this.closeCommentForm = this.closeCommentForm.bind(this);
 	}
 
 	update(field) {
@@ -51,19 +54,6 @@ class CommentForm extends React.Component {
 		}
 	}
 
-	// updateState(comment)
-	// {
-	// 	return () => this.setState({
-	// 		comment: comment.comment,
-	// 	})
-	// }
-
-	// updateComment() {
-	// 	return e => {
-	// 		this.setState({ comment: e.target.value })
-	// 	}
-	// }
-
 	handleSubmit(e, newComment) {
 		e.preventDefault();
 		const comment = this.state.comment;
@@ -75,6 +65,7 @@ class CommentForm extends React.Component {
 		})
 			.then(() => {
 				// this.props.history.push(`/q/${this.state.questionId}`)
+				this.closeCommentForm();
 			})
 	}
 
@@ -91,26 +82,45 @@ class CommentForm extends React.Component {
 		this.props.history.push(url);
 	}
 
+	closeCommentForm() {
+		this.setState({showCommentForm: false});
+	}
+
 	render() {
-		const { bold, italic } = this.state;
+		// const { bold, italic } = this.state;
 		return (
 			<Mutation
 				mutation={NEW_COMMENT}
-				update={(cache, data) => this.updateCache(cache, data)}
+				update={(cache, data) => {this.updateCache(cache, data)}}
 				onCompleted={data => {
-					const { comment } = data.newComment;
-					// this.props.history.push(`c/${this.state.questionId}`)
-					// this.loginAndRedirectTo("/", data)
-
+					this.props.closeCommentForm();
+					// this.setState({comment: ""});
 				}}
 			>
 				{(newComment, { comment }) => {
-					// const { user } = this.props;
 					return (
 						<div className="comment-form-container">
 							<form onSubmit={e => this.handleSubmit(e, newComment)} className="comment-form">
-								<div className="comment-form-user-icon">
+								<div className="comment-item-user-icon">
 									{/* <img className="comment-item-user-icon" src={user.profileUrl} /> */}
+									<Query query={CURRENT_USER} variables={{token : localStorage.getItem("auth-token") }}>
+										{({loading, error, data}) => {
+											if (loading) return null;
+											if (error) return null;
+											if (data.currentUser.profileUrl) {
+												return (
+												<Fragment>
+													<ProfileIcon 
+														profileUrl={data.currentUser.profileUrl}
+														fname={data.currentUser.fname}
+														size={40}
+														fsize={18}
+													/>
+												</Fragment>
+												)
+											}
+										}}
+									</Query>
 								</div>
 								{/* <div className="comment-form-input-box"> */}
 								<div className="comment-form-input-box">
