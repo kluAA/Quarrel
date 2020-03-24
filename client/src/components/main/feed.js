@@ -20,7 +20,7 @@ class Feed extends React.Component {
                         if (error) return `Error! ${error.message}`;
                         return (
                             data.questions.map(question => {
-                                return <FeedItem key={question._id} question={question} />
+                                return <FeedItem key={question._id} question={question} noAnswerYet={this.props.noAnswerYet}/>
                             })
                         )
                     }}

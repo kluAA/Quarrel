@@ -242,7 +242,20 @@ export default {
                 }
             }
             comments {
+              _id
+							comment
+							date
+              user {
                 _id
+                fname
+                lname
+                profileUrl
+							}
+							dislikes {
+								user {
+									_id
+								}
+							}
             }
           }
         }
