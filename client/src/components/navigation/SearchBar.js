@@ -9,14 +9,24 @@ class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            search: ""
+            search: "",
+            dataMatches: []
         };
         this.update = this.update.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.redirect = this.redirect.bind(this);
     }
 
     update (e) {
         this.setState({ search: e.currentTarget.value });
+    }
+
+    redirect(id) {
+        return e => {
+            this.props.history.push(`/q/${id}`);
+            this.props.closeModal(e);
+            this.setState({ search: "", dataMatches: [] });
+        }
     }
 
     handleSubmit (e) {
@@ -34,10 +44,17 @@ class SearchBar extends React.Component {
             searchList = (
                 <Query query={SIMILAR_QUESTIONS} variables={{ question: this.state.search }}>
                     {({loading, error, data}) => {
-                        if (loading) return "loading...";
+                        if (loading) {
+                            return this.state.dataMatches.map(match => {
+                                return <li onClick={this.redirect(match._id)} key={match._id}>{match.question}</li>
+                            })
+                        }
                         if (error) return `Error! ${error.message}`;
-                        return data.similarQuestions.map(match => {
-                            return <Link to={`q/${match._id}`}><li>{match.question}</li></Link>
+                        if (data.similarQuestions.length) {
+                            this.state.dataMatches = data.similarQuestions;
+                        }
+                        return this.state.dataMatches.map(match => {
+                            return <li onClick={this.redirect(match._id)} key={match._id}>{match.question}</li>
                         })
                     }}
                 </Query>
