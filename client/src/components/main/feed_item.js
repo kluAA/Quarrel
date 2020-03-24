@@ -64,23 +64,27 @@ class FeedItem extends React.Component {
            </div>
        )
   
-        return(
-            <li className="feed-item">
-                <h1>
-                    <Link to={`/q/${question._id}`}>
-                        {question.question}
-                    </Link>
-                </h1>
-                { question.answers.length > 0 ? popularAnswer : noAnswer }
-                <div className="feed-item-options">
-                    <div onClick={e => this.toggleForm()} className="feed-item-answer">
-                        <i className="far fa-angry"></i>
-                        <span>Quarrel</span>
+        if ((this.props.noAnswerYet && !question.answers.length) || !this.props.noAnswerYet) {
+            return (
+                <li className="feed-item">
+                    <h1>
+                        <Link to={`/q/${question._id}`}>
+                            {question.question}
+                        </Link>
+                    </h1>
+                    {question.answers.length > 0 ? popularAnswer : noAnswer}
+                    <div className="feed-item-options">
+                        <div onClick={e => this.toggleForm()} className="feed-item-answer">
+                            <i className="far fa-angry"></i>
+                            <span>Quarrel</span>
+                        </div>
+                        {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={this.props.question._id} /> : null}
                     </div>
-                    {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={this.props.question._id}/> : null }
-                </div>
-            </li>
-        )
+                </li>
+            )
+        } else {
+            return null;
+        }
     }
 }
 
