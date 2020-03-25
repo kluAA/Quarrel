@@ -14,9 +14,7 @@ class QuestionsYouAnswered extends React.Component {
 
     removeHTMLTags(str) {
         const pattern = /<.*?>|&nbsp;/;
-        console.log(str)
         str = str.split(pattern).join(" ");
-        console.log(str)
         return str;
     }   
 

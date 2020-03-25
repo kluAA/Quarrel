@@ -89,7 +89,7 @@ class Upvote extends React.Component {
                         {(deleteUpvote, { data }) => (
                             <form onSubmit={e => this.handleDelete(e, deleteUpvote)}>
                                 <button className="upvote-container upvoted">
-                                    <FaArrowUp />
+                                    <div className="upvoted-arrow"><FaArrowUp /></div>
                                     <div className="upvote-text">Upvote</div>
                                     <div className="upvote-numbers">{this.props.answer.upvotes.length}</div>
                                 </button>
@@ -99,30 +99,43 @@ class Upvote extends React.Component {
                 </div>
             )
         } else {
-            return (
-                <div className="upvote">
-                    <Mutation
-                        mutation={UPVOTE_ANSWER}
-                        onError={err => this.setState({ message: err.message })}
-                        update={(cache, data) => this.updateCache(cache, data)}
-                        onCompleted={data => {
-                            const { answer } = data.upvoteAnswer;
-                            this.setState({ message: "You upvoted this question" });
-                        }}
-                    >
-                        {(upvoteAnswer, { data }) => (
-                            <form onSubmit={e => this.handleUpvote(e, upvoteAnswer)}>
-                                <button className="upvote-container">
-                                    <FaArrowUp />
-                                    <div className="upvote-text">Upvote</div>
-                                    <div className="upvote-numbers">{this.props.answer.upvotes.length}</div>
-                                </button>
-                            </form>
-                        )
-                        }
-                    </Mutation>
-                </div>
-            )
+            if (this.props.answer.user._id !== localStorage.getItem("currentUserId")) {
+                return (
+                    <div className="upvote">
+                        <Mutation
+                            mutation={UPVOTE_ANSWER}
+                            onError={err => this.setState({ message: err.message })}
+                            update={(cache, data) => this.updateCache(cache, data)}
+                            onCompleted={data => {
+                                const { answer } = data.upvoteAnswer;
+                                this.setState({ message: "You upvoted this question" });
+                            }}
+                        >
+                            {(upvoteAnswer, { data }) => (
+                                <form onSubmit={e => this.handleUpvote(e, upvoteAnswer)}>
+                                    <button className="upvote-container">
+                                        <FaArrowUp />
+                                        <div className="upvote-text">Upvote</div>
+                                        <div className="upvote-numbers">{this.props.answer.upvotes.length}</div>
+                                    </button>
+                                </form>
+                            )
+                            }
+                        </Mutation>
+                    </div>
+                )
+            } else {
+                return (
+                    <div className="upvote">
+                        <button className="disabled-upvote-container">
+                            <FaArrowUp />
+                            <div className="upvote-text">Upvote</div>
+                            <div className="upvote-numbers">{this.props.answer.upvotes.length}</div>
+                        </button>
+                    </div>
+                )
+            }
+            
         }
     }
 }
