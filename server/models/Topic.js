@@ -81,7 +81,6 @@ TopicSchema.statics.addQuestion = (questionId, topicId) => {
 TopicSchema.statics.findMatches = (query) => {
   const Topic = mongoose.model("topic");
   const longestWord = findLongestWord(query);
-  console.log(longestWord);
   return Topic.find({ name: { $regex: new RegExp(longestWord, 'i') } });
 }
 
