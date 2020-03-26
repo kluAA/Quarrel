@@ -41,8 +41,9 @@ QuestionSchema.statics.findRelatedQuestions = (questionId) => {
     const Question = mongoose.model("question");
     return Question.findById(questionId)
         .then(foundQuestion => {
-            const questionText = findLongestWord(foundQuestion.question)
-            return Question.find({ question: { $regex: new RegExp(questionText, 'i') } });
+            const longestWord = findLongestWord(foundQuestion.question);
+            const secondLongestWord = findSecondLongestWord(foundQuestion.question);
+            return Question.find({ question: { $regex: new RegExp(`${longestWord}|${secondLongestWord}`, 'i') } })
         });
 }
 
@@ -65,6 +66,21 @@ const findLongestWord = (sentence) => {
         }
     }
     return longestWord;
+};
+
+const findSecondLongestWord = (sentence) => {
+    let words = sentence.slice(0, -1).split(" ");
+    let longestWord = words[0];
+    let secondLongest = words[1];
+    for (i = 0; i < words.length; i++) {
+        if (words[i].length > longestWord.length) {
+            secondLongest = longestWord;
+            longestWord = words[i];
+        } else if (words[i] !== longestWord && words[i].length > secondLongest.length) {
+            secondLongest = words[i];
+        }
+    }
+    return secondLongest;
 };
 
 module.exports = mongoose.model("question", QuestionSchema);
