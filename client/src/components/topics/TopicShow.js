@@ -1,6 +1,5 @@
 import React from "react";
 import TopicHeader from "./TopicHeader"
-import QuestionShow from "../questions/QuestionShow"
 import { Query } from "react-apollo";
 import Queries from "../../graphql/queries";
 const { FETCH_TOPIC_BY_NAME } = Queries;

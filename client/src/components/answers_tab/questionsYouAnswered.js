@@ -3,20 +3,18 @@ import { Query } from "react-apollo";
 import { Link } from "react-router-dom";
 import Queries from "../../graphql/queries";
 import AnswerItem from "../answer/AnswerItem";
-import FeedItem from "../main/feed_item";
-import Feed from "../main/feed";
 const { ANSWERS_BY_USER } = Queries;
 
 class QuestionsYouAnswered extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
     removeHTMLTags(str) {
         const pattern = /<.*?>|&nbsp;/;
         str = str.split(pattern).join(" ");
         return str;
-    }   
+    }
 
     render() {
         return (
@@ -37,16 +35,16 @@ class QuestionsYouAnswered extends React.Component {
                             if (data.answersByUser.length === 0) return <li key={0} id="no-results" className="feed-item">You haven't answered any questions yet.</li>;
                             return data.answersByUser.map(match => {
                                 return (
-                                        <li key={match.question._id} className="questions-you-answered-item">
-                                            <Link to={`/q/${match.question._id}`}>
-                                                <div className="answers-tab-question">{match.question.question}</div>
-                                            </Link>
-                                            <AnswerItem
-                                                key={match._id}
-                                                answer={match}
-                                                questionId={match.question._id}
-                                            />
-                                        </li>
+                                    <li key={match.question._id} className="questions-you-answered-item">
+                                        <Link to={`/q/${match.question._id}`}>
+                                            <div className="answers-tab-question">{match.question.question}</div>
+                                        </Link>
+                                        <AnswerItem
+                                            key={match._id}
+                                            answer={match}
+                                            questionId={match.question._id}
+                                        />
+                                    </li>
                                 )
                             })
                         }}

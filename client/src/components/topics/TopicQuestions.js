@@ -3,7 +3,6 @@ import TopicHeader from "./TopicHeader"
 import QuestionShow from "../questions/QuestionShow"
 import { Query } from "react-apollo";
 import Queries from "../../graphql/queries";
-import Upvote from "../upvote/Upvote";
 const { FETCH_TOPIC_BY_NAME } = Queries;
 
 class TopicQuestions extends React.Component {

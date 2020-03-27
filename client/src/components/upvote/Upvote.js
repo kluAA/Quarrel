@@ -9,9 +9,9 @@ const { FETCH_QUESTION, CURRENT_USER } = Queries;
 
 
 class Upvote extends React.Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
-        this.state = { message: ""};
+        this.state = { message: "" };
     }
 
     handleUpvote(e, upvoteAnswer) {
@@ -48,7 +48,7 @@ class Upvote extends React.Component {
         }
     }
 
-    render () {
+    render() {
         const userIds = this.props.answer.upvotes.map(upvote => {
             return upvote.user._id;
         })
@@ -63,14 +63,14 @@ class Upvote extends React.Component {
                             return (
                                 <div className="upvoted-message">
                                     {
-                                        data.currentUser.profileUrl && 
+                                        data.currentUser.profileUrl &&
                                         <ProfileIcon
                                             size={25}
                                             profileUrl={data.currentUser.profileUrl}
                                             fsize={12}
                                             fname={data.currentUser.fname}
                                         />
-                                    }       
+                                    }
                                     <p className="upvoted-message-text">You upvoted this</p>
                                 </div>
                             )
@@ -82,7 +82,7 @@ class Upvote extends React.Component {
                         onError={err => this.setState({ message: err.message })}
                         update={(cache, data) => this.updateCache(cache, data)}
                         onCompleted={data => {
-                            const { answer } = data.deleteUpvote;
+                            // const { answer } = data.deleteUpvote;
                             this.setState({ message: "" });
                         }}
                     >
@@ -107,7 +107,7 @@ class Upvote extends React.Component {
                             onError={err => this.setState({ message: err.message })}
                             update={(cache, data) => this.updateCache(cache, data)}
                             onCompleted={data => {
-                                const { answer } = data.upvoteAnswer;
+                                // const { answer } = data.upvoteAnswer;
                                 this.setState({ message: "You upvoted this question" });
                             }}
                         >
@@ -135,7 +135,7 @@ class Upvote extends React.Component {
                     </div>
                 )
             }
-            
+
         }
     }
 }
