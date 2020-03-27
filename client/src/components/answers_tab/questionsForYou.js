@@ -1,14 +1,14 @@
 import React from "react";
-import { Query } from "react-apollo";
+// import { Query } from "react-apollo";
 import { Link } from "react-router-dom";
-import Queries from "../../graphql/queries";
+// import Queries from "../../graphql/queries";
 import Feed from "../main/feed";
-const { UNANSWERED_QUESTIONS } = Queries;
+// const { UNANSWERED_QUESTIONS } = Queries;
 
 class QuestionsForYou extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
     render() {
         return (
@@ -39,7 +39,7 @@ class QuestionsForYou extends React.Component {
                         }}
                     </Query>
                 </ul> */}
-                <Feed noAnswerYet={true}/>
+                <Feed noAnswerYet={true} />
             </div>
         )
     }

@@ -2,7 +2,6 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Queries from "../../graphql/queries";
 import { Query } from "react-apollo";
-import { Link, Redirect } from "react-router-dom";
 const { SIMILAR_QUESTIONS } = Queries;
 
 class SearchBar extends React.Component {
@@ -17,7 +16,7 @@ class SearchBar extends React.Component {
         this.redirect = this.redirect.bind(this);
     }
 
-    update (e) {
+    update(e) {
         this.setState({ search: e.currentTarget.value });
     }
 
@@ -29,7 +28,7 @@ class SearchBar extends React.Component {
         }
     }
 
-    handleSubmit (e) {
+    handleSubmit(e) {
         e.preventDefault();
         if (this.state.search.length > 0) {
             this.props.closeModal(e);
@@ -43,7 +42,7 @@ class SearchBar extends React.Component {
         if (searchLength > 1) {
             searchList = (
                 <Query query={SIMILAR_QUESTIONS} variables={{ question: this.state.search }}>
-                    {({loading, error, data}) => {
+                    {({ loading, error, data }) => {
                         if (loading) {
                             return this.state.dataMatches.map(match => {
                                 return <li onClick={this.redirect(match._id)} key={match._id}>{match.question}</li>
