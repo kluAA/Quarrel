@@ -2,7 +2,7 @@ import React from 'react';
 import { Query, Mutation } from 'react-apollo';
 import Queries from "../../graphql/queries";
 import Mutations from "../../graphql/mutations";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import AnswerForm from "../answer/AnswerForm";
 import AnswerItem from "../answer/AnswerItem";
 const { FETCH_QUESTION, CURRENT_USER } = Queries;
@@ -49,7 +49,7 @@ class QuestionShow extends React.Component {
     renderTopicsList(topics) {
         return topics.map(topic => {
             return <div className="topics-list-item">
-                {topic.name}
+                <Link to={`/topic/${topic.name}/questions`}>{topic.name}</Link>
             </div>
         })
     }
