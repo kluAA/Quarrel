@@ -48,9 +48,7 @@ class QuestionShow extends React.Component {
 
     renderTopicsList(topics) {
         return topics.map(topic => {
-            return <div className="topics-list-item">
-                <Link to={`/topic/${topic.name}/questions`}>{topic.name}</Link>
-            </div>
+            return <Link className="topics-list-item" to={`/topic/${topic.name}/questions`}>{topic.name}</Link>
         })
     }
 
