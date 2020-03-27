@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import AnswerForm from "../answer/AnswerForm";
 import ProfileIcon from "../customization/ProfileIcon";
 import moment from "moment";
+import TopicThumbnail from "../topics/TopicThumbnail";
 
 class FeedItem extends React.Component {
     constructor(props) {
@@ -69,17 +70,25 @@ class FeedItem extends React.Component {
                 <li className="feed-item">
                     <ul className="feed-item-topics-list">
                         {this.props.question.topics.map((topic, idx) => {
-                            if (idx !== 0) {
+                            if (idx !== 0 && idx < 6) {
                                 return (
                                 <div className="feed-item-topic-container" key={idx}>
                                     <div className="separator">-</div>
-                                    <Link to={`/topic/${topic.name}/questions`} ><li>{topic.name}</li></Link>
+                                        <Link to={`/topic/${topic.name}/questions`} ><li className="feed-item-topic">{topic.name}</li></Link>
+                                    <div className="feed-item-topic-box">
+                                        <div class="arrow-up"></div>
+                                        <TopicThumbnail key={topic._id} topic={topic} name={topic.name} />
+                                    </div>
                                 </div>
                                 )
-                            } else {
+                            } else if (idx < 6) {
                                 return (
                                     <div className="feed-item-topic-container" key={idx}>
-                                        <Link to={`/topic/${topic.name}/questions`} ><li>{topic.name}</li></Link>
+                                        <Link to={`/topic/${topic.name}/questions`} ><li className="feed-item-topic">{topic.name}</li></Link>
+                                        <div className="feed-item-topic-box">
+                                            <div class="arrow-up"></div>
+                                            <TopicThumbnail key={topic._id} topic={topic} name={topic.name} />
+                                        </div>
                                     </div>
                                 )
                             }
