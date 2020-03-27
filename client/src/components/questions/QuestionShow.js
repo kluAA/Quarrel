@@ -36,7 +36,6 @@ class QuestionShow extends React.Component {
     }
 
     track(e, trackQuestion, questionId) {
-        debugger;
         e.preventDefault();
         trackQuestion({
             variables: {
