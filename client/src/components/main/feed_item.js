@@ -67,6 +67,24 @@ class FeedItem extends React.Component {
         if ((this.props.noAnswerYet && !question.answers.length) || !this.props.noAnswerYet) {
             return (
                 <li className="feed-item">
+                    <ul className="feed-item-topics-list">
+                        {this.props.question.topics.map((topic, idx) => {
+                            if (idx !== 0) {
+                                return (
+                                <div className="feed-item-topic-container" key={idx}>
+                                    <div className="separator">-</div>
+                                    <Link to={`/topic/${topic.name}/questions`} ><li>{topic.name}</li></Link>
+                                </div>
+                                )
+                            } else {
+                                return (
+                                    <div className="feed-item-topic-container" key={idx}>
+                                        <Link to={`/topic/${topic.name}/questions`} ><li>{topic.name}</li></Link>
+                                    </div>
+                                )
+                            }
+                        })}
+                    </ul>
                     <h1>
                         <Link to={`/q/${question._id}`}>
                             {question.question}

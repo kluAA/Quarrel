@@ -95,3 +95,22 @@
     margin-right: 3px;
     font-size: 18px;
 }
+
+.feed-item-topics-list {
+    display: flex;
+    font-size: 13px;
+    color: #949494;
+}
+
+.feed-item-topic-container {
+    display: flex;
+    margin-bottom: 4px;
+}
+
+.separator {
+    margin: 0px 4px 0px;
+}
+
+.feed-item-topic-container a:hover {
+    text-decoration: underline;
+}

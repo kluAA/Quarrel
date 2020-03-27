@@ -19,6 +19,7 @@ export default {
           }
           topics {
             _id
+            name
           }
           answers {
             date
