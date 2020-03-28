@@ -19,6 +19,11 @@ export default {
           }
           topics {
             _id
+            name
+            imageUrl
+            followers {
+              _id
+            }
           }
           answers {
             date
