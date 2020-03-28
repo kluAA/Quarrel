@@ -40,7 +40,9 @@ export default {
       query FetchQuestionsByTopic($name: String!) {
         questions_by_topic(name: $name) {
           name
-          questions
+          questions {
+            question
+          }
         }
       }
     `,
@@ -63,6 +65,10 @@ export default {
         question(_id: $id) {
           _id
           question
+          user{
+              _id
+              email
+            }
           date
           topics {
             name
@@ -117,7 +123,6 @@ export default {
         }
       }
     `,
-  //removed name from topics
   SIMILAR_QUESTIONS: gql`
       query SimilarQuestions($question: String) {
         similarQuestions(question: $question) {

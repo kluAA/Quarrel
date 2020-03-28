@@ -14,7 +14,7 @@ class QuestionShow extends React.Component {
         this.state = {
             edit: false,
             body: "",
-            showForm: false
+            showForm: false,
         }
         this.toggleForm = this.toggleForm.bind(this);
         this.numAnswers = this.numAnswers.bind(this);
@@ -47,8 +47,19 @@ class QuestionShow extends React.Component {
 
     renderTopicsList(topics) {
         return topics.map(topic => {
-            return <Link className="topics-list-item" to={`/topic/${topic.name}/questions`}>{topic.name}</Link>
+            return <Link key={`${topic._id}`} className="topics-list-item" to={`/topic/${topic.name}/questions`}>{topic.name}</Link>
         })
+    }
+
+    //checks the author of the question and compares with current user.
+    renderPencil(question, currentUserId) {
+        if (question.user._id === currentUserId) {
+            return <div className="edit-topics">
+                <i className="fas fa-pencil-alt" onClick={this.editTopics}></i>
+            </div>
+        } else {
+            return null
+        }
     }
 
     render() {
@@ -70,11 +81,12 @@ class QuestionShow extends React.Component {
                             />
                         )
                     })
-
+                    let currentUserId = localStorage.getItem("currentUserId")
                     return (
                         <div >
                             <div className="topics-list-container">
                                 {this.renderTopicsList(question.topics)}
+                                {this.renderPencil(question, currentUserId)}
                             </div>
                             <div className="qns-container">
 
@@ -95,6 +107,7 @@ class QuestionShow extends React.Component {
                                             if (error) return null;
                                             if (data) {
                                                 const trackedQuestions = data.currentUser.trackedQuestions;
+                                                this.currentUser = data.currentUser
                                                 return (
                                                     <Mutation
                                                         mutation={TRACK_QUESTION}
