@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import ReactDom from 'react-dom';
 import { Mutation, Query } from "react-apollo";
 import Mutations from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
@@ -12,13 +13,30 @@ class CommentForm extends React.Component {
 		this.state = {
 			answerId: this.props.answerId,
 			comment: "",
-			// bold: false,
-			// italic: false,
 			history: this.props.history,
-			showCommentForm: true
-		}
+			showForm: this.props.showForm,
+			showCommentForm: this.props.showCommentForm,
+			showCommentButton: this.props.showCommentButton,
+		};
 		this.update = this.update.bind(this);
 		this.closeCommentForm = this.closeCommentForm.bind(this);
+		this.showButton = this.showButton.bind(this);
+		this.hideButton = this.hideButton.bind(this);
+	}
+
+	componentDidMount() {
+		// document.addEventListener('DOMContentLoaded', () => {
+			const input = document.getElementById('comment-input');
+			const button = document.getElementById('comment-submit-button');
+			input.addEventListener('click', this.showButton);
+			
+		// });
+		// document.addEventListener('click', showButton);
+	}
+
+	componentWillUnmount() {
+		const input = document.getElementById('comment-input');
+		input.removeEventListener('click', this.showButton);
 	}
 
 	update(field) {
@@ -64,37 +82,59 @@ class CommentForm extends React.Component {
 			}
 		})
 			.then(() => {
-				// this.props.history.push(`/q/${this.state.questionId}`)
 				this.closeCommentForm();
 			})
 	}
 
-	format(type) {
-		return e => {
-			e.preventDefault();
-			e.stopPropagation();
-			document.execCommand(type, false, null);
-			this.setState({ [type]: document.queryCommandState(type) });
-		}
-	}
-
-	loginAndRedirectTo(url, data) {
-		this.props.history.push(url);
-	}
-
 	closeCommentForm() {
-		this.setState({showCommentForm: false});
+		this.setState({showCommentForm: false, showCommentButton: false});
+	}
+
+	showButton(e) {
+		e.preventDefault();
+		if (this.state.showForm === true) {
+			this.setState({ showCommentButton: true });
+			console.log("show button works");
+		} else {
+			// button.styling.display = "none";
+			console.log("show button does not work");
+		};
+	
+	}
+
+	hideButton() {
+		const button = document.getElementById("comment-submit-button");
+		// this.setState({ showCommentButton: false });
+		button.styling.display = "inline-block";
+
+		// if (button.style.display === "inline-block") {
+		// 	button.styling.display = "none";
+		// } else {
+		// 	button.styling.display = "none";
+		// }
 	}
 
 	render() {
-		// const { bold, italic } = this.state;
+		// document.addEventListener('DOMContentLoaded', () => {
+		// 	var input = document.getElementById("comment-input");
+		// 	var button = document.getElementById('comment-submit-button');
+
+		// 	if (this.state.showForm === true && this.state.showButton === false) {
+		// 		button.styling.display = "inline block";
+		// 		console.log("show button works");
+		// 	} else {
+		// 		button.styling.display = "none";
+		// 		console.log("show button does not work");
+		// 	}
+		// });
+
 		return (
 			<Mutation
 				mutation={NEW_COMMENT}
 				update={(cache, data) => {this.updateCache(cache, data)}}
 				onCompleted={data => {
-					this.props.closeCommentForm();
-					// this.setState({comment: ""});
+					// this.props.closeCommentForm();
+					this.setState({comment: "", showCommentForm: false, showCommentButton: false});
 				}}
 			>
 				{(newComment, { comment }) => {
@@ -102,7 +142,6 @@ class CommentForm extends React.Component {
 						<div className="comment-form-container">
 							<form onSubmit={e => this.handleSubmit(e, newComment)} className="comment-form">
 								<div className="comment-item-user-icon">
-									{/* <img className="comment-item-user-icon" src={user.profileUrl} /> */}
 									<Query query={CURRENT_USER} variables={{token : localStorage.getItem("auth-token") }}>
 										{({loading, error, data}) => {
 											if (loading) return null;
@@ -122,24 +161,27 @@ class CommentForm extends React.Component {
 										}}
 									</Query>
 								</div>
-								{/* <div className="comment-form-input-box"> */}
-								<div className="comment-form-input-box">
+								<div className="comment-form-input-box" 
+									// id="comment-input"
+									>
 									<input
 										onChange={this.update("comment")}
 										value={this.state.comment}
 										placeholder="Add a comment..."
 										className="comment-form-input"
+										id="comment-input"
+										// onClick={console.log("on focus")}
 									/>
+									{this.showCommentButton ? this.hideButton() : null}
 								</div>
 								<div className="comment-form-button">
-									<input type="submit" className="comment-form-button" value="" />
+									<input type="submit" className="comment-form-button" id="comment-submit-button" value="Add Comment" />
 								</div>
 
 							</form>
 						</div>
 					)
 				}}
-
 			</Mutation>
 		)
 	}
