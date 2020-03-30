@@ -16,7 +16,7 @@ class CommentForm extends React.Component {
 			history: this.props.history,
 			showForm: this.props.showForm,
 			showCommentForm: this.props.showCommentForm,
-			showCommentButton: this.props.showCommentButton,
+			showCommentButton: false,
 		};
 		this.update = this.update.bind(this);
 		this.closeCommentForm = this.closeCommentForm.bind(this);
@@ -25,13 +25,8 @@ class CommentForm extends React.Component {
 	}
 
 	componentDidMount() {
-		// document.addEventListener('DOMContentLoaded', () => {
 			const input = document.getElementById('comment-input');
-			const button = document.getElementById('comment-submit-button');
 			input.addEventListener('click', this.showButton);
-			
-		// });
-		// document.addEventListener('click', showButton);
 	}
 
 	componentWillUnmount() {
@@ -92,19 +87,13 @@ class CommentForm extends React.Component {
 
 	showButton(e) {
 		e.preventDefault();
-		if (this.state.showForm === true) {
-			this.setState({ showCommentButton: true });
-			console.log("show button works");
-		} else {
-			// button.styling.display = "none";
-			console.log("show button does not work");
-		};
-	
+		console.log("show button does not work");
+		this.setState({ showCommentButton: true });
 	}
 
 	hideButton() {
 		const button = document.getElementById("comment-submit-button");
-		// this.setState({ showCommentButton: false });
+		this.setState({ showCommentButton: false });
 		button.styling.display = "inline-block";
 
 		// if (button.style.display === "inline-block") {
@@ -115,18 +104,13 @@ class CommentForm extends React.Component {
 	}
 
 	render() {
-		// document.addEventListener('DOMContentLoaded', () => {
-		// 	var input = document.getElementById("comment-input");
-		// 	var button = document.getElementById('comment-submit-button');
-
-		// 	if (this.state.showForm === true && this.state.showButton === false) {
-		// 		button.styling.display = "inline block";
-		// 		console.log("show button works");
-		// 	} else {
-		// 		button.styling.display = "none";
-		// 		console.log("show button does not work");
-		// 	}
-		// });
+		const button = (
+			<Fragment>
+			<div className="comment-form-button">
+				<input type="submit" className="comment-form-button" id="comment-submit-button" value="Add Comment" />
+			</div>
+			</Fragment>
+		)
 
 		return (
 			<Mutation
@@ -164,7 +148,7 @@ class CommentForm extends React.Component {
 								<div className="comment-form-input-box" 
 									// id="comment-input"
 									>
-									<input
+									<textarea
 										onChange={this.update("comment")}
 										value={this.state.comment}
 										placeholder="Add a comment..."
@@ -172,12 +156,9 @@ class CommentForm extends React.Component {
 										id="comment-input"
 										// onClick={console.log("on focus")}
 									/>
-									{this.showCommentButton ? this.hideButton() : null}
 								</div>
-								<div className="comment-form-button">
-									<input type="submit" className="comment-form-button" id="comment-submit-button" value="Add Comment" />
-								</div>
-
+								{/* {this.showCommentButton ? button : null } */}
+								{button}
 							</form>
 						</div>
 					)
