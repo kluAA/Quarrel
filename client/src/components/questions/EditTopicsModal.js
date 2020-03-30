@@ -20,8 +20,8 @@ export default class Modal extends React.Component {
 
   handleTopicSubmit(e, addTopicToQuestion) {
     e.preventDefault()
-    debugger
     let topics = this.state.topics;
+    debugger
     topics.forEach(topicId => {
       addTopicToQuestion({ variables: { topicId: topicId, questionId: this.state.successfulQId } })
     });

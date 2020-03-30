@@ -234,14 +234,14 @@ export default {
             }
         }
 		`,
-		DELETE_COMMENT: gql`
+    DELETE_COMMENT: gql`
 				mutation DeleteComment($id: ID!) {
 						deleteComment(_id: $id) {
 								_id
 						}
 				}
 		`,
-		DISLIKE_COMMENT: gql`
+    DISLIKE_COMMENT: gql`
 				mutation DislikeComment($commentId: ID) {
 						dislikeComment(commentId: $commentId) {
 								_id
@@ -260,7 +260,7 @@ export default {
 						}
 				}	
 		`,
-		DELETE_DISLIKE: gql`
+    DELETE_DISLIKE: gql`
 				mutation DeleteDislike($commentId: ID) {
 					deleteDislike(commentId: $commentId) {
 						_id
