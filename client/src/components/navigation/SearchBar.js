@@ -74,7 +74,12 @@ class SearchBar extends React.Component {
                     </form>
                 </div>
                 {
-                    this.props.showModal && <ul className="search-list">{searchList}</ul>
+                    this.props.showModal && this.state.search.length > 0 &&
+                    <ul className="search-list">
+                        <div class="arrow-up-search"></div>
+                        <li onClick={this.handleSubmit}><span><i className="fas fa-search"></i> Search: </span>{this.state.search}</li>
+                        {searchList}
+                    </ul>
                 }
             </div>
         )
