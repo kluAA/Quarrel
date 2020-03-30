@@ -16,7 +16,7 @@ module.exports = function validateLoginInput(data) {
 
     if (Validator.isEmpty(data.password)) {
         return {
-					message: "Incorrect password. Reset Password",
+					message: "Incorrect password.",
 					isValid: false
 				};
     }

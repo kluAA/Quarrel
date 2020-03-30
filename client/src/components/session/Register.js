@@ -16,18 +16,27 @@ class Register extends React.Component {
 			errors: [],
 		};
 		this.renderErrors = this.renderErrors.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.closeMessage = this.closeMessage.bind(this);
 	}
 
 	update(field) {
 		return e => this.setState({ [field]: e.target.value });
 	}
 
+	closeMessage(e) {
+		let errorArray = []
+		this.setState({ errors: errorArray });
+	}
+
 	renderErrors(errors) {
+		if (!errors) return null;
 		let errorArray = errors.map((error) => (
 			error.message
 		))
 		this.setState({ errors: errorArray })
-		console.log(errorArray)
+		setTimeout(this.closeMessage, 5001)
+		// console.log(errorArray)
 	}
 
 	updateCache(client, { data }) {
@@ -50,6 +59,12 @@ class Register extends React.Component {
 	}
 
 	render() {
+		const registerErrors = (
+			<div className="login-error">
+				{this.state.errors}
+			</div>
+		)
+
 		return (
 			<Mutation
 				mutation={REGISTER_USER}
@@ -70,9 +85,10 @@ class Register extends React.Component {
 
 				{registerUser => (
 					<div className="">
-						<div className="errorMsg">
-							{this.state.errors[0]}
-						</div>
+						{/* <div className="register-error hide-me">
+							{this.state.errors}
+						</div> */}
+						{this.state.errors.length > 0 ? registerErrors : null}
 
 						<form onSubmit={e => this.handleSubmit(e, registerUser, this.props.history)} className="signup-form-box">
 							<p className="session-label">Signup</p>
