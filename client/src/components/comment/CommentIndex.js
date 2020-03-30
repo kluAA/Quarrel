@@ -12,10 +12,29 @@ class CommentIndex extends React.Component {
     constructor(props) {
 				super(props);
 				this.state = {
-					showCommentForm: true
+					showForm: this.props.showForm,
+					showCommentForm: true,
+					showCommentButton: false,
 				}
 				this.closeCommentForm = this.closeCommentForm.bind(this);
 		}
+
+	componentDidMount()
+	{
+		// document.addEventListener('DOMContentLoaded', () => {
+		const input = document.getElementById('comment-input');
+		const button = document.getElementById('comment-submit-button');
+		input.addEventListener('click', this.showButton);
+
+		// });
+		// document.addEventListener('click', showButton);
+	}
+
+	componentWillUnmount()
+	{
+		const input = document.getElementById('comment-input');
+		input.removeEventListener('click', this.showButton);
+	}
 		
 		handleDelete(e, deleteComment)
 		{
@@ -29,17 +48,28 @@ class CommentIndex extends React.Component {
 		}
 
 		closeCommentForm(e) {
-			// e.preventDefault();
-			this.setState({showCommentForm: false});
+			e.preventDefault();
+			this.setState({showCommentForm: false, showCommentButton: false});
 		}
 
     render() {
-        const { answer, comment, user } = this.props;
+			window.addEventListener('DOMContentLoaded', function ()	{
+				let input = document.getElementById('comment-input');
+				let button = document.getElementById('comment-submit-button');
+
+				input.addEventListener('focus', function () {
+					button.style.display = "inline-block"
+				}, true);
+				input.addEventListener('blur', function () {
+					button.style.display = "none"
+				}, true);
+			}, false);
+
         return (
             <div className="">
 								<div className="">
-									{this.state.showCommentForm ? <CommentForm closeCommentForm={this.closeCommentForm} answerId={this.props.answerId} questionId={this.props.questionId} /> : null}
-									{/* <CommentForm answerId={this.props.answerId} questionId={this.props.questionId} /> */}
+									{/* {this.state.showCommentForm ? <CommentForm closeCommentForm={this.closeCommentForm} answerId={this.props.answerId} questionId={this.props.questionId} /> : null} */}
+									<CommentForm answerId={this.props.answerId} questionId={this.props.questionId} />
 								</div>
                 {this.props.comments.map(comment => (
                     <div key={comment._id} className="comment-item-container">
@@ -59,7 +89,6 @@ class CommentIndex extends React.Component {
                         </div>
 
                         <div className="comment-item-content">
-                            {/* <Link to={`/comment/${comment._id}`} className="">{comment.comment}</Link> */}
 														{comment.comment}
                         </div>
 
