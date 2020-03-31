@@ -52,10 +52,36 @@ QuestionSchema.statics.addTopic = (questionId, topicId) => {
 
     return Question.findById(questionId).then(question => {
         question.topics.push(topicId);
+
         return question.save()
     });
 };
 
+
+QuestionSchema.statics.addTopics = (questionId, topics) => {
+    const Question = mongoose.model("question");
+    const Topic = mongoose.model("topic")
+
+    return Question.findById(questionId).then(question => {
+       
+        //access old topics that will be removed
+        let topicsForRemoval = question.topics.filter(topic => !topics.includes(topic))
+        topicsForRemoval.forEach(objectId => {
+            Topic.findByIdAndUpdate(objectId, {$pull: {questions: questionId}}).exec()
+        })
+
+        //adding question to new topics
+        topics.forEach(topicId => {
+            Topic.findById(topicId).then( topic => {
+                topic.questions.push(questionId)  
+                topic.save()
+            });
+        });
+
+        question.topics = topics;
+        return question.save()
+    });
+};
 const findLongestWord = (sentence) => {
     let words = sentence.slice(0, -1).split(" ");
     let longestWord = words[0];

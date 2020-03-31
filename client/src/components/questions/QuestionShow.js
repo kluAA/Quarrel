@@ -5,6 +5,8 @@ import Mutations from "../../graphql/mutations";
 import { Link, withRouter } from "react-router-dom";
 import AnswerForm from "../answer/AnswerForm";
 import AnswerItem from "../answer/AnswerItem";
+import Modal from "./EditTopicsModal"
+
 const { FETCH_QUESTION, CURRENT_USER } = Queries;
 const { TRACK_QUESTION } = Mutations;
 
@@ -14,13 +16,24 @@ class QuestionShow extends React.Component {
         this.state = {
             edit: false,
             body: "",
-            showForm: false
+            showForm: false,
+            show: false,
+            updated: false
+
         }
         this.toggleForm = this.toggleForm.bind(this);
         this.numAnswers = this.numAnswers.bind(this);
         this.track = this.track.bind(this);
         this.renderTopicsList = this.renderTopicsList.bind(this)
     }
+
+
+
+    toggleTopicModal = e => {
+        this.setState({
+            show: !this.state.show
+        });
+    };
 
     toggleForm() {
         this.setState({ showForm: !this.state.showForm })
@@ -45,10 +58,24 @@ class QuestionShow extends React.Component {
 
     }
 
+
     renderTopicsList(topics) {
         return topics.map(topic => {
-            return <Link className="topics-list-item" to={`/topic/${topic.name}/questions`}>{topic.name}</Link>
+            return <Link key={`${topic._id}`} className="topics-list-item" to={`/topic/${topic.name}/questions`}>{topic.name}</Link>
         })
+    }
+
+    //checks the author of the question and compares with current user.
+    renderPencil(question, currentUserId) {
+        if (question.user._id === currentUserId) {
+            return <div className="edit-topics" onClick={e => {
+                this.toggleTopicModal();
+            }}>
+                <i className="fas fa-pencil-alt"></i>
+            </div >
+        } else {
+            return null
+        }
     }
 
     render() {
@@ -70,11 +97,14 @@ class QuestionShow extends React.Component {
                             />
                         )
                     })
-
+                    let currentUserId = localStorage.getItem("currentUserId")
                     return (
                         <div >
+                            <Modal onClose={this.toggleTopicModal} show={this.state.show}
+                                checked={question.topics} question={question}/>
                             <div className="topics-list-container">
                                 {this.renderTopicsList(question.topics)}
+                                {this.renderPencil(question, currentUserId)}
                             </div>
                             <div className="qns-container">
 
@@ -95,6 +125,7 @@ class QuestionShow extends React.Component {
                                             if (error) return null;
                                             if (data) {
                                                 const trackedQuestions = data.currentUser.trackedQuestions;
+                                                this.currentUser = data.currentUser
                                                 return (
                                                     <Mutation
                                                         mutation={TRACK_QUESTION}
@@ -134,10 +165,11 @@ class QuestionShow extends React.Component {
                             </div>
                         </div>
                     )
-                }}
+                }
+                }
 
 
-            </Query>
+            </Query >
         )
     }
 }

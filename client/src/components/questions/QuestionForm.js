@@ -32,9 +32,9 @@ class QuestionForm extends React.Component {
         this.handleModal = this.handleModal.bind(this);
         this.closeMessage = this.closeMessage.bind(this);
         this.redirect = this.redirect.bind(this);
+        this.setDefaultCheck = this.setDefaultCheck.bind(this);
         this.handleTopicSubmit = this.handleTopicSubmit.bind(this);
         this.updateTopic = this.updateTopic.bind(this);
-        this.setDefaultCheck = this.setDefaultCheck.bind(this);
         this.handleTopicModal = this.handleTopicModal.bind(this);
     }
 
