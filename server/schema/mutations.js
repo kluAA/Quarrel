@@ -176,8 +176,8 @@ const mutation = new GraphQLObjectType({
                 questionId: { type: GraphQLID }
             },
             async resolve(parentValue, { topics, questionId }, ctx) {
-                return Question.addTopic(questionId, topics).then(
-                    Topic.editQuestion(questionId, topics)
+                return Question.addTopic(questionId, topics)
+                // .then(Topic.editQuestion(questionId, topics)
                 )
             }
         },

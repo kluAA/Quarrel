@@ -62,7 +62,11 @@ QuestionSchema.statics.addTopics = (questionId, topics) => {
 
     return Question.findById(questionId).then(question => {
         //access old topics that will be removed
-        let oldTopics = question.topics.filter(topic => !topics.includes(topic))
+        let topicsForRemoval = question.topics.filter(topic => !topics.includes(topic))
+        topicsForRemoval.forEach(topicId => {
+            let topic = findBy(topicId)
+            topic.questions.deleteOne( {"_id": ObjectId(question._id)});
+        })
         //iterate through array, findbyTopicById then use pull to pull questionId from the questions array.
         question.topics = topics;
 
