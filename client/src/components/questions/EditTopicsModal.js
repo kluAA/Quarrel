@@ -20,7 +20,7 @@ export default class Modal extends React.Component {
 
 
   handleTopicSubmit(e, addTopicsToQuestion) {
-    // e.preventDefault()
+    e.preventDefault()
     let topics = this.state.topics;
     addTopicsToQuestion({ variables: { topics: topics, questionId: this.state.questionId} })
     this.onClose()
