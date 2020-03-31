@@ -61,6 +61,9 @@ QuestionSchema.statics.addTopics = (questionId, topics) => {
     const Question = mongoose.model("question");
 
     return Question.findById(questionId).then(question => {
+        //access old topics that will be removed
+        let oldTopics = question.topics.filter(topic => !topics.includes(topic))
+        //iterate through array, findbyTopicById then use pull to pull questionId from the questions array.
         question.topics = topics;
 
         return question.save()
