@@ -98,7 +98,7 @@ class QuestionShow extends React.Component {
                     return (
                         <div >
                             <Modal onClose={this.showModal} show={this.state.show}
-                                checked={question.topics} />
+                                checked={question.topics} question={question}/>
                             <div className="topics-list-container">
                                 {this.renderTopicsList(question.topics)}
                                 {this.renderPencil(question, currentUserId)}

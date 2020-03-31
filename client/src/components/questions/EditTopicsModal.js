@@ -3,11 +3,12 @@ import { Mutation, Query } from "react-apollo";
 import Queries from "../../graphql/queries";
 import Mutations from "../../graphql/mutations";
 const { FETCH_TOPICS } = Queries
-const { ADD_TOPIC_TO_QUESTION } = Mutations
+const { ADD_TOPICS_TO_QUESTION} = Mutations
 export default class Modal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      questionId: props.question._id,
       topics: [],
       checked: {
       },
@@ -18,13 +19,11 @@ export default class Modal extends React.Component {
 
 
 
-  handleTopicSubmit(e, addTopicToQuestion) {
+  handleTopicSubmit(e, addTopicsToQuestion) {
     e.preventDefault()
     let topics = this.state.topics;
-    debugger
-    topics.forEach(topicId => {
-      addTopicToQuestion({ variables: { topicId: topicId, questionId: this.state.successfulQId } })
-    });
+    addTopicsToQuestion({ variables: { topics: topics, questionId: this.state.questionId} })
+
     this.onClose()
   }
 
@@ -50,7 +49,7 @@ export default class Modal extends React.Component {
       <div className="modal-background" onClick={this.onClose}>
         <div className="topics-modal" onClick={e => e.stopPropagation()}>
           <Mutation
-            mutation={ADD_TOPIC_TO_QUESTION}
+            mutation={ADD_TOPICS_TO_QUESTION}
             onError={err => this.setState({ message: err.message })}
             onCompleted={data => {
               this.setState({
@@ -58,9 +57,10 @@ export default class Modal extends React.Component {
                 topics: [],
                 checked: {}
               });
+              debugger
             }}
           >
-            {(addTopicToQuestion) => (
+            {(addTopicsToQuestion) => (
               <div className="topics-modal">
                 <div className="topics-modal-header">
                   {this.state.successfulQuestion}
@@ -68,7 +68,7 @@ export default class Modal extends React.Component {
                 <div className="topics-modal-instructions">
                   Edit topics that best describe your question
                                     </div>
-                <form onSubmit={e => this.handleTopicSubmit(e, addTopicToQuestion)}>
+                <form onSubmit={e => this.handleTopicSubmit(e, addTopicsToQuestion)}>
                   <div className="topics-modal-body">
                     <Query query={FETCH_TOPICS} >
                       {({ loading, error, data }) => {

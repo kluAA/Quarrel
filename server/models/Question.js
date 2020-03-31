@@ -52,10 +52,20 @@ QuestionSchema.statics.addTopic = (questionId, topicId) => {
 
     return Question.findById(questionId).then(question => {
         question.topics.push(topicId);
+
         return question.save()
     });
 };
 
+QuestionSchema.statics.addTopics = (questionId, topics) => {
+    const Question = mongoose.model("question");
+
+    return Question.findById(questionId).then(question => {
+        question.topics = topics;
+
+        return question.save()
+    });
+};
 const findLongestWord = (sentence) => {
     let words = sentence.slice(0, -1).split(" ");
     let longestWord = words[0];

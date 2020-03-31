@@ -86,6 +86,17 @@ export default {
             }
         }
     `,
+    ADD_TOPICS_TO_QUESTION: gql`
+        mutation AddTopicsToQuestion($topics: [ID!]!, $questionId: ID!) {
+            addTopicsToQuestion(topics: $topics, questionId: $questionId) {
+                _id
+                name
+                questions {
+                    _id
+                }
+            }
+        }
+    `,
     NEW_ANSWER: gql`
         mutation NewAnswer($body: String!, $questionId: ID!) {
             newAnswer(body: $body, questionId: $questionId) {
