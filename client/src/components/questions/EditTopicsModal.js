@@ -39,10 +39,6 @@ export default class Modal extends React.Component {
     }
   }
 
-  updateCache(cache, data) {
-    console.log(data)
-  }
-
   render() {
     if (!this.props.show) {
       return null;
