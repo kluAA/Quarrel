@@ -17,7 +17,9 @@ class QuestionShow extends React.Component {
             edit: false,
             body: "",
             showForm: false,
-            show: false
+            show: false,
+            updated: false
+
         }
         this.toggleForm = this.toggleForm.bind(this);
         this.numAnswers = this.numAnswers.bind(this);
@@ -27,7 +29,7 @@ class QuestionShow extends React.Component {
 
 
 
-    showModal = e => {
+    toggleTopicModal = e => {
         this.setState({
             show: !this.state.show
         });
@@ -56,6 +58,7 @@ class QuestionShow extends React.Component {
 
     }
 
+
     renderTopicsList(topics) {
         return topics.map(topic => {
             return <Link key={`${topic._id}`} className="topics-list-item" to={`/topic/${topic.name}/questions`}>{topic.name}</Link>
@@ -66,7 +69,7 @@ class QuestionShow extends React.Component {
     renderPencil(question, currentUserId) {
         if (question.user._id === currentUserId) {
             return <div className="edit-topics" onClick={e => {
-                this.showModal();
+                this.toggleTopicModal();
             }}>
                 <i className="fas fa-pencil-alt"></i>
             </div >
@@ -97,7 +100,7 @@ class QuestionShow extends React.Component {
                     let currentUserId = localStorage.getItem("currentUserId")
                     return (
                         <div >
-                            <Modal onClose={this.showModal} show={this.state.show}
+                            <Modal onClose={this.toggleTopicModal} show={this.state.show}
                                 checked={question.topics} question={question}/>
                             <div className="topics-list-container">
                                 {this.renderTopicsList(question.topics)}

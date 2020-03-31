@@ -57,19 +57,28 @@ QuestionSchema.statics.addTopic = (questionId, topicId) => {
     });
 };
 
+
 QuestionSchema.statics.addTopics = (questionId, topics) => {
     const Question = mongoose.model("question");
+    const Topic = mongoose.model("topic")
 
     return Question.findById(questionId).then(question => {
+       
         //access old topics that will be removed
         let topicsForRemoval = question.topics.filter(topic => !topics.includes(topic))
-        topicsForRemoval.forEach(topicId => {
-            let topic = findBy(topicId)
-            topic.questions.deleteOne( {"_id": ObjectId(question._id)});
+        topicsForRemoval.forEach(objectId => {
+            Topic.findByIdAndUpdate(objectId, {$pull: {questions: questionId}}).exec()
         })
-        //iterate through array, findbyTopicById then use pull to pull questionId from the questions array.
-        question.topics = topics;
 
+        //adding question to new topics
+        topics.forEach(topicId => {
+            Topic.findById(topicId).then( topic => {
+                topic.questions.push(questionId)  
+                topic.save()
+            });
+        });
+
+        question.topics = topics;
         return question.save()
     });
 };

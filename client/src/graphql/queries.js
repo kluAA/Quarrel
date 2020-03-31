@@ -39,27 +39,15 @@ export default {
   FETCH_QUESTIONS_BY_TOPIC: gql`
       query FetchQuestionsByTopic($name: String!) {
         questions_by_topic(name: $name) {
+          _id
           name
           questions {
+            _id
             question
           }
         }
       }
     `,
-  // FETCH_ANSWERS_BY_TOPIC: gql`
-  //       query FetchTopic($name: String!) {
-  //       topic_by_name(name: $name) {    
-  // {
-  //       questions {
-  //         _id
-  //         question
-  //         date
-  //         user {
-  //           email
-  //         }
-  //       }
-  //     }
-  //   `,
   FETCH_QUESTION: gql`
       query FetchQuestion($id: ID!) {
         question(_id: $id) {
@@ -71,6 +59,7 @@ export default {
             }
           date
           topics {
+            _id
             name
           }
           answers {

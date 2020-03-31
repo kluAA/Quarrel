@@ -77,17 +77,6 @@ TopicSchema.statics.addQuestion = (questionId, topicId) => {
   });
 }
 
-// TopicSchema.statics.editQuestion = (questionId, topicIds) => {
-//   debugger
-//   const Topic = mongoose.model("topic");
-//   const Question = mongoose.model("question")
-//   topicIds.forEach(topicId => {
-//     Topic.findByIdAndUpdate(topicId, {$push: {questions: questionId}}, {})
-//   })
-//   return Question.findByIdAndUpdate(questionId, {$set: {topics: topicIds}}, {new: true}).then(question => question)
-// }
-
-
 TopicSchema.statics.findMatches = (query) => {
   const Topic = mongoose.model("topic");
   const longestWord = findLongestWord(query);

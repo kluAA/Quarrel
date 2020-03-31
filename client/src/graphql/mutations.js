@@ -90,9 +90,10 @@ export default {
         mutation AddTopicsToQuestion($topics: [ID!]!, $questionId: ID!) {
             addTopicsToQuestion(topics: $topics, questionId: $questionId) {
                 _id
-                name
-                questions {
+                question
+                topics {
                     _id
+                    name
                 }
             }
         }

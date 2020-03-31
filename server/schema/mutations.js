@@ -170,15 +170,13 @@ const mutation = new GraphQLObjectType({
             }
         },
         addTopicsToQuestion: {
-            type: TopicType,
+            type: QuestionType,
             args: {
                 topics: { type: new GraphQLList(GraphQLID) },
                 questionId: { type: GraphQLID }
             },
             async resolve(parentValue, { topics, questionId }, ctx) {
-                return Question.addTopic(questionId, topics)
-                // .then(Topic.editQuestion(questionId, topics)
-                )
+                return Question.addTopics(questionId, topics)
             }
         },
         trackQuestion: {
