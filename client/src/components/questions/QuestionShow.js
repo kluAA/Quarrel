@@ -2,9 +2,11 @@ import React from 'react';
 import { Query, Mutation } from 'react-apollo';
 import Queries from "../../graphql/queries";
 import Mutations from "../../graphql/mutations";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import AnswerForm from "../answer/AnswerForm";
 import AnswerItem from "../answer/AnswerItem";
+import Modal from "./EditTopicsModal"
+
 const { FETCH_QUESTION, CURRENT_USER } = Queries;
 const { TRACK_QUESTION } = Mutations;
 
@@ -14,13 +16,26 @@ class QuestionShow extends React.Component {
         this.state = {
             edit: false,
             body: "",
-            showForm: false
+            showForm: false,
+            show: false,
+            updated: false,
+            showMoreAnswers: false
         }
         this.toggleForm = this.toggleForm.bind(this);
         this.numAnswers = this.numAnswers.bind(this);
         this.track = this.track.bind(this);
         this.renderTopicsList = this.renderTopicsList.bind(this)
+        this.renderAnswers = this.renderAnswers.bind(this)
+        this.toggleShowMoreAnswers = this.toggleShowMoreAnswers.bind(this)
     }
+
+
+
+    toggleTopicModal = e => {
+        this.setState({
+            show: !this.state.show
+        });
+    };
 
     toggleForm() {
         this.setState({ showForm: !this.state.showForm })
@@ -36,7 +51,6 @@ class QuestionShow extends React.Component {
     }
 
     track(e, trackQuestion, questionId) {
-        debugger;
         e.preventDefault();
         trackQuestion({
             variables: {
@@ -48,11 +62,48 @@ class QuestionShow extends React.Component {
 
     renderTopicsList(topics) {
         return topics.map(topic => {
-            return <div className="topics-list-item">
-                {topic.name}
-            </div>
+            return <Link key={`${topic._id}`} className="topics-list-item" to={`/topic/${topic.name}/questions`}>{topic.name}</Link>
         })
     }
+
+    //checks the author of the question and compares with current user.
+    renderPencil(question, currentUserId) {
+        if (question.user._id === currentUserId) {
+            return <div className="edit-topics" onClick={e => {
+                this.toggleTopicModal();
+            }}>
+                <i className="fas fa-pencil-alt"></i>
+            </div >
+        } else {
+            return null
+        }
+    }
+
+    renderAnswers(answers) {
+        if (this.state.showMoreAnswers) {
+            return answers
+        } else {
+            return answers[0]
+        }
+    }
+
+    renderShowAnswersButton(answersLength) {
+        if (answersLength) {
+            if(this.state.showMoreAnswers) {
+                return <button onClick={this.toggleShowMoreAnswers}>Show Less Answers</button>
+            } else {
+                return <button onClick={this.toggleShowMoreAnswers}>Show More Answers</button>
+            }
+        } else {
+            return null
+        }
+    }
+
+
+    toggleShowMoreAnswers() {
+        this.setState({ showMoreAnswers: !this.state.showMoreAnswers });
+    }
+
 
     render() {
         return (
@@ -73,11 +124,14 @@ class QuestionShow extends React.Component {
                             />
                         )
                     })
-
+                    let currentUserId = localStorage.getItem("currentUserId")
                     return (
                         <div >
+                            <Modal onClose={this.toggleTopicModal} show={this.state.show}
+                                checked={question.topics} question={question}/>
                             <div className="topics-list-container">
                                 {this.renderTopicsList(question.topics)}
+                                {this.renderPencil(question, currentUserId)}
                             </div>
                             <div className="qns-container">
 
@@ -98,6 +152,7 @@ class QuestionShow extends React.Component {
                                             if (error) return null;
                                             if (data) {
                                                 const trackedQuestions = data.currentUser.trackedQuestions;
+                                                this.currentUser = data.currentUser
                                                 return (
                                                     <Mutation
                                                         mutation={TRACK_QUESTION}
@@ -133,16 +188,18 @@ class QuestionShow extends React.Component {
                                 </div>
                                 {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={question._id} /> : null}
                                 <h2>{this.numAnswers(question)}</h2>
-                                {answers}
+                                { this.renderAnswers(answers)}
+                            { this.renderShowAnswersButton(answers.length) }
                             </div>
                         </div>
                     )
-                }}
+                }
+                }
 
 
-            </Query>
+            </Query >
         )
-    }
+    }   
 }
 
 export default withRouter(QuestionShow);

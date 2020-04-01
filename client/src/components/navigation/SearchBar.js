@@ -2,24 +2,33 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Queries from "../../graphql/queries";
 import { Query } from "react-apollo";
-import { Link, Redirect } from "react-router-dom";
 const { SIMILAR_QUESTIONS } = Queries;
 
 class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            search: ""
+            search: "",
+            dataMatches: []
         };
         this.update = this.update.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.redirect = this.redirect.bind(this);
     }
 
-    update (e) {
+    update(e) {
         this.setState({ search: e.currentTarget.value });
     }
 
-    handleSubmit (e) {
+    redirect(id) {
+        return e => {
+            this.props.history.push(`/q/${id}`);
+            this.props.closeModal(e);
+            this.setState({ search: "", dataMatches: [] });
+        }
+    }
+
+    handleSubmit(e) {
         e.preventDefault();
         if (this.state.search.length > 0) {
             this.props.closeModal(e);
@@ -33,11 +42,18 @@ class SearchBar extends React.Component {
         if (searchLength > 1) {
             searchList = (
                 <Query query={SIMILAR_QUESTIONS} variables={{ question: this.state.search }}>
-                    {({loading, error, data}) => {
-                        if (loading) return "loading...";
+                    {({ loading, error, data }) => {
+                        if (loading) {
+                            return this.state.dataMatches.map(match => {
+                                return <li onClick={this.redirect(match._id)} key={match._id}>{match.question}</li>
+                            })
+                        }
                         if (error) return `Error! ${error.message}`;
-                        return data.similarQuestions.map(match => {
-                            return <Link to={`q/${match._id}`}><li>{match.question}</li></Link>
+                        if (data.similarQuestions.length) {
+                            this.state.dataMatches = data.similarQuestions;
+                        }
+                        return this.state.dataMatches.map(match => {
+                            return <li onClick={this.redirect(match._id)} key={match._id}>{match.question}</li>
                         })
                     }}
                 </Query>
@@ -58,7 +74,12 @@ class SearchBar extends React.Component {
                     </form>
                 </div>
                 {
-                    this.props.showModal && <ul className="search-list">{searchList}</ul>
+                    this.props.showModal && this.state.search.length > 0 &&
+                    <ul className="search-list">
+                        <div class="arrow-up-search"></div>
+                        <li onClick={this.handleSubmit}><span><i className="fas fa-search"></i> Search: </span>{this.state.search}</li>
+                        {searchList}
+                    </ul>
                 }
             </div>
         )
