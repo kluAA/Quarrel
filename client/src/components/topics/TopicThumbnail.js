@@ -81,19 +81,6 @@ class TopicThumbnail extends React.Component {
                         }
                         return null
                     }
-                        // if (data.currentUser.topics.find(topic => topic._id === this.props.topic._id)) {
-                        //   if (!this.state.follow) {
-                        //     this.setState({
-                        //       follow: true
-                        //     })
-                        //   }
-                        // } else {
-                        //   if (this.state.follow) {
-                        //     this.setState({
-                        //       follow: false
-                        //     })
-                        //   }
-                        // }
                     }
                 </Query>
                 <div className="">
@@ -101,7 +88,7 @@ class TopicThumbnail extends React.Component {
                         <Link to={`/topic/${this.state.name}/questions`} key={this.props.topic._id} >
                             <div className="TopicPhoto">
                                 <div className="topic-photo-thumbnail">
-                                    <img className="icon" src={this.renderImg()}></img>
+                                    <img className="icon" src={this.renderImg()} alt=""></img>
                                 </div>
                             </div>
                         </Link>
