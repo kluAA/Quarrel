@@ -76,7 +76,7 @@ class FeedItem extends React.Component {
                                     <div className="separator">-</div>
                                         <Link to={`/topic/${topic.name}/questions`} ><li className="feed-item-topic">{topic.name}</li></Link>
                                     <div className="feed-item-topic-box">
-                                        <div class="arrow-up"></div>
+                                        <div className="arrow-up"></div>
                                         <TopicThumbnail key={topic._id} topic={topic} name={topic.name} />
                                     </div>
                                 </div>
@@ -86,7 +86,7 @@ class FeedItem extends React.Component {
                                     <div className="feed-item-topic-container" key={idx}>
                                         <Link to={`/topic/${topic.name}/questions`} ><li className="feed-item-topic">{topic.name}</li></Link>
                                         <div className="feed-item-topic-box">
-                                            <div class="arrow-up"></div>
+                                            <div className="arrow-up"></div>
                                             <TopicThumbnail key={topic._id} topic={topic} name={topic.name} />
                                         </div>
                                     </div>
