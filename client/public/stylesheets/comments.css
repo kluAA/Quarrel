@@ -75,17 +75,6 @@ textarea.comment-form-input {
 	display: inline;
 	overflow: auto;
 	box-sizing: border-box;
-	/* table-layout: fixed; */
-}
-textarea#comment-input {
-	width: 100%;
-	word-wrap: break-word;
-	word-break: break-all;
-	/* min-height: 32px; */
-	display: inline;
-	/* table-layout: fixed; */
-	overflow-wrap: break-word;
-	box-sizing: border-box;
 }
 .comment-form-button {
   cursor: pointer;
@@ -95,14 +84,15 @@ textarea#comment-input {
   color: white;
   font-size: 13px;
   font-weight: 500;
-  /* display: none; */
+  /* visibility: hidden; */
 	color: white;
 	vertical-align: middle;
 	margin-left: 8px;
 }
-#comment-submit-button {
-	/* display: none; */
-}
+/* #comment-submit-button {
+	width: auto;
+} */
+
 
 
 

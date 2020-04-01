@@ -19,21 +19,32 @@ class CommentIndex extends React.Component {
 				this.closeCommentForm = this.closeCommentForm.bind(this);
 		}
 
-	componentDidMount()
-	{
-		// document.addEventListener('DOMContentLoaded', () => {
-		const input = document.getElementById('comment-input');
-		const button = document.getElementById('comment-submit-button');
-		input.addEventListener('click', this.showButton);
+	componentDidMount() {
+		const commentToggle = document.getElementById('comment-toggle');
+		commentToggle.addEventListener('click', 
+		this.setState({ 
+			showCommentForm: !this.state.showCommentForm, 
+			showCommentButton: false 
+		}), console.log("comment toggle", 
+		"showCommentForm :", this.state.showCommentForm, 
+		"showCommentButton :", this.state.showCommentButton ))
+		// const input = document.getElementById('comment-input');
+		// input.addEventListener('click', this.setState({showCommentForm: true}));
+		// input.addEventListener('click', );
 
-		// });
-		// document.addEventListener('click', showButton);
 	}
 
-	componentWillUnmount()
-	{
-		const input = document.getElementById('comment-input');
-		input.removeEventListener('click', this.showButton);
+	componentWillUnmount(){
+		const commentToggle = document.getElementById('comment-toggle');
+		commentToggle.removeEventListener('click', 
+		this.setState({ 
+			showCommentForm: !this.state.showCommentForm,
+			showCommentButton: !this.state.showCommentButton 
+		}),
+			console.log("comment toggle", this.state.showCommentForm, this.state.showCommentButton,))
+
+		// const input = document.getElementById('comment-input');
+		// input.removeEventListener('click');
 	}
 		
 		handleDelete(e, deleteComment)
@@ -53,22 +64,9 @@ class CommentIndex extends React.Component {
 		}
 
     render() {
-			window.addEventListener('DOMContentLoaded', function ()	{
-				let input = document.getElementById('comment-input');
-				let button = document.getElementById('comment-submit-button');
-
-				input.addEventListener('focus', function () {
-					button.style.display = "inline-block"
-				}, true);
-				input.addEventListener('blur', function () {
-					button.style.display = "none"
-				}, true);
-			}, false);
-
         return (
             <div className="">
 								<div className="">
-									{/* {this.state.showCommentForm ? <CommentForm closeCommentForm={this.closeCommentForm} answerId={this.props.answerId} questionId={this.props.questionId} /> : null} */}
 									<CommentForm answerId={this.props.answerId} questionId={this.props.questionId} />
 								</div>
                 {this.props.comments.map(comment => (

@@ -166,7 +166,7 @@ class AnswerItem extends React.Component {
                 <div className="ai-options-container">
                     <div className="ai-options-left">
                         <Upvote answer={answer} questionId={this.props.questionId} />
-                        <button onClick={this.toggleForm} className="comment-toggle">
+                        <button onClick={this.toggleForm} className="comment-toggle" id="comment-toggle">
                             <i className="far fa-comments"></i>
                             <span>Comment</span>
                             <span>{answer.comments.length}</span>
