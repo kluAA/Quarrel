@@ -10,12 +10,10 @@ export default class Modal extends React.Component {
     this.state = {
       questionId: props.question._id,
       topics: [],
-      updatedTopics: false,
-      checked: props.checked,
+      checked: {}
     }
     this.handleTopicSubmit = this.handleTopicSubmit.bind(this);
     this.updateTopic = this.updateTopic.bind(this);
-    this.checkBoxValue = this.checkBoxValue.bind(this);
   }
 
 
@@ -24,16 +22,6 @@ export default class Modal extends React.Component {
     let topics = this.state.topics;
     addTopicsToQuestion({ variables: { topics: topics, questionId: this.state.questionId} })
     this.onClose()
-  }
-
-  checkBoxValue(topicId){
-    let result = false
-    this.props.checked.forEach(object => {
-     if (object._id === topicId) {
-        result = true;
-     }
-    })
-    return result
   }
 
 
@@ -49,10 +37,6 @@ export default class Modal extends React.Component {
     } else {
       this.setState({ topics: dup, checked: trueState })
     }
-  }
-
-  updateCache(cache, data) {
-    console.log(data)
   }
 
   render() {
@@ -93,7 +77,7 @@ export default class Modal extends React.Component {
                                 name={topic.name}
                                 value={topic._id}
                                 onChange={this.updateTopic}
-                                checked={this.checkBoxValue(topic._id)}
+                                checked={this.state.checked[topic._id]}
                               />
                               <img className="topic-modal-icon" src={topic.imageUrl} alt="" />
                               <label hmtlfor={topic.name}>{topic.name}</label>
