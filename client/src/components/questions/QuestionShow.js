@@ -18,13 +18,15 @@ class QuestionShow extends React.Component {
             body: "",
             showForm: false,
             show: false,
-            updated: false
-
+            updated: false,
+            showMoreAnswers: false
         }
         this.toggleForm = this.toggleForm.bind(this);
         this.numAnswers = this.numAnswers.bind(this);
         this.track = this.track.bind(this);
         this.renderTopicsList = this.renderTopicsList.bind(this)
+        this.renderAnswers = this.renderAnswers.bind(this)
+        this.toggleShowMoreAnswers = this.toggleShowMoreAnswers.bind(this)
     }
 
 
@@ -58,7 +60,6 @@ class QuestionShow extends React.Component {
 
     }
 
-
     renderTopicsList(topics) {
         return topics.map(topic => {
             return <Link key={`${topic._id}`} className="topics-list-item" to={`/topic/${topic.name}/questions`}>{topic.name}</Link>
@@ -77,6 +78,32 @@ class QuestionShow extends React.Component {
             return null
         }
     }
+
+    renderAnswers(answers) {
+        if (this.state.showMoreAnswers) {
+            return answers
+        } else {
+            return answers[0]
+        }
+    }
+
+    renderShowAnswersButton(answersLength) {
+        if (answersLength) {
+            if(this.state.showMoreAnswers) {
+                return <button onClick={this.toggleShowMoreAnswers}>Show Less Answers</button>
+            } else {
+                return <button onClick={this.toggleShowMoreAnswers}>Show More Answers</button>
+            }
+        } else {
+            return null
+        }
+    }
+
+
+    toggleShowMoreAnswers() {
+        this.setState({ showMoreAnswers: !this.state.showMoreAnswers });
+    }
+
 
     render() {
         return (
@@ -161,7 +188,8 @@ class QuestionShow extends React.Component {
                                 </div>
                                 {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={question._id} /> : null}
                                 <h2>{this.numAnswers(question)}</h2>
-                                {answers}
+                                { this.renderAnswers(answers)}
+                            { this.renderShowAnswersButton(answers.length) }
                             </div>
                         </div>
                     )
@@ -171,7 +199,7 @@ class QuestionShow extends React.Component {
 
             </Query >
         )
-    }
+    }   
 }
 
 export default withRouter(QuestionShow);
