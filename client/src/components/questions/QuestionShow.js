@@ -87,11 +87,15 @@ class QuestionShow extends React.Component {
         }
     }
 
-    renderShowAnswersButton() {
-        if(this.state.showMoreAnswers) {
-            return <button onClick={this.toggleShowMoreAnswers}>Show Less Answers</button>
+    renderShowAnswersButton(answersLength) {
+        if (answersLength) {
+            if(this.state.showMoreAnswers) {
+                return <button onClick={this.toggleShowMoreAnswers}>Show Less Answers</button>
+            } else {
+                return <button onClick={this.toggleShowMoreAnswers}>Show More Answers</button>
+            }
         } else {
-            return <button onClick={this.toggleShowMoreAnswers}>Show More Answers</button>
+            return null
         }
     }
 
@@ -185,7 +189,7 @@ class QuestionShow extends React.Component {
                                 {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={question._id} /> : null}
                                 <h2>{this.numAnswers(question)}</h2>
                                 { this.renderAnswers(answers)}
-                            { this.renderShowAnswersButton() }
+                            { this.renderShowAnswersButton(answers.length) }
                             </div>
                         </div>
                     )
