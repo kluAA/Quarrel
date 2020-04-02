@@ -34,7 +34,7 @@ const QuestionSchema = new Schema({
 
 QuestionSchema.statics.findMatches = (question) => {
     const Question = mongoose.model("question");
-    const invalidValues = ['(', ')', '*', '+', "\\"]
+    const invalidValues = ['(', ')', '*', '+', "\\", "?"]
     for (let i = 0; i < invalidValues.length; i++) {
         if (question.includes(invalidValues[i])) {
             question = question.replace(invalidValues[i], "");
