@@ -1,44 +1,28 @@
 .SideBar-container {
   box-sizing: border-box;
-  width: 142px;
+  width: 135px;
   border-width: initial;
   border-style: none;
   border-color: initial;
   border-image: initial;
   margin-top: 30px;
-}
-
-.SideBar-innerbox {
-    box-sizing: border-box;
-    top: 80px;
-    overflow-y: auto;
-    margin-left: -16px;
-    margin-right: -16px;
-    padding-left: 16px;
-    padding-right: 16px;
-    border-width: initial;
-    border-style: none;
-    border-color: initial;
-    border-image: initial;
+  padding-right: 16px;
 }
 
 .sidebar-icon{
-  height: 15px;
-  width: 15px;
-  margin-right: 5px
+  height: 18px;
+  width: 18px;
+  margin-right: 8px
 }
 
 .Link-container {
+  cursor: pointer;
   box-sizing: border-box;
   margin-bottom: 8px;
   height: auto;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
-  border-width: initial;
-  border-style: none;
-  border-color: initial;
-  border-image: initial;
   padding: 4px;
   border-radius: 3px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
@@ -47,20 +31,50 @@
   background: rgb(230, 231, 232);
 }
 .sidebar-link {
-  display: flex
+  display: flex;
 }
-.Sidebar-icon-label {
+.sidebar-icon-label {
     box-sizing: border-box;
-    color: (#666666);
-    font-size: 13px;
-    border-width: initial;
-    border-style: none;
-    border-color: initial;
-    border-image: initial;
+    /* color: #636466; */
+    font-size: 14px;
 }
 
 .rsb-container {
-  margin-top: 25px;
-  width: 142px;
-  height: 500px;
+  margin-top: 30px;
+  width: 135px;
+  margin-left: 25px;
 }
+
+.rsb-member {
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  width: 125px;
+}
+
+.member-name {
+  /* color: #636466; */
+  font-size: 15px;
+  margin-bottom: 3px;
+}
+
+.rsb-member li {
+  margin-left: 12px;
+  font-size: 13px;
+  margin-bottom: 3px;
+  padding: 5px;
+  display: inline-block;
+}
+
+.rsb-member li:hover {
+  background: rgb(230, 231, 232);
+}
+
+.rsb-member i {
+  margin-right: 4px;
+}
+
+.fa-linkedin {
+  color: #0078b5;;
+}
+
