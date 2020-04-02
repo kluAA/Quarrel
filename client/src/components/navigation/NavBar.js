@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Queries from "../../graphql/queries";
 import { Query } from "react-apollo"
 import SearchBar from "./SearchBar";
@@ -19,7 +19,8 @@ class NavBar extends React.Component {
             client: "",
             showModal: false,
             searchFocus: "",
-            showOptions: false
+            showOptions: false,
+            selected: { ["/"]: "", ["/answer"]: "", ["/topics"]: "" }
         };
         this.handleModal = this.handleModal.bind(this);
         this.openModal = this.openModal.bind(this);
@@ -27,6 +28,14 @@ class NavBar extends React.Component {
         this.toggleOptions = this.toggleOptions.bind(this);
         this.closeOptions = this.closeOptions.bind(this);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    componentDidUpdate(prevProps) {
+        let oldLocation = prevProps.location.pathname;
+        let newLocation = this.props.location.pathname;
+        if (oldLocation !== newLocation) {
+            this.setState({ selected: { [newLocation]: "selected" }})
+        }
     }
 
     componentWillMount() {
@@ -99,19 +108,19 @@ class NavBar extends React.Component {
                     </div>
                     <ul className="nav-links" onClick={this.closeModal}>
                         <Link to="/">
-                            <li className="nav-home">
+                            <li className={`nav-home ${this.state.selected["/"]}`}>
                                 <i className="far fa-list-alt"></i>
                                 <span>Home</span>
                             </li>
                         </Link>
                         <Link to="/answer">
-                            <li className="nav-answer">
+                            <li className={`nav-answer ${this.state.selected["/answer"]}`}>
                                 <i className="far fa-edit"></i>
                                 <span>Answer</span>
                             </li>
                         </Link>
                         <Link to="/topics">
-                            <li className="nav-topics">
+                            <li className={`nav-topics ${this.state.selected["/topics"]}`}>
                                 <i className="far fa-comments"></i>
                                 <span>Topics</span>
                             </li>
@@ -168,4 +177,4 @@ class NavBar extends React.Component {
     }
 }
 
-export default NavBar;
+export default withRouter(NavBar);
