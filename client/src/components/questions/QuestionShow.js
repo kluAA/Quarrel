@@ -29,6 +29,7 @@ class QuestionShow extends React.Component {
         this.toggleShowMoreAnswers = this.toggleShowMoreAnswers.bind(this)
         this.containerClassName = this.containerClassName.bind(this)
         this.feedItemClassName = this.feedItemClassName.bind(this)
+        this.renderQuestionTitle = this.renderQuestionTitle.bind(this)
     }
 
 
@@ -78,6 +79,16 @@ class QuestionShow extends React.Component {
             </div >
         } else {
             return null
+        }
+    }
+
+    renderQuestionTitle(question) {
+        if (this.props.reusedComponent) {
+            return <Link to={`/q/${question._id}`}>
+                <h1>{question.question}</h1>
+            </Link>
+        } else {
+           return <h1>{question.question}</h1>
         }
     }
 
@@ -151,8 +162,7 @@ class QuestionShow extends React.Component {
                                 {this.renderPencil(question, currentUserId)}
                             </div>
                             <div className={this.feedItemClassName()}>
-
-                                <h1>{question.question}</h1>
+                                {this.renderQuestionTitle(question)}
                                 <div className="qns-actions">
                                     <div className="qns-answer"
                                         onClick={this.toggleForm}
