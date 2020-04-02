@@ -4,6 +4,7 @@ import Queries from "../../graphql/queries";
 import { Query } from "react-apollo"
 import SearchBar from "./SearchBar";
 import QuestionForm from "../questions/QuestionForm";
+import NavNotifications from "./NavNotifications";
 
 import ProfileIcon from "../customization/ProfileIcon";
 import OptionsMenu from "./OptionsMenu";
@@ -116,10 +117,7 @@ class NavBar extends React.Component {
                                 <span>Topics</span>
                             </li>
                         </Link>
-                        <li className="nav-notifications">
-                            <i className="far fa-bell"></i>
-                            <span>Notifications</span>
-                        </li>
+                        <NavNotifications />
                     </ul>
                     <SearchBar
                         openModal={this.openModal}
