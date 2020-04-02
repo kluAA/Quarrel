@@ -99,8 +99,7 @@ class QuestionForm extends React.Component {
         e.preventDefault();
         let question = this.state.question;
         const link = this.state.link;
-        let splitQuestion = question.split(" ");
-        if (splitQuestion.length < 3 || splitQuestion.includes("")) {
+        if (question.trim().length < 1 || question.split(" ").length < 3) {
             this.setState({
                 message: "This question needs more detail. " +
                     "Add more information to ask a clear question, " +
@@ -108,6 +107,7 @@ class QuestionForm extends React.Component {
             });
             setTimeout(this.closeMessage, 5001)
         } else if (link.length === 0 || Validator.isURL(link)) {
+            question = question.trim();
             if (question[question.length - 1] !== "?") question = question + '?';
             newQuestion({
                 variables: {
