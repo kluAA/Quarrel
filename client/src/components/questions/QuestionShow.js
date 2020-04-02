@@ -116,7 +116,7 @@ class QuestionShow extends React.Component {
 
     feedItemClassName(){
         if (this.props.reusedComponent) {
-            return ""
+            return "topics-feed-question"
         } else {
             return "qns-container"
         }

@@ -32,6 +32,7 @@ class QuestionsYouAnswered extends React.Component {
                         {({ loading, error, data }) => {
                             if (loading) return "Loading...";
                             if (error) return `Error! ${error.message}`;
+                            debugger
                             if (data.answersByUser.length === 0) return <li key={0} id="no-results" className="feed-item">You haven't answered any questions yet.</li>;
                             return data.answersByUser.map(match => {
                                 return (
