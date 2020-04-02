@@ -4,11 +4,14 @@
     border-radius: 4px;
     border-bottom: 1px solid #e2e2e2;
     padding-top: 16px;
+    padding-bottom: 8px;
     font-size: 15px;
     line-height: 1.4;
     color: #333;
     display: block;
     width: 600px;
+    margin-bottom: 10px;
+    margin-top: 30px;
 }
 .TopicPageHeader-Top {
   margin: 5px 16px;
@@ -103,6 +106,10 @@
 
 /* navbar */
 
+.topicShow {
+  width: 600px
+}
+
 .TopicPageNavBar {
   background: #fff;
   border-bottom: 0;
@@ -127,7 +134,6 @@
 
 .topics-list-container {
   display: flex;
-  margin-top: 20px;
   padding-bottom: 8px;
   background: white;
   max-width: 640px;
@@ -144,4 +150,8 @@
 
 .topics-list-item:hover {
 color: #2b6dad;
+}
+
+.topics-feed-question {
+  padding-bottom: 8px;
 }

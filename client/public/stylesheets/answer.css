@@ -258,5 +258,14 @@
     background: #4267b2;
 }
 
+.answers-toggle-container{
+    display:flex;
+    justify-content: center;
+}
 
+
+.answers-toggle {
+    color: #666;
+    text-align: center;
+}
 
