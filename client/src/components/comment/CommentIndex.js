@@ -83,8 +83,9 @@ class CommentIndex extends React.Component {
 															/>
 														</div>
                             <div className="comment-item-user-info">{comment.user.fname} {comment.user.lname}
-														<br/>
-															{moment(new Date(parseInt(comment.date)), "YYYY-MM-DD").fromNow()}
+							<p className="comment-item-date">
+								{moment(new Date(parseInt(comment.date)), "YYYY-MM-DD").fromNow()}
+							</p>
 														</div>
                         </div>
 
