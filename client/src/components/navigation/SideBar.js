@@ -20,7 +20,7 @@ class SideBar extends React.Component {
                             data.topics.map(topic => {
                                 return (
                                     <div key={topic._id} className="Link-container">
-                                        <Link className="sidebar-link" to={`/topic/${topic.name}`} key={topic._id} topic={topic}>
+                                        <Link className="sidebar-link" to={`/topic/${topic.name}/questions`} key={topic._id} topic={topic}>
                                             <img className="sidebar-icon" src={topic.imageUrl} alt=""></img>
                                             <div className="sidebar-icon-label">{topic.name}</div>
                                         </Link>

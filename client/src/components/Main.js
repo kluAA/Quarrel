@@ -17,7 +17,7 @@ const Main = () => {
             <NavBar />
             {/* <SessionForm /> */}
             <div className="main-body">
-                <Route exact path="/" component={SideBar} />
+                <Route path="/" component={SideBar} />
                 <Switch>
                     <Route exact path="/" component={MainFeedContainer} />
                     <Route exact path="/topics" component={TopicsShow} />
@@ -27,7 +27,7 @@ const Main = () => {
                     <Route exact path="/answer" component={QuestionsForYou} />
                     <Route exact path="/answered" component={QuestionsYouAnswered} />
                 </Switch>
-                <Route exact path="/" component={RightSideBar} />
+                <Route path="/" component={RightSideBar} />
             </div>
         </div>
     )

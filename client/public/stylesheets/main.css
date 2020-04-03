@@ -10,8 +10,8 @@
 
 .main-body {
     margin-top: 50px;
-    width: 1050px;
+    width: 1002px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }
 
