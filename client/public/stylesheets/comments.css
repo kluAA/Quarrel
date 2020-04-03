@@ -55,20 +55,21 @@
 	overflow: auto;
 }
 
-textarea.comment-form-input {
+input.comment-form-input {
 	word-wrap: break-word;
 	word-break: break-all;
 	overflow-wrap: break-word;
-	display: inline;
+	/* display: inline; */
 	overflow: auto;
 	box-sizing: border-box;
 	width: 100%;
 	height: auto;
 }
 
+
 .comment-form-button {
   cursor: pointer;
-  padding: 5px;
+  padding: 7px 12px;
   background: #329bff;
   border-radius: 20px;
   color: white;

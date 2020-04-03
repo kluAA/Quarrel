@@ -69,7 +69,6 @@ class CommentForm extends React.Component {
 
 	handleSubmit(e, newComment) {
 		e.preventDefault();
-		const comment = this.state.comment;
 		newComment({
 			variables: {
 				comment: this.state.comment,
@@ -146,7 +145,7 @@ class CommentForm extends React.Component {
 								<div className="comment-form-input-box" 
 									// id="comment-input"
 									>
-									<textarea
+									<input type="text" 
 										onChange={this.update("comment")}
 										value={this.state.comment}
 										placeholder="Add a comment..."
