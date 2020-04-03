@@ -1,3 +1,7 @@
+.TopicPageHeader:first-of-type {
+  margin-top: 30px;
+}
+
 .TopicPageHeader{
     border: 1px solid #efefef;
     background-color: #fff;
@@ -11,8 +15,8 @@
     display: block;
     width: 600px;
     margin-bottom: 10px;
-    margin-top: 30px;
 }
+
 .TopicPageHeader-Top {
   margin: 5px 16px;
 }
