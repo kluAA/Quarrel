@@ -106,9 +106,7 @@ class CommentForm extends React.Component {
 	render() {
 		const button = (
 			<Fragment>
-			<div className="comment-form-button">
 				<input type="submit" className="comment-form-button" id="comment-submit-button" value="Add Comment" />
-			</div>
 			</Fragment>
 		)
 
