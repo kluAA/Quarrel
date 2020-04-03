@@ -46,10 +46,7 @@ class RightSideBar extends React.Component {
 
         const elizabeth = {
             name: "Elizabeth D.",
-            git: "",
-            linkedIn: "",
-            portfolio: "",
-            angel: ""
+            git: "https://www.linkedin.com/mwlite/in/elizabethqdang",
         }
 
         const members = [ kevin, javier, sammy, elizabeth ];
