@@ -17,6 +17,42 @@ class RightSideBar extends React.Component {
      
     }
 
+    renderGit(member){
+        if (member.git) {
+            return <li>
+                <i className="fab fa-github-square"></i>
+                <a href={member.git}>Github</a>
+            </li>
+        }
+    }
+
+    renderLinkedIn(member) {
+        if (member.linkedIn) {
+            return <li>
+                <i className="fab fa-linkedin"></i>
+                <a href={member.linkedIn}>LinkedIn</a>
+            </li>
+        }
+    }
+    
+    renderAngel(member) {
+        if (member.angel){
+            return <li>
+                <i className="fab fa-angellist"></i>
+                <a href={member.angel}>AngelList</a>
+            </li>
+        } 
+    }
+    renderPortfolio(member) {
+        if (member.portfolio) {
+            return <li>
+                <i className="fas fa-folder"></i>
+                <a href={member.portfolio}>Portfolio</a>
+            </li> 
+        }
+    }
+    
+
     render() {
         
         const kevin = {
@@ -55,22 +91,10 @@ class RightSideBar extends React.Component {
             return (
                 <ul className="rsb-member">
                     <span className="member-name">{member.name}</span>
-                    <li>
-                        <i className="fab fa-github-square"></i>
-                        <a href={member.git}>Github</a>
-                    </li>
-                    <li>
-                        <i className="fab fa-linkedin"></i>
-                        <a href={member.linkedIn}>LinkedIn</a>
-                    </li>
-                    <li>
-                        <i className="fab fa-angellist"></i>
-                        <a href={member.angel}>AngelList</a>
-                    </li>
-                    <li>
-                        <i className="fas fa-folder"></i>
-                        <a href={member.portfolio}>Portfolio</a>
-                    </li>
+                        {this.renderGit(member)}
+                        {this.renderLinkedIn(member)}
+                        {this.renderAngel(member)}
+                         {this.renderPortfolio(member)}
                 </ul>
             )
         })
