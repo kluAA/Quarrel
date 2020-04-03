@@ -27,6 +27,7 @@ class QuestionShow extends React.Component {
         this.renderTopicsList = this.renderTopicsList.bind(this)
         this.renderAnswers = this.renderAnswers.bind(this)
         this.toggleShowMoreAnswers = this.toggleShowMoreAnswers.bind(this)
+        this.renderShowAnswersButton = this.renderShowAnswersButton.bind(this)
         this.containerClassName = this.containerClassName.bind(this)
         this.feedItemClassName = this.feedItemClassName.bind(this)
         this.renderQuestionTitle = this.renderQuestionTitle.bind(this)
@@ -93,7 +94,7 @@ class QuestionShow extends React.Component {
     }
 
     renderAnswers(answers) {
-        if (this.state.showMoreAnswers) {
+        if (this.state.showMoreAnswers || !(this.props.reusedComponent)) {
             return answers
         } else {
             return answers[0]
@@ -101,7 +102,7 @@ class QuestionShow extends React.Component {
     }
 
     renderShowAnswersButton(answersLength) {
-        if (answersLength) {
+        if (answersLength && this.props.reusedComponent) {
             if(this.state.showMoreAnswers) {
                 return <button className="answers-toggle"onClick={this.toggleShowMoreAnswers}>Show Less Answers</button>
             } else {
