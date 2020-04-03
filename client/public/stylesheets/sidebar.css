@@ -7,6 +7,7 @@
   border-image: initial;
   margin-top: 30px;
   padding-right: 16px;
+  margin-left: 5px;
 }
 
 .sidebar-icon{
@@ -18,7 +19,7 @@
 .Link-container {
   cursor: pointer;
   box-sizing: border-box;
-  margin-bottom: 8px;
+  margin-bottom: 15px;
   height: auto;
   display: flex;
   -webkit-box-align: center;
@@ -36,12 +37,13 @@
 .sidebar-icon-label {
     box-sizing: border-box;
     /* color: #636466; */
+    color: rgb(99, 100, 102);
     font-size: 14px;
 }
 
 .rsb-container {
   margin-top: 30px;
-  width: 135px;
+  width: 160px;
   margin-left: 25px;
 }
 
