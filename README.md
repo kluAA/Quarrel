@@ -1,188 +1,24 @@
-Quora
------
-Questions
-Answers/comments on answers
-Search Questions
-Topics/Tags
+# Quarrel
+Quarrel is a clone of the question-and-answer website Quora. It is a web app with full authentication features where you can sign up, log in with your credentials, ask questions, search questions by topics, answer other user's questions, upvote answers and comment on them.
 
-**Bonus** 
-Upvotes, order questions by popularity
-Replies to comments
+## Demo
+Live demo: http://quarrel-pro.herokuapp.com/#/session
 
-1) Basic User Auth Skeleton
-2) Create Questions and Answers
-3) Topics/Tags
-4) Search Engines
+## Technologies used
+Quarrel's back-end is built on [MongoDB](https://www.mongodb.com/) and [Express](https://expressjs.com/), the front-end is built with [React](https://reactjs.org/), we also used [GraphQL](https://graphql.org/) to handle API requests, [Node.js](https://nodejs.org/) served as the runtime environment, and finally the app is containerized using [Docker](https://www.docker.com/).
 
-graphql - good since we would need to display all data on single page
-CSS - Not fancy looking would need to improvise and make look professional
+## Site
+### Landing Page
+<img width="1440" alt="quarrel_splash" src="https://user-images.githubusercontent.com/19655779/78736956-3ccaae00-7903-11ea-8f6f-f0447744c522.png">
 
+### Questions
+<img width="1440" alt="quarrel_questions" src="https://user-images.githubusercontent.com/19655779/78737122-a0ed7200-7903-11ea-9e0d-e4e9668b6549.png">
 
-Features
-----------
-*Splash Page*
-Background Image       
-                      Header Logo Img
-                    <H2> Mission statement
-        *google api*                      *login component* (always displays)
-                                            <h2> Login
-    Google sign in API?             |       Email input                                      
-    "sign up with email" links to   |       Password input
-                renders signup form |     forgot password?   Login submit button                  
-        *Signup Form*
-     <h2> Sign up
-     First Name, Last Name
-     Email
-     Password
-     reCaptchav3 api?
-     cancel button (takes you back to login) and sign up submit button
-        ___
-      *Footer Links*
-      About About Developer pages? LinkedIn pages?
+### Answers
+<img width="1440" alt="quarrel_answers" src="https://user-images.githubusercontent.com/19655779/78737348-2d983000-7904-11ea-9b36-146e5df705e7.png">
 
+### Topics
+<img width="1440" alt="quarrel_topics" src="https://user-images.githubusercontent.com/19655779/78737447-57e9ed80-7904-11ea-995a-fb3e5155ee1b.png">
 
-
-*Header Bar*
------------
-websockets
-Logo
-  - links to homepage
-Home icon
-  - links to homepage
-Answer icon
-  - links to questions for you ("/answer")
-Spaces icon (optional)
-  - opens dropdown of followed spaces as well
-  - also contains a link to see all spaces ("/spaces)
-Searchbar Component
-  -selecting opens modal
-  -typing autofills/suggest topics/spaces
-  -link to "add a new question" modal
-Profile Picture
-  -opens dropdown
-      -messages
-      -stats
-      -your content
-        -links to "/content" page of questions asked, answers
-Add a question button
-  -opens up modal
-
-*topics-sidebar*
----------------
-Feed Button
-  -links to homepage
-  -List of Followed Topics
-    - Each Item is a link to topic page "/q/topic-name"
-*footer-links*
-
-
-
-
-User Auth
-----------
-* Register
-  - First Name
-  - Last Name
-  - Email
-  - Password
-* Login
-  - Email
-  - Password
-  
-  topics and spaces are visable to all (with url link)
-  posting requires authentication
-Questions
----------
-* Modal
-* Header
-  - Tab 1: Add question
-  - Tab 2: Share link
-  - Ul: Advice to get better answers
-* Ask form
-  - Ask header
-    - Current user profile picture
-    - Current User Name
-    - Privacy options
-  - Ask Form
-    - Text area
-    * Related questions
-    - Optional Link
-  - Footer
-    - Cancel button
-    - Add question button
-* Share link form
-  - Current User profile pic
-  - Current User name
-  - Text area
-  - Input for link
-    
-
-Answers (directly from a question page)
---------- 
-Answer button
-	- modal form pops up
-	- answer form
-		- styling button features
-		- attach picture option
-		- text box
-Follow button
-	- just a button
-Request button
-
-Answers (from nav bar) links to /answers
-_________
-	- question
-	- topic
-	- Answer button (opens answer box)
-	- Pass button (hides question)
-	- Follow button
-	- X close button (hides question)
-
-
-Topics
----------
-* Name of topic
-* Description
-* Other
-  - follow
-  - contains posts and questions
-
-Search Bar
----------
-- Modal
-- Autofill
-- Link to add new question
-
-# Components 
-
-Questions for You
----------------
-* Maps questions on topics you have followed
-* Clicking answer displays form/textarea to answer
-
-
-
-# Routes
-
-* "/": Splash Page (logged out)/Feed (logged in)
-* "/answer": Answer questions
-* "/topic/:name": Topic Index
-* "/:(question with whitespace parsed as '-' and special characters removed): Question Show
-* 
-
-
-# CSS Layout
-
-* NavBar
-  - Width is 100%
-  - Inner content is fixed at 1005px and centered
-  - Height is fixed 50px
-
-* Main Content
-  - Everything is centered and contained in a div with width 1050px
-  - Background color outside of content is #F1F2F2
-  
-* Feed 
-  - Width of each container is 600px
-  - 16x 16x 4px padding
-  - Divs should have id of the question id to expand/collapse comments form
+### Comments
+<img width="1440" alt="quarrel_comments" src="https://user-images.githubusercontent.com/19655779/78737725-1443b380-7905-11ea-9646-9316e5c0be01.png">
