@@ -22,7 +22,7 @@ class TopicHeader extends React.Component {
     this.renderImg = this.renderImg.bind(this)
   }
 
-
+//runs mutation when follow icon is clicked
   handleClick(e, followTopicMutation) {
     e.preventDefault()
     followTopicMutation({ variables: { topicId: this.props.topic._id } })
@@ -31,6 +31,7 @@ class TopicHeader extends React.Component {
     })
   }
 
+  //displays an empty checklist/checked list if the user is not following/following a topic respectively.
   renderFollowIcon() {
     if (this.state.follow) {
       return <div id="follow-icon-pressed">

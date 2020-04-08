@@ -30,5 +30,7 @@ Topics are also editable. A user can add/remove topics from questions they asked
 If a user has asked a question, they will see a small pencil next to the topics list
 in the quesiton show page.
 
+A user can also follow a topic
+
 ### Comments
 <img width="1440" alt="quarrel_comments" src="https://user-images.githubusercontent.com/19655779/78737725-1443b380-7905-11ea-9646-9316e5c0be01.png">
