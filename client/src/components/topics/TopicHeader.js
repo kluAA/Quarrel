@@ -11,20 +11,21 @@ const { FOLLOW_TOPIC } = Mutations
 class TopicHeader extends React.Component {
   constructor(props) {
     super(props)
-    this.handleClick = this.handleClick.bind(this)
     this.state = {
       name: this.props.name,
       message: "",
       follow: false
     }
+
+    this.handleClick = this.handleClick.bind(this)
     this.renderFollowIcon = this.renderFollowIcon.bind(this)
     this.renderImg = this.renderImg.bind(this)
   }
 
 
-  handleClick(e, followTopic) {
+  handleClick(e, followTopicMutation) {
     e.preventDefault()
-    followTopic({ variables: { topicId: this.props.topic._id } })
+    followTopicMutation({ variables: { topicId: this.props.topic._id } })
     this.setState({
       follow: !this.state.follow
     })

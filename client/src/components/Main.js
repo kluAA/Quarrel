@@ -15,7 +15,6 @@ const Main = () => {
     return (
         <div className="main">
             <NavBar />
-            {/* <SessionForm /> */}
             <div className="main-body">
                 <Route path="/" component={SideBar} />
                 <Switch>
