@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import NavBar from "./navigation/NavBar";
 import TopicsShow from "./topics/TopicsShow"
-import TopicShow from "./topics/TopicShow"
+// import TopicShow from "./topics/TopicShow"
 import TopicQuestions from "./topics/TopicQuestions"
 import SideBar from "./navigation/SideBar"
 import RightSideBar from "./navigation/RightSideBar";

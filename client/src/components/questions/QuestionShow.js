@@ -84,7 +84,7 @@ class QuestionShow extends React.Component {
     }
 
     renderQuestionTitle(question) {
-        if (this.props.reusedComponent) {
+        if (this.props.fromTopicQuesitons) {
             return <Link to={`/q/${question._id}`}>
                 <h1>{question.question}</h1>
             </Link>
@@ -94,7 +94,7 @@ class QuestionShow extends React.Component {
     }
 
     renderAnswers(answers) {
-        if (this.state.showMoreAnswers || !(this.props.reusedComponent)) {
+        if (this.state.showMoreAnswers || !(this.props.fromTopicQuesitons)) {
             return answers
         } else {
             return answers[0]
@@ -102,7 +102,7 @@ class QuestionShow extends React.Component {
     }
 
     renderShowAnswersButton(answersLength) {
-        if (answersLength && this.props.reusedComponent) {
+        if (answersLength && this.props.fromTopicQuesitons) {
             if(this.state.showMoreAnswers) {
                 return <button className="answers-toggle"onClick={this.toggleShowMoreAnswers}>Show Less Answers</button>
             } else {
@@ -119,7 +119,7 @@ class QuestionShow extends React.Component {
     }
 
     containerClassName(){
-        if (this.props.reusedComponent) {
+        if (this.props.fromTopicQuesitons) {
             return "feed-item"
         } else {
             return ""
@@ -127,7 +127,7 @@ class QuestionShow extends React.Component {
     }
 
     feedItemClassName(){
-        if (this.props.reusedComponent) {
+        if (this.props.fromTopicQuesitons) {
             return "topics-feed-question"
         } else {
             return "qns-container"

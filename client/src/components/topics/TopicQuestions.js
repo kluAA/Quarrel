@@ -24,7 +24,7 @@ class TopicQuestions extends React.Component {
 
                 {topic.questions.map(question => {
                   
-                  return <QuestionShow key={question._id} reusedComponent={true} id={question._id} question={question} name={question.name} />
+                  return <QuestionShow key={question._id} fromTopicQuesitons={true} id={question._id} question={question} name={question.name} />
                 }
                 )}
 

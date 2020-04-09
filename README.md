@@ -39,5 +39,10 @@ The Topic Questions page queries for topic information using
 a Fetch All Topics Query while Topic grabs the data by using another query 
 passing in the available topic name from the URL.
 
+The Topic Question also reused the Question Show component. Initially this presented
+some challenges with styling and proper links but was accomplished with a 
+prop called "fromTopicQuestion" with a value of True. Inside of the question show
+we could conditionally check to see if this was a feed item "Question Show"
+component or being reused by the Topic Question Component.
 ### Comments
 <img width="1440" alt="quarrel_comments" src="https://user-images.githubusercontent.com/19655779/78737725-1443b380-7905-11ea-9646-9316e5c0be01.png">
