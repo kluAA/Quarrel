@@ -4,6 +4,8 @@ import { Query } from "react-apollo";
 import Queries from "../../graphql/queries";
 const { FETCH_TOPICS } = Queries;
 
+//A show page for all topics #/topics
+
 class TopicsShow extends React.Component {
 
   render() {

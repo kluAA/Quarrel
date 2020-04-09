@@ -10,7 +10,6 @@ import Show from "./Show";
 const App = () => {
 	return (
 		<div>
-			{/* <SessionForm /> */}
 			<Switch>
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/signup" component={Register} />
