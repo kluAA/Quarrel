@@ -30,7 +30,14 @@ Topics are also editable. A user can add/remove topics from questions they asked
 If a user has asked a question, they will see a small pencil next to the topics list
 in the quesiton show page.
 
-A user can also follow a topic
+A user can also follow a topic.
+
+The desire for the topics feature was to main the philosophy of DRY coding. Many 
+components were reused using different graphql queries. For example,
+The TopicsShow page and the Topic Questions page both use the Topic Header.
+The Topic Questions page queries for topic information using 
+a Fetch All Topics Query while Topic grabs the data by using another query 
+passing in the available topic name from the URL.
 
 ### Comments
 <img width="1440" alt="quarrel_comments" src="https://user-images.githubusercontent.com/19655779/78737725-1443b380-7905-11ea-9646-9316e5c0be01.png">

@@ -20,7 +20,8 @@ const Main = () => {
                 <Switch>
                     <Route exact path="/" component={MainFeedContainer} />
                     <Route exact path="/topics" component={TopicsShow} />
-                    <Route exact path="/topic/:name" component={TopicShow} />
+                    {/* currently commented out since TopicShow only has one feature, TopicQuestion */}
+                    {/* <Route exact path="/topic/:name" component={TopicShow} /> */}
                     <Route exact path="/topic/:name/questions" component={TopicQuestions} />
                     <Route exact path="/search/:query" component={SearchResults} />
                     <Route exact path="/answer" component={QuestionsForYou} />

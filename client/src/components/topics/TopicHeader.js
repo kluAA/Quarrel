@@ -101,6 +101,7 @@ class TopicHeader extends React.Component {
                   <div className="topic_item follow-icon">
                     <span>
                       <Mutation
+                      // handles the logic for following a topic
                         mutation={FOLLOW_TOPIC}
                         onError={err => this.setState({ message: err.message })}
                       >
@@ -146,6 +147,7 @@ class TopicHeader extends React.Component {
             </div>
           </div>
         </div>
+        {/* Topic TopicNavBar will contain future features */}
         {/* <TopicNavBar topic={this.props.topic} /> */}
       </div >
     );
