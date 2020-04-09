@@ -14,6 +14,24 @@ Quarrel's back-end is built on [MongoDB](https://www.mongodb.com/) and [Express]
 ### Questions
 <img width="1440" alt="quarrel_questions" src="https://user-images.githubusercontent.com/19655779/78737122-a0ed7200-7903-11ea-9e0d-e4e9668b6549.png">
 
+Clicking on the "Add Question" button opens up a modal where the user can ask a question. This form has some front end validations that prevent the user from entering an empty question or a string too short to be a valid question. The error and success messages are displayed on a banner on top of the window that disappears after 5 seconds. As the user is typing a question, the server will use regex to look for similar questions. This prompts the user to check a similar question instead of writing a duplicate question.
+
+```javascript
+QuestionSchema.statics.findMatches = (question) => {
+    const Question = mongoose.model("question");
+    const invalidValues = ['(', ')', '*', '+', "\\", "?"];
+    
+    for (let i = 0; i < invalidValues.length; i++) {
+        if (question.includes(invalidValues[i])) {
+            question = question.replace(invalidValues[i], "");
+        }
+    }
+
+    question = question.trim();
+    return Question.find({ question: { $regex: new RegExp(question, 'i') } });
+};
+```
+
 ### Answers
 <img width="1440" alt="quarrel_answers" src="https://user-images.githubusercontent.com/19655779/78737348-2d983000-7904-11ea-9b36-146e5df705e7.png">
 
