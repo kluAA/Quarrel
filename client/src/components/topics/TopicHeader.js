@@ -16,10 +16,8 @@ class TopicHeader extends React.Component {
       message: "",
       follow: false
     }
-
     this.handleClick = this.handleClick.bind(this)
     this.renderFollowIcon = this.renderFollowIcon.bind(this)
-    this.renderImg = this.renderImg.bind(this)
   }
 
 //runs mutation when follow icon is clicked
@@ -53,10 +51,6 @@ class TopicHeader extends React.Component {
     }
   }
 
-  renderImg() {
-    return this.props.topic.imageUrl
-  }
-
   render() {
     return (
       <div className="TopicPageHeader" >
@@ -67,7 +61,7 @@ class TopicHeader extends React.Component {
               return null
             }
 
-            //need to refactor to make more effecient
+            //finds current user and compares its id with all the topic followers, sets state accordingly (for default follow icon rendering)
             if (this.props.topic.followers.find(object => object._id === data.currentUser._id)) {
               if (!this.state.follow) {
                 this.setState({
@@ -83,19 +77,6 @@ class TopicHeader extends React.Component {
             }
             return null
           }
-            // if (data.currentUser.topics.find(topic => topic._id === this.props.topic._id)) {
-            //   if (!this.state.follow) {
-            //     this.setState({
-            //       follow: true
-            //     })
-            //   }
-            // } else {
-            //   if (this.state.follow) {
-            //     this.setState({
-            //       follow: false
-            //     })
-            //   }
-            // }
           }
         </Query>
         <div className="TopicPageHeader-Top flex">
@@ -103,7 +84,7 @@ class TopicHeader extends React.Component {
             <Link to={`/topic/${this.state.name}/questions`} key={this.props.topic._id} >
               <div className="TopicPhoto">
                 <div className="topic_photo_img">
-                  <img className="icon" src={this.renderImg()} alt=""></img>
+                  <img className="icon" src={this.props.topic.imageUrl} alt=""></img>
                 </div>
               </div>
             </Link>
@@ -165,7 +146,7 @@ class TopicHeader extends React.Component {
             </div>
           </div>
         </div>
-        <TopicNavBar topic={this.props.topic} />
+        {/* <TopicNavBar topic={this.props.topic} /> */}
       </div >
     );
   }
