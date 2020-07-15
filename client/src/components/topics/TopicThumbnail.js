@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom"
 import { Mutation, Query } from "react-apollo"
-import TopicNavBar from "./TopicNavBar.js"
+// import TopicNavBar from "./TopicNavBar.js"
 import Mutations from "../../graphql/mutations"
 import Queries from "../../graphql/queries"
 
@@ -150,7 +150,7 @@ class TopicThumbnail extends React.Component {
                         </div>
                     </div>
                 </div>
-                <TopicNavBar topic={this.props.topic} />
+                {/* <TopicNavBar topic={this.props.topic} /> */}
             </div >
         );
     }

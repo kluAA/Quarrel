@@ -26,6 +26,9 @@ class SessionForm extends React.Component {
 						</div>
 					</div>
 				</div>
+				{/* <div className="footer">
+					Splash does not look good with a footer...
+				</div> */}
 			</div>
 		);
 	}

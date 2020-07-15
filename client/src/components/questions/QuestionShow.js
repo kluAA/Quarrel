@@ -27,6 +27,10 @@ class QuestionShow extends React.Component {
         this.renderTopicsList = this.renderTopicsList.bind(this)
         this.renderAnswers = this.renderAnswers.bind(this)
         this.toggleShowMoreAnswers = this.toggleShowMoreAnswers.bind(this)
+        this.renderShowAnswersButton = this.renderShowAnswersButton.bind(this)
+        this.containerClassName = this.containerClassName.bind(this)
+        this.feedItemClassName = this.feedItemClassName.bind(this)
+        this.renderQuestionTitle = this.renderQuestionTitle.bind(this)
     }
 
 
@@ -79,8 +83,18 @@ class QuestionShow extends React.Component {
         }
     }
 
+    renderQuestionTitle(question) {
+        if (this.props.fromTopicQuesitons) {
+            return <Link to={`/q/${question._id}`}>
+                <h1>{question.question}</h1>
+            </Link>
+        } else {
+           return <h1>{question.question}</h1>
+        }
+    }
+
     renderAnswers(answers) {
-        if (this.state.showMoreAnswers) {
+        if (this.state.showMoreAnswers || !(this.props.fromTopicQuesitons)) {
             return answers
         } else {
             return answers[0]
@@ -88,11 +102,11 @@ class QuestionShow extends React.Component {
     }
 
     renderShowAnswersButton(answersLength) {
-        if (answersLength) {
+        if (answersLength && this.props.fromTopicQuesitons) {
             if(this.state.showMoreAnswers) {
-                return <button onClick={this.toggleShowMoreAnswers}>Show Less Answers</button>
+                return <button className="answers-toggle"onClick={this.toggleShowMoreAnswers}>Show Less Answers</button>
             } else {
-                return <button onClick={this.toggleShowMoreAnswers}>Show More Answers</button>
+                return <button className="answers-toggle" onClick={this.toggleShowMoreAnswers}>Show More Answers</button>
             }
         } else {
             return null
@@ -104,6 +118,21 @@ class QuestionShow extends React.Component {
         this.setState({ showMoreAnswers: !this.state.showMoreAnswers });
     }
 
+    containerClassName(){
+        if (this.props.fromTopicQuesitons) {
+            return "feed-item"
+        } else {
+            return ""
+        }
+    }
+
+    feedItemClassName(){
+        if (this.props.fromTopicQuesitons) {
+            return "topics-feed-question"
+        } else {
+            return "qns-container"
+        }
+    }
 
     render() {
         return (
@@ -126,16 +155,15 @@ class QuestionShow extends React.Component {
                     })
                     let currentUserId = localStorage.getItem("currentUserId")
                     return (
-                        <div >
+                        <div className={this.containerClassName()}>
                             <Modal onClose={this.toggleTopicModal} show={this.state.show}
                                 checked={question.topics} question={question}/>
                             <div className="topics-list-container">
                                 {this.renderTopicsList(question.topics)}
                                 {this.renderPencil(question, currentUserId)}
                             </div>
-                            <div className="qns-container">
-
-                                <h1>{question.question}</h1>
+                            <div className={this.feedItemClassName()}>
+                                {this.renderQuestionTitle(question)}
                                 <div className="qns-actions">
                                     <div className="qns-answer"
                                         onClick={this.toggleForm}
@@ -189,7 +217,9 @@ class QuestionShow extends React.Component {
                                 {this.state.showForm ? <AnswerForm toggleForm={this.toggleForm} questionId={question._id} /> : null}
                                 <h2>{this.numAnswers(question)}</h2>
                                 { this.renderAnswers(answers)}
+                                <div className="answers-toggle-container">
                             { this.renderShowAnswersButton(answers.length) }
+                                </div>
                             </div>
                         </div>
                     )

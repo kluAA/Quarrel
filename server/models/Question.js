@@ -34,6 +34,14 @@ const QuestionSchema = new Schema({
 
 QuestionSchema.statics.findMatches = (question) => {
     const Question = mongoose.model("question");
+    const invalidValues = ['(', ')', '*', '+', "\\", "?"]
+    for (let i = 0; i < invalidValues.length; i++) {
+        if (question.includes(invalidValues[i])) {
+            question = question.replace(invalidValues[i], "");
+        }
+    }
+
+    question = question.trim();
     return Question.find({ question: { $regex: new RegExp(question, 'i') } });
 };
 
@@ -43,6 +51,7 @@ QuestionSchema.statics.findRelatedQuestions = (questionId) => {
         .then(foundQuestion => {
             const longestWord = findLongestWord(foundQuestion.question);
             const secondLongestWord = findSecondLongestWord(foundQuestion.question);
+            // console.log(foundQuestion);
             return Question.find({ question: { $regex: new RegExp(`${longestWord}|${secondLongestWord}`, 'i') } })
         });
 }
