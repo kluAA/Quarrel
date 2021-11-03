@@ -30,6 +30,6 @@
     "multer-s3": "^2.9.0",
     "nodemon": "^2.0.2",
     "react-icons": "^3.9.0",
-    "validator": "^12.2.0"
+    "validator": "^13.7.0"
   }
 }
